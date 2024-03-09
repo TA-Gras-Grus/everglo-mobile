@@ -1,5 +1,9 @@
+import 'package:everglo_mobile/app/modules/forgetPassword/views/change_password_view.dart';
+import 'package:everglo_mobile/app/modules/forgetPassword/views/verify_o_t_p_view.dart';
 import 'package:get/get.dart';
 
+import '../modules/forgetPassword/bindings/forget_password_binding.dart';
+import '../modules/forgetPassword/views/component/forget_password_progress.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -12,7 +16,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.FORGET_PASSWORD;
 
   static final routes = [
     GetPage(
@@ -29,6 +33,11 @@ class AppPages {
       name: _Paths.LOGIN,
       page: () => LoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGET_PASSWORD,
+      page: () => ChangePasswordView(),
+      binding: ForgetPasswordBinding(),
     ),
   ];
 }
