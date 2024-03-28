@@ -1,5 +1,6 @@
 import 'package:everglo_mobile/app/modules/forgetPassword/controllers/forget_password_controller.dart';
 import 'package:everglo_mobile/app/modules/forgetPassword/views/component/forget_password_progress.dart';
+import 'package:everglo_mobile/app/modules/home/views/component/bottom_navigation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 

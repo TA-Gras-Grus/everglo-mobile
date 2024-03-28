@@ -10,6 +10,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      theme: ThemeData(scaffoldBackgroundColor: Color(0xFFF6F6F6)),
     ),
   );
 }
