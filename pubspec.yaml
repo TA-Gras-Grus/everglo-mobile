@@ -8,12 +8,14 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.4.0
+  dropdown_button2: ^2.3.9
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0
   flutter_dynamic_icon: ^2.1.0
   flutter_form_builder: ^9.2.1
   flutter_riverpod: ^2.4.10
+  flutter_svg: ^2.0.10+1
   form_builder_validators: ^9.1.0
   get: 4.6.6
   google_fonts: ^6.1.0
@@ -33,3 +35,28 @@ flutter:
     - assets/images/mail.png
     - assets/images/password.png
     - assets/images/hideEyes.png
+    - assets/images/profileAdiat.jpeg
+    - assets/images/updated.png
+
+    - assets/icons/notificationGreen.svg
+    - assets/icons/greenhouseIcon.svg
+    - assets/icons/dropdownIcon.svg
+    - assets/icons/plantsIcon.svg
+    - assets/icons/rightArrow.svg
+    - assets/icons/totalPolybagIcon.svg
+    - assets/icons/activePolybagIcon.svg
+    - assets/icons/humidityIcon.svg
+    - assets/icons/airTemperatureIcon.svg
+    - assets/icons/blowerControl.svg
+    - assets/icons/heaterControl.svg
+    - assets/icons/waterTankVolume.svg
+    - assets/icons/electricalConductivity.svg
+    - assets/icons/potentialHydrogen.svg
+    - assets/icons/partPerMillion.svg
+    - assets/icons/waterFlowInterval.svg
+    - assets/icons/waterFlowTime.svg
+    - assets/icons/waterFlowToday.svg
+    - assets/icons/flowControl.svg
+    - assets/icons/arrowUp.svg
+
+  
