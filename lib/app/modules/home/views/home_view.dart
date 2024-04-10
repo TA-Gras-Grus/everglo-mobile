@@ -1286,6 +1286,7 @@ class HomeView extends GetView<HomeController> {
         height: 302,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
         ),
         child: Center(
           child: Column(
@@ -1386,6 +1387,7 @@ class HomeView extends GetView<HomeController> {
         height: 398,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
         ),
         child: Center(
           child: Column(
