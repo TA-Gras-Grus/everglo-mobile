@@ -39,6 +39,8 @@ flutter:
     - assets/images/hideEyes.png
     - assets/images/profileAdiat.jpeg
     - assets/images/updated.png
+    - assets/images/chiliPlants.png
+    - assets/images/melonPlants.jpeg
 
     - assets/icons/notificationGreen.svg
     - assets/icons/greenhouseIcon.svg
@@ -61,3 +63,4 @@ flutter:
     - assets/icons/flowControl.svg
     - assets/icons/arrowUp.svg
     - assets/icons/scan.svg
+    - assets/icons/plants.svg
