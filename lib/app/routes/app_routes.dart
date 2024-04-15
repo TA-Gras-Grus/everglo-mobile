@@ -8,6 +8,8 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const FORGET_PASSWORD = _Paths.FORGET_PASSWORD;
   static const POLYBAG_SCANNER = _Paths.POLYBAG_SCANNER;
+  static const POLYBAGS = _Paths.POLYBAGS;
+  static const POLYBAGS_LISTS = _Paths.POLYBAGS + _Paths.POLYBAGS_LISTS;
 }
 
 abstract class _Paths {
@@ -17,4 +19,6 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const FORGET_PASSWORD = '/forget-password';
   static const POLYBAG_SCANNER = '/polybag-scanner';
+  static const POLYBAGS = '/polybags';
+  static const POLYBAGS_LISTS = '/polybags-lists';
 }
