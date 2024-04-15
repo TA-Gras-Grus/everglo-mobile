@@ -64,3 +64,5 @@ flutter:
     - assets/icons/arrowUp.svg
     - assets/icons/scan.svg
     - assets/icons/plants.svg
+    - assets/icons/dayOfPlanted.svg
+    - assets/icons/dayAfterPlant.svg

@@ -1,4 +1,4 @@
-import 'package:everglo_mobile/app/modules/polybags/views/component/list_plants.dart';
+import 'package:everglo_mobile/app/modules/polybags/polybagsPlants/views/component/list_plants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
