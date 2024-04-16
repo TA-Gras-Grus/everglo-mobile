@@ -15,40 +15,6 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leadingWidth: 80,
-      //   backgroundColor: Colors.transparent,
-      //   leading: Padding(
-      //     padding:
-      //         const EdgeInsets.only(left: 20, right: 18, top: 10, bottom: 10),
-      //     child: Container(
-      //       height: 32,
-      //       width: 32,
-      //       decoration: BoxDecoration(
-      //         color: Colors.white,
-      //         borderRadius: BorderRadius.circular(12),
-      //         boxShadow: [
-      //           BoxShadow(
-      //             color: Colors.grey
-      //                 .withOpacity(0.2), // Adjust opacity for shadow intensity
-      //             blurRadius: 10.0, // Adjust blur radius for shadow softness
-      //             spreadRadius: 1.0, // Adjust spread radius for shadow size
-      //           ),
-      //         ],
-      //       ),
-      //       child: IconButton(
-      //         icon: Icon(Icons.arrow_back, color: Colors.black, size: 18),
-      //         onPressed: () => Navigator.pop(Get.context!),
-      //       ),
-      //     ),
-      //   ),
-      //   title: Text('Profile',
-      //       style: GoogleFonts.poppins(
-      //         fontSize: 18,
-      //         fontWeight: FontWeight.w600,
-      //       )),
-      //   centerTitle: true,
-      // ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
