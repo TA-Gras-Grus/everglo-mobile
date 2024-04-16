@@ -15,6 +15,8 @@ import '../modules/polybags/polybagsLists/views/polybagsLists_view.dart';
 import '../modules/polybags/polybagsPlants/bindings/polybagsPlants_binding.dart';
 import '../modules/polybags/polybagsPlants/views/polybagsPlants_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/editProfile/bindings/edit_profile_binding.dart';
+import '../modules/profile/editProfile/views/edit_profile_view.dart';
 import '../modules/profile/profileDetail/bindings/profile_detail_binding.dart';
 import '../modules/profile/profileDetail/views/profile_detail_view.dart';
 import '../modules/profile/views/profile_view.dart';
@@ -26,7 +28,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.PROFILE_DETAIL;
+  static const INITIAL = Routes.EDIT_PROFILE;
 
   static final routes = [
     GetPage(
@@ -75,6 +77,11 @@ class AppPages {
           name: _Paths.PROFILE_DETAIL,
           page: () => const ProfileDetailView(),
           binding: ProfileDetailBinding(),
+        ),
+        GetPage(
+          name: _Paths.EDIT_PROFILE,
+          page: () => EditProfileView(),
+          binding: EditProfileBinding(),
         ),
       ],
     ),

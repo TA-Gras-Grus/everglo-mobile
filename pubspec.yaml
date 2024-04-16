@@ -42,6 +42,7 @@ flutter:
     - assets/images/chiliPlants.png
     - assets/images/melonPlants.jpeg
     - assets/images/polybags.png
+    - assets/images/failed.png
 
     - assets/icons/notificationGreen.svg
     - assets/icons/greenhouseIcon.svg
@@ -72,3 +73,4 @@ flutter:
     - assets/icons/logout.svg
     - assets/icons/help.svg
     - assets/icons/pencil.svg
+    - assets/icons/camera.svg

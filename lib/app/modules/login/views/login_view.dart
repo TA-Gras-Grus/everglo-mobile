@@ -168,6 +168,7 @@ class LoginView extends GetView<LoginController> {
                                 child: FormBuilderTextField(
                                   // key: _emailFieldKey,
                                   name: 'email',
+
                                   focusNode: controller.focusNode,
                                   cursorColor: Color(0xFF00AD7C),
                                   decoration: InputDecoration(
