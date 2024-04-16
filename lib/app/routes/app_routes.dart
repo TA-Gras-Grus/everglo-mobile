@@ -10,6 +10,7 @@ abstract class Routes {
   static const POLYBAG_SCANNER = _Paths.POLYBAG_SCANNER;
   static const POLYBAGS = _Paths.POLYBAGS;
   static const POLYBAGS_LISTS = _Paths.POLYBAGS + _Paths.POLYBAGS_LISTS;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const POLYBAG_SCANNER = '/polybag-scanner';
   static const POLYBAGS = '/polybags';
   static const POLYBAGS_LISTS = '/polybags-lists';
+  static const PROFILE = '/profile';
 }

@@ -10,10 +10,12 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/polybag_scanner/bindings/polybag_scanner_binding.dart';
 import '../modules/polybag_scanner/views/polybag_scanner_view.dart';
-import '../modules/polybags/polybagsPlants/bindings/polybagsPlants_binding.dart';
 import '../modules/polybags/polybagsLists/bindings/polybagsLists_binding.dart';
 import '../modules/polybags/polybagsLists/views/polybagsLists_view.dart';
+import '../modules/polybags/polybagsPlants/bindings/polybagsPlants_binding.dart';
 import '../modules/polybags/polybagsPlants/views/polybagsPlants_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/splashScreen/bindings/splash_screen_binding.dart';
 import '../modules/splashScreen/views/splash_screen_view.dart';
 
@@ -22,7 +24,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.POLYBAGS_LISTS;
+  static const INITIAL = Routes.PROFILE;
 
   static final routes = [
     GetPage(
@@ -61,6 +63,11 @@ class AppPages {
           binding: PolybagsListsBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }
