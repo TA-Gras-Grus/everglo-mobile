@@ -1,23 +1,16 @@
 import 'package:get/get.dart';
+import 'dart:async';
 
 class SplashScreenController extends GetxController {
-  //TODO: Implement SplashScreenController
+  RxBool isLoading = true.obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
+    Timer(const Duration(seconds: 3), () {
+      printInfo(info: 'oke');
+      isLoading.value = false;
+      Get.offAllNamed('/login');
+    });
     super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

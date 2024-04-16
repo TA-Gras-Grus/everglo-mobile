@@ -1,34 +1,38 @@
+import 'dart:async';
+
+import 'package:everglo_mobile/app/data/models/Response.dart';
+import 'package:everglo_mobile/app/data/models/User.dart';
+import 'package:everglo_mobile/app/data/repository/AuthRepository.dart';
+import 'package:everglo_mobile/app/helpers/NotificationSnackbar.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
-  final _formKey = GlobalKey<FormState>();
-  final FocusNode focusNode = FocusNode();
+  final GlobalKey<FormBuilderState> formKey = GlobalKey();
+  Rx<FocusNode> focusNode = FocusNode().obs;
+  RxBool isPasswordHidden = true.obs;
+  Rx<Color> focusedIconColor = const Color(0xFF00AD7C).obs;
+  Rx<Color> unfocusedIconColor = const Color(0xFF8A8D90).obs;
+  Rx<GetStorage> storage = GetStorage().obs;
   RxBool isLoading = false.obs;
-  var isPasswordHidden = true.obs;
-  final focusedIconColor = Color(0xFF00AD7C);
-  final unfocusedIconColor = Color(0xFF8A8D90);
+  RxString email = 'admin@gmail.com'.obs;
+  RxString password = '88888888'.obs;
 
   @override
   void onInit() {
     super.onInit();
-    focusNode.addListener(() {
+    focusNode.value.addListener(() {
       update();
     });
   }
 
   @override
   void dispose() {
-    focusNode.dispose();
+    focusNode.value.dispose();
     super.dispose();
   }
-
-  // @override
-  // void onClose() {
-  //   focusNode.dispose();
-  //   super.onClose();
-  // }
 
   validateEmail(String? email) {
     if (!GetUtils.isEmail(email ?? '')) {
@@ -44,23 +48,34 @@ class LoginController extends GetxController {
     return null;
   }
 
-  Future onLogin() async {
-    if (_formKey.currentState!.validate()) {
+  Future<void> onLogin() async {
+    isLoading.value = true;
+    if (!formKey.currentState!.validate()) {
       Get.snackbar(
-        'Success',
-        'Login Successful',
-        snackPosition: SnackPosition.BOTTOM,
+        'Error',
+        'Login Unsuccessful',
+        snackPosition: SnackPosition.TOP,
         colorText: Colors.white,
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.red,
+        margin: const EdgeInsets.fromLTRB(10, 30, 10, 0),
       );
-      return null;
+    } else {
+      handleLogin().then(
+        (user) => {
+          NotificationSnackbar()
+              .success('Login Successful', 'Welcome ${user.role}'),
+          Get.toNamed('/home')
+        },
+      );
     }
-    Get.snackbar(
-      'Error',
-      'Login Unsuccessful',
-      snackPosition: SnackPosition.BOTTOM,
-      colorText: Colors.white,
-      backgroundColor: Colors.red,
-    );
+    isLoading.value = false;
+  }
+
+  Future<User> handleLogin() async {
+    final response = await AuthRepository().login(email, password);
+    ResponseSuccess result = ResponseSuccess.fromJson(response);
+    User user = User.fromJson(result.data);
+    // storage.value.write('userToken', user.token ?? '');
+    return user;
   }
 }
