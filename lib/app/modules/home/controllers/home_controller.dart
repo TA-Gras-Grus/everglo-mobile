@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
@@ -16,8 +15,11 @@ class HomeController extends GetxController {
   RxBool isHeaterSwitchOn = false.obs;
   RxBool isBlowerSwitchOn = false.obs;
 
+  Rx<GetStorage> storage = GetStorage().obs;
+
   @override
   void onInit() {
+    printInfo(info: storage.value.read('userToken'));
     super.onInit();
   }
 
@@ -80,6 +82,4 @@ class HomeController extends GetxController {
     }
     Navigator.pop(Get.context!);
   }
-
-  void increment() => count.value++;
 }
