@@ -10,10 +10,18 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/polybag_scanner/bindings/polybag_scanner_binding.dart';
 import '../modules/polybag_scanner/views/polybag_scanner_view.dart';
-import '../modules/polybags/polybagsPlants/bindings/polybagsPlants_binding.dart';
 import '../modules/polybags/polybagsLists/bindings/polybagsLists_binding.dart';
 import '../modules/polybags/polybagsLists/views/polybagsLists_view.dart';
+import '../modules/polybags/polybagsPlants/bindings/polybagsPlants_binding.dart';
 import '../modules/polybags/polybagsPlants/views/polybagsPlants_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/changePassword_profile/bindings/change_password_profile_binding.dart';
+import '../modules/profile/changePassword_profile/views/change_password_profile_view.dart';
+import '../modules/profile/editProfile/bindings/edit_profile_binding.dart';
+import '../modules/profile/editProfile/views/edit_profile_view.dart';
+import '../modules/profile/profileDetail/bindings/profile_detail_binding.dart';
+import '../modules/profile/profileDetail/views/profile_detail_view.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/splashScreen/bindings/splash_screen_binding.dart';
 import '../modules/splashScreen/views/splash_screen_view.dart';
 
@@ -59,6 +67,28 @@ class AppPages {
           name: _Paths.POLYBAGS_LISTS,
           page: () => const PolybagsListsView(),
           binding: PolybagsListsBinding(),
+        ),
+      ],
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
+      children: [
+        GetPage(
+          name: _Paths.PROFILE_DETAIL,
+          page: () => const ProfileDetailView(),
+          binding: ProfileDetailBinding(),
+        ),
+        GetPage(
+          name: _Paths.EDIT_PROFILE,
+          page: () => EditProfileView(),
+          binding: EditProfileBinding(),
+        ),
+        GetPage(
+          name: _Paths.CHANGE_PASSWORD_PROFILE,
+          page: () => ChangePasswordProfileView(),
+          binding: ChangePasswordProfileBinding(),
         ),
       ],
     ),
