@@ -24,6 +24,7 @@ dependencies:
   mobile_scanner: ^3.5.5
   zoom_tap_animation: ^1.1.0
   get_storage: ^2.1.1
+  fl_chart: ^0.67.0
 
 dev_dependencies:
   flutter_lints: ^3.0.1
@@ -76,3 +77,5 @@ flutter:
     - assets/icons/help.svg
     - assets/icons/pencil.svg
     - assets/icons/camera.svg
+    - assets/icons/harvest.svg
+    - assets/icons/unharvested.svg

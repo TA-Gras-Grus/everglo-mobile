@@ -10,6 +10,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/polybag_scanner/bindings/polybag_scanner_binding.dart';
 import '../modules/polybag_scanner/views/polybag_scanner_view.dart';
+import '../modules/polybags/polybagsDetail/bindings/polybags_detail_binding.dart';
+import '../modules/polybags/polybagsDetail/views/polybags_detail_view.dart';
 import '../modules/polybags/polybagsLists/bindings/polybagsLists_binding.dart';
 import '../modules/polybags/polybagsLists/views/polybagsLists_view.dart';
 import '../modules/polybags/polybagsPlants/bindings/polybagsPlants_binding.dart';
@@ -30,7 +32,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.SPLASH_SCREEN;
+  static const INITIAL = Routes.POLYBAGS_DETAIL;
 
   static final routes = [
     GetPage(
@@ -67,6 +69,11 @@ class AppPages {
           name: _Paths.POLYBAGS_LISTS,
           page: () => const PolybagsListsView(),
           binding: PolybagsListsBinding(),
+        ),
+        GetPage(
+          name: _Paths.POLYBAGS_DETAIL,
+          page: () => const PolybagsDetailView(),
+          binding: PolybagsDetailBinding(),
         ),
       ],
     ),
