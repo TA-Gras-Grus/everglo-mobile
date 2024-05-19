@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:everglo_mobile/app/data/models/Response.dart';
-import 'package:everglo_mobile/app/helpers/NotificationSnackbar.dart';
+import 'package:everglo_mobile/app/helpers/notification_snackbar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart' as get_dart;
 import 'package:get_storage/get_storage.dart';
