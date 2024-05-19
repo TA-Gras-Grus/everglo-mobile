@@ -82,3 +82,7 @@ flutter:
     - family: EvergloIcon
       fonts:
         - asset: assets/icons/EvergloIcon.ttf
+  fonts:
+    - family: EvergloIcon
+      fonts:
+        - asset: assets/icons/EvergloIcon.ttf
