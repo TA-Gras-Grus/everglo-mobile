@@ -43,7 +43,6 @@ flutter:
     - assets/images/updated.png
     - assets/images/chiliPlants.png
     - assets/images/melonPlants.jpeg
-
     - assets/icons/notificationGreen.svg
     - assets/icons/greenhouseIcon.svg
     - assets/icons/dropdownIcon.svg
@@ -68,3 +67,7 @@ flutter:
     - assets/icons/plants.svg
     - assets/icons/dayOfPlanted.svg
     - assets/icons/dayAfterPlant.svg
+  fonts:
+    - family: EvergloIcon
+      fonts:
+        - asset: assets/icons/EvergloIcon.ttf
