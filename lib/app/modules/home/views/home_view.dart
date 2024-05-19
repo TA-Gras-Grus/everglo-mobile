@@ -1,3 +1,6 @@
+import 'package:everglo_mobile/app/helpers/bottom_navbar.dart';
+import 'package:everglo_mobile/app/helpers/everglo_icon_icons.dart';
+import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,29 +27,29 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: BottomNavigationView(),
-      body: SingleChildScrollView(
-        child: Obx(() {
-          if (controller.isLoading.value) {
-            return Center(
-              child: Text("Loading"),
-            );
-          } else {
-            return Column(
-              children: [
-                _userInfo(),
-                _greenhouseOption(context),
-                _plantsButton(),
-                _greenHouseStatistic(),
-                _greenHouseController(),
-                _waterTankStatistic(),
-                _dripIrrigationControl(context),
-              ],
-            );
-          }
-        }),
-      ),
-    );
+        // bottomNavigationBar: BottomNavigationView(),
+        body: SingleChildScrollView(
+          child: Obx(() {
+            if (controller.isLoading.value) {
+              return Center(
+                child: Text("Loading"),
+              );
+            } else {
+              return Column(
+                children: [
+                  _userInfo(),
+                  _greenhouseOption(context),
+                  _plantsButton(),
+                  _greenHouseStatistic(),
+                  _greenHouseController(),
+                  _waterTankStatistic(),
+                  _dripIrrigationControl(context),
+                ],
+              );
+            }
+          }),
+        ),
+        bottomNavigationBar: const BottomNavbar());
   }
 
   Widget _userInfo() => Padding(

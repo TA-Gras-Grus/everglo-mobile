@@ -1,4 +1,4 @@
-import 'package:everglo_mobile/app/helpers/DioInterceptor.dart';
+import 'package:everglo_mobile/app/helpers/dio_interceptor.dart';
 import 'package:get/get.dart';
 
 class AuthRepository {

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:everglo_mobile/app/data/models/Response.dart';
 import 'package:everglo_mobile/app/data/models/User.dart';
 import 'package:everglo_mobile/app/data/repository/AuthRepository.dart';
-import 'package:everglo_mobile/app/helpers/NotificationSnackbar.dart';
+import 'package:everglo_mobile/app/helpers/notification_snackbar.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +75,7 @@ class LoginController extends GetxController {
     final response = await AuthRepository().login(email, password);
     ResponseSuccess result = ResponseSuccess.fromJson(response);
     User user = User.fromJson(result.data);
-    // storage.value.write('userToken', user.token ?? '');
+    storage.value.write('userToken', user.token ?? '');
     return user;
   }
 }

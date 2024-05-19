@@ -78,4 +78,7 @@ flutter:
     - assets/icons/pencil.svg
     - assets/icons/camera.svg
     - assets/icons/harvest.svg
-    - assets/icons/unharvested.svg
+    - assets/icons/unharvested.svg  fonts:
+    - family: EvergloIcon
+      fonts:
+        - asset: assets/icons/EvergloIcon.ttf
