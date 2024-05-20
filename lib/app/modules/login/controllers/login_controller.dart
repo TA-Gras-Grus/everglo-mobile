@@ -17,7 +17,7 @@ class LoginController extends GetxController {
   Rx<Color> unfocusedIconColor = const Color(0xFF8A8D90).obs;
   Rx<GetStorage> storage = GetStorage().obs;
   RxBool isLoading = false.obs;
-  RxString email = 'admin@gmail.com'.obs;
+  RxString email = 'owner@gmail.com'.obs;
   RxString password = '88888888'.obs;
 
   @override
@@ -63,8 +63,8 @@ class LoginController extends GetxController {
       handleLogin().then(
         (user) => {
           NotificationSnackbar()
-              .success('Login Successful', 'Welcome ${user.role}'),
-          Get.toNamed('/home')
+              .success('Login Successful', 'Welcome ${user.firstName}'),
+          Get.offAllNamed('/home')
         },
       );
     }
@@ -76,6 +76,7 @@ class LoginController extends GetxController {
     ResponseSuccess result = ResponseSuccess.fromJson(response);
     User user = User.fromJson(result.data);
     storage.value.write('userToken', user.token ?? '');
+    storage.value.write('userData', result.data);
     return user;
   }
 }

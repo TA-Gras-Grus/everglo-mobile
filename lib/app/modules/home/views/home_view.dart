@@ -27,29 +27,32 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // bottomNavigationBar: BottomNavigationView(),
-        body: SingleChildScrollView(
-          child: Obx(() {
-            if (controller.isLoading.value) {
-              return Center(
-                child: Text("Loading"),
-              );
-            } else {
-              return Column(
-                children: [
-                  _userInfo(),
-                  _greenhouseOption(context),
-                  _plantsButton(),
-                  _greenHouseStatistic(),
-                  _greenHouseController(),
-                  _waterTankStatistic(),
-                  _dripIrrigationControl(context),
-                ],
-              );
-            }
-          }),
-        ),
-        bottomNavigationBar: const BottomNavbar());
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(
+              child: Text("Loading"),
+            );
+          } else {
+            return Column(
+              children: [
+                _userInfo(),
+                _greenhouseOption(context),
+                _plantsButton(),
+                _greenHouseStatistic(),
+                _greenHouseController(),
+                _waterTankStatistic(),
+                _dripIrrigationControl(context),
+              ],
+            );
+          }
+        }),
+      ),
+      bottomNavigationBar: const BottomNavbar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: ScanButton(),
+    );
   }
 
   Widget _userInfo() => Padding(
@@ -72,13 +75,12 @@ class HomeView extends GetView<HomeController> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(60 / 2),
                     child: Image.asset(
-                      'assets/images/profileAdiat.jpeg',
+                      'assets/images/bagas.jpg',
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 const SizedBox(height: 10),
-
                 //Info
                 Padding(
                   // Add padding here
@@ -96,11 +98,11 @@ class HomeView extends GetView<HomeController> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        "Adiat Rahman",
+                        controller.user.value.firstName ?? '',
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
-                          color: Color(0xFF000000),
+                          color: const Color(0xFF000000),
                         ),
                       ),
                     ],
@@ -117,7 +119,7 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget _greenhouseOption(BuildContext context) => Padding(
-        padding: EdgeInsets.only(top: 0, left: 24),
+        padding: const EdgeInsets.only(top: 0, left: 24),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -128,7 +130,7 @@ class HomeView extends GetView<HomeController> {
                   child: Container(
                     height: 56,
                     width: 256,
-                    padding: EdgeInsets.only(left: 16, right: 20),
+                    padding: const EdgeInsets.only(left: 16, right: 20),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(width: 1.0, color: Colors.transparent),
@@ -155,7 +157,7 @@ class HomeView extends GetView<HomeController> {
                               children: [
                                 SvgPicture.asset(
                                     'assets/icons/greenhouseIcon.svg'),
-                                SizedBox(width: 15),
+                                const SizedBox(width: 15),
                                 Text(listGreenhouse[0]),
                               ],
                             ),
@@ -169,7 +171,7 @@ class HomeView extends GetView<HomeController> {
                               children: [
                                 SvgPicture.asset(
                                     'assets/icons/greenhouseIcon.svg'),
-                                SizedBox(width: 15),
+                                const SizedBox(width: 15),
                                 Text(listGreenhouse[1]),
                               ],
                             ),
@@ -183,7 +185,7 @@ class HomeView extends GetView<HomeController> {
                               children: [
                                 SvgPicture.asset(
                                     'assets/icons/greenhouseIcon.svg'),
-                                SizedBox(width: 15),
+                                const SizedBox(width: 15),
                                 Text(listGreenhouse[2]),
                               ],
                             ),
@@ -197,7 +199,7 @@ class HomeView extends GetView<HomeController> {
                               children: [
                                 SvgPicture.asset(
                                     'assets/icons/greenhouseIcon.svg'),
-                                SizedBox(width: 15),
+                                const SizedBox(width: 15),
                                 Text(
                                   listGreenhouse[3],
                                 ),
@@ -213,7 +215,7 @@ class HomeView extends GetView<HomeController> {
                               children: [
                                 SvgPicture.asset(
                                     'assets/icons/greenhouseIcon.svg'),
-                                SizedBox(width: 15),
+                                const SizedBox(width: 15),
                                 Text(listGreenhouse[4]),
                               ],
                             ),
@@ -264,7 +266,7 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ],
                     ),
-                    child: Center(child: Icon(Icons.add)),
+                    child: const Center(child: Icon(Icons.add)),
                   ),
                 ),
               ],
@@ -274,7 +276,7 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget _plantsButton() => Padding(
-        padding: EdgeInsets.only(top: 16, left: 24, bottom: 16),
+        padding: const EdgeInsets.only(top: 16, left: 24, bottom: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -295,7 +297,7 @@ class HomeView extends GetView<HomeController> {
                     SvgPicture.asset(
                       'assets/icons/plantsIcon.svg',
                     ),
-                    SizedBox(width: 13),
+                    const SizedBox(width: 13),
                     Text(
                       "Your Plants",
                       style: GoogleFonts.poppins(
@@ -304,7 +306,7 @@ class HomeView extends GetView<HomeController> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(width: 150),
+                    const SizedBox(width: 150),
                     SvgPicture.asset(
                       'assets/icons/rightArrow.svg',
                       color: Colors.white,
@@ -335,7 +337,7 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget _greenHouseStatistic() => Padding(
-        padding: EdgeInsets.only(left: 24),
+        padding: const EdgeInsets.only(left: 24),
         child: Column(
           children: [
             Row(
@@ -349,13 +351,13 @@ class HomeView extends GetView<HomeController> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -377,16 +379,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 51,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFFDF1E2),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFFDF1E2),
                             child: SvgPicture.asset(
                                 'assets/icons/totalPolybagIcon.svg')),
                       ),
-                      SizedBox(width: 13),
+                      const SizedBox(width: 13),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '300',
                             style: GoogleFonts.poppins(
@@ -405,11 +407,11 @@ class HomeView extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(11),
+                  padding: const EdgeInsets.all(11),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -431,16 +433,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 51,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFE5F7ED),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFE5F7ED),
                             child: SvgPicture.asset(
                                 'assets/icons/activePolybagIcon.svg')),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '150',
                             style: GoogleFonts.poppins(
@@ -461,13 +463,13 @@ class HomeView extends GetView<HomeController> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -489,16 +491,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 51,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFFBE1EC),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFFBE1EC),
                             child: SvgPicture.asset(
                                 'assets/icons/airTemperatureIcon.svg')),
                       ),
-                      SizedBox(width: 13),
+                      const SizedBox(width: 13),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '30° C',
                             style: GoogleFonts.poppins(
@@ -517,11 +519,11 @@ class HomeView extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -543,16 +545,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 51,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFFDF1E2),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFFDF1E2),
                             child: SvgPicture.asset(
                                 'assets/icons/humidityIcon.svg')),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '50% RH',
                             style: GoogleFonts.poppins(
@@ -573,18 +575,18 @@ class HomeView extends GetView<HomeController> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
           ],
         ),
       );
 
   Widget _greenHouseController() => Padding(
-        padding: EdgeInsets.only(left: 24, bottom: 16),
+        padding: const EdgeInsets.only(left: 24, bottom: 16),
         child: Row(children: [
           Container(
             width: 163,
             height: 90,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
@@ -606,7 +608,7 @@ class HomeView extends GetView<HomeController> {
                       borderRadius: BorderRadius.circular(20),
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [
                               Color(0xFFB7E4C7),
                               Color(0xFFFFFFFF),
@@ -617,7 +619,7 @@ class HomeView extends GetView<HomeController> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           height: 40,
                           width: 40,
                           child: SvgPicture.asset(
@@ -645,7 +647,7 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ],
                 ),
-                SizedBox(height: 7),
+                const SizedBox(height: 7),
                 Row(
                   children: [
                     Text(
@@ -660,11 +662,11 @@ class HomeView extends GetView<HomeController> {
               ],
             ),
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Container(
             width: 163,
             height: 90,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
@@ -686,7 +688,7 @@ class HomeView extends GetView<HomeController> {
                       borderRadius: BorderRadius.circular(20),
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [
                               Color(0xFFB7E4C7),
                               Color(0xFFFFFFFF),
@@ -697,7 +699,7 @@ class HomeView extends GetView<HomeController> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           height: 40,
                           width: 40,
                           child: SvgPicture.asset(
@@ -725,7 +727,7 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ],
                 ),
-                SizedBox(height: 7),
+                const SizedBox(height: 7),
                 Row(
                   children: [
                     Text(
@@ -744,7 +746,7 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget _waterTankStatistic() => Padding(
-        padding: EdgeInsets.only(left: 24, bottom: 16),
+        padding: const EdgeInsets.only(left: 24, bottom: 16),
         child: Column(
           children: [
             Row(
@@ -758,13 +760,13 @@ class HomeView extends GetView<HomeController> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -786,16 +788,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 51,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFE4F8FB),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFE4F8FB),
                             child: SvgPicture.asset(
                                 'assets/icons/waterTankVolume.svg')),
                       ),
-                      SizedBox(width: 9),
+                      const SizedBox(width: 9),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '216 L',
                             style: GoogleFonts.poppins(
@@ -814,11 +816,11 @@ class HomeView extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(11),
+                  padding: const EdgeInsets.all(11),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -840,16 +842,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 49,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFFDF1E2),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFFDF1E2),
                             child: SvgPicture.asset(
                                 'assets/icons/electricalConductivity.svg')),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '1.2 EC',
                             style: GoogleFonts.poppins(
@@ -870,13 +872,13 @@ class HomeView extends GetView<HomeController> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -898,16 +900,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 51,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFFBE1EC),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFFBE1EC),
                             child: SvgPicture.asset(
                                 'assets/icons/potentialHydrogen.svg')),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '7.26 pH',
                             style: GoogleFonts.poppins(
@@ -926,11 +928,11 @@ class HomeView extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -952,16 +954,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 51,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFEFECFD),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFEFECFD),
                             child: SvgPicture.asset(
                                 'assets/icons/partPerMillion.svg')),
                       ),
-                      SizedBox(width: 6),
+                      const SizedBox(width: 6),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '1200 PPM',
                             style: GoogleFonts.poppins(
@@ -987,7 +989,7 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget _dripIrrigationControl(BuildContext context) => Padding(
-        padding: EdgeInsets.only(left: 24),
+        padding: const EdgeInsets.only(left: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1006,23 +1008,24 @@ class HomeView extends GetView<HomeController> {
                 IconButton(
                     onPressed: () {
                       showModalBottomSheet<void>(
+                        isScrollControlled: true,
                         context: context,
                         builder: _setDripBottomSheet,
                       );
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.settings,
                       color: Colors.black,
                     )),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -1044,16 +1047,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 51,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFE4F8FB),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFE4F8FB),
                             child: SvgPicture.asset(
                                 'assets/icons/waterFlowInterval.svg')),
                       ),
-                      SizedBox(width: 9),
+                      const SizedBox(width: 9),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '180 minutes',
                             style: GoogleFonts.poppins(
@@ -1072,11 +1075,11 @@ class HomeView extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Container(
                   width: 163,
                   height: 66,
-                  padding: EdgeInsets.all(11),
+                  padding: const EdgeInsets.all(11),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -1098,16 +1101,16 @@ class HomeView extends GetView<HomeController> {
                         child: Container(
                             height: 50,
                             width: 49,
-                            padding: EdgeInsets.all(11),
-                            color: Color(0xFFFBE1EC),
+                            padding: const EdgeInsets.all(11),
+                            color: const Color(0xFFFBE1EC),
                             child: SvgPicture.asset(
                                 'assets/icons/waterFlowTime.svg')),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             '2 minutes',
                             style: GoogleFonts.poppins(
@@ -1128,7 +1131,7 @@ class HomeView extends GetView<HomeController> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Column(
@@ -1141,7 +1144,7 @@ class HomeView extends GetView<HomeController> {
                         Container(
                           width: 163,
                           height: 90,
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
@@ -1163,7 +1166,7 @@ class HomeView extends GetView<HomeController> {
                                     borderRadius: BorderRadius.circular(20),
                                     child: DecoratedBox(
                                       decoration: BoxDecoration(
-                                        gradient: LinearGradient(
+                                        gradient: const LinearGradient(
                                           colors: [
                                             Color(0xFFB7E4C7),
                                             Color(0xFFFFFFFF),
@@ -1174,7 +1177,7 @@ class HomeView extends GetView<HomeController> {
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: Container(
-                                        padding: EdgeInsets.all(10),
+                                        padding: const EdgeInsets.all(10),
                                         height: 40,
                                         width: 40,
                                         child: SvgPicture.asset(
@@ -1208,7 +1211,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 7),
+                              const SizedBox(height: 7),
                               Row(
                                 children: [
                                   Text(
@@ -1223,11 +1226,11 @@ class HomeView extends GetView<HomeController> {
                             ],
                           ),
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Container(
                           width: 163,
                           height: 66,
-                          padding: EdgeInsets.all(11),
+                          padding: const EdgeInsets.all(11),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
@@ -1246,17 +1249,17 @@ class HomeView extends GetView<HomeController> {
                                 child: Container(
                                   height: 50,
                                   width: 49,
-                                  padding: EdgeInsets.all(11),
-                                  color: Color(0xFFFDF1E2),
+                                  padding: const EdgeInsets.all(11),
+                                  color: const Color(0xFFFDF1E2),
                                   child: SvgPicture.asset(
                                       'assets/icons/waterFlowToday.svg'),
                                 ),
                               ),
-                              SizedBox(width: 6),
+                              const SizedBox(width: 6),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Text(
                                     '4 times',
                                     style: GoogleFonts.poppins(
@@ -1297,7 +1300,7 @@ class HomeView extends GetView<HomeController> {
               Container(
                 height: 5,
                 width: 60,
-                margin: EdgeInsets.only(top: 20),
+                margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(100),
@@ -1306,7 +1309,7 @@ class HomeView extends GetView<HomeController> {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 35, right: 30, top: 24, bottom: 24),
                     child: Text(
                       'Are you sure want to turn on drip\nirrigation system?',
@@ -1322,7 +1325,8 @@ class HomeView extends GetView<HomeController> {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 35, right: 30, bottom: 28),
+                    padding:
+                        const EdgeInsets.only(left: 35, right: 30, bottom: 28),
                     child: Text(
                       'The drip irrigation system will be turned on\nonce, click yes if you want to continue.',
                       textAlign: TextAlign.center,
@@ -1339,11 +1343,11 @@ class HomeView extends GetView<HomeController> {
                   MaterialButton(
                     onPressed: () => controller.onFlowSwitch(false),
                     child: Container(
-                      margin: EdgeInsets.only(left: 14, right: 5),
+                      margin: const EdgeInsets.only(left: 14, right: 5),
                       height: 54,
                       width: 142,
                       decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xFFFB9A99)),
+                        border: Border.all(color: const Color(0xFFFB9A99)),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(
@@ -1352,7 +1356,7 @@ class HomeView extends GetView<HomeController> {
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFFFB9A99),
+                            color: const Color(0xFFFB9A99),
                           ),
                         ),
                       ),
@@ -1364,7 +1368,7 @@ class HomeView extends GetView<HomeController> {
                       height: 54,
                       width: 142,
                       decoration: BoxDecoration(
-                        color: Color(0xFF52B788),
+                        color: const Color(0xFF52B788),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(
@@ -1386,19 +1390,20 @@ class HomeView extends GetView<HomeController> {
         ),
       );
 
-  Widget _setDripBottomSheet(BuildContext context) => Container(
-        height: 398,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
-        ),
-        child: Center(
+  Widget _setDripBottomSheet(BuildContext context) => SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+          ),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
             children: [
               Container(
                 height: 5,
                 width: 60,
-                margin: EdgeInsets.only(top: 20),
+                margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(100),
@@ -1407,7 +1412,8 @@ class HomeView extends GetView<HomeController> {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 100, top: 24, bottom: 24),
+                    padding:
+                        const EdgeInsets.only(left: 100, top: 24, bottom: 24),
                     child: Text(
                       'Drip Irrigation Setting',
                       style: GoogleFonts.poppins(
@@ -1423,7 +1429,7 @@ class HomeView extends GetView<HomeController> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(right: 190.0),
+                      padding: const EdgeInsets.only(right: 190.0),
                       child: Text(
                         "Water Flow Interval",
                         style: GoogleFonts.poppins(
@@ -1433,26 +1439,26 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     SizedBox(
                       width: 327,
                       height: 50,
                       child: FormBuilderTextField(
                         // key: _flowInterval,
                         name: 'waterFlowInterval',
-                        cursorColor: Color(0xFF00AD7C),
+                        cursorColor: const Color(0xFF00AD7C),
                         decoration: InputDecoration(
                           errorStyle: const TextStyle(fontSize: 0.01),
                           hintText: "Enter the Interval",
                           hintStyle: GoogleFonts.poppins(
                             fontSize: 14,
-                            color: Color(0xFFABB3BB),
+                            color: const Color(0xFFABB3BB),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.only(
+                          suffixIcon: const Padding(
+                            padding: EdgeInsets.only(
                                 left: 14, right: 20, top: 14, bottom: 14),
                             child: Text(
                               'minutes',
@@ -1464,22 +1470,23 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                           prefixIcon: Padding(
-                            padding: EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(15.0),
                             child: SvgPicture.asset(
                                 'assets/icons/waterFlowInterval.svg',
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                     Color(0xFF00AD7C), BlendMode.srcIn)),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFF00AD7C)),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFF00AD7C)),
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         validator: null,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Padding(
-                      padding: EdgeInsets.only(right: 190.0),
+                      padding: const EdgeInsets.only(right: 190.0),
                       child: Text(
                         "Water Flow Time",
                         style: GoogleFonts.poppins(
@@ -1489,26 +1496,26 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     SizedBox(
                       width: 327,
                       height: 50,
                       child: FormBuilderTextField(
                         // key: _flowTime,
                         name: 'waterFlowTime',
-                        cursorColor: Color(0xFF00AD7C),
+                        cursorColor: const Color(0xFF00AD7C),
                         decoration: InputDecoration(
                           errorStyle: const TextStyle(fontSize: 0.01),
                           hintText: "Enter the time",
                           hintStyle: GoogleFonts.poppins(
                             fontSize: 14,
-                            color: Color(0xFFABB3BB),
+                            color: const Color(0xFFABB3BB),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.only(
+                          suffixIcon: const Padding(
+                            padding: EdgeInsets.only(
                                 left: 14, right: 20, top: 14, bottom: 14),
                             child: Text(
                               'minutes',
@@ -1520,14 +1527,15 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                           prefixIcon: Padding(
-                            padding: EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(15.0),
                             child: SvgPicture.asset(
                                 'assets/icons/waterFlowTime.svg',
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                     Color(0xFF00AD7C), BlendMode.srcIn)),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFF00AD7C)),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFF00AD7C)),
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         validator: null,
@@ -1536,17 +1544,17 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Row(
                 children: [
                   MaterialButton(
                     onPressed: () => controller.onSetDrip(false),
                     child: Container(
-                      margin: EdgeInsets.only(left: 14, right: 14),
+                      margin: const EdgeInsets.only(left: 14, right: 14),
                       height: 54,
                       width: 142,
                       decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xFFFB9A99)),
+                        border: Border.all(color: const Color(0xFFFB9A99)),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(
@@ -1555,7 +1563,7 @@ class HomeView extends GetView<HomeController> {
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFFFB9A99),
+                            color: const Color(0xFFFB9A99),
                           ),
                         ),
                       ),
@@ -1575,7 +1583,7 @@ class HomeView extends GetView<HomeController> {
                       height: 54,
                       width: 142,
                       decoration: BoxDecoration(
-                        color: Color(0xFF52B788),
+                        color: const Color(0xFF52B788),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(
@@ -1592,6 +1600,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ],
               ),
+              const SizedBox(height: 40),
             ],
           ),
         ),
@@ -1605,7 +1614,7 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 40, bottom: 12),
+                margin: const EdgeInsets.only(top: 40, bottom: 12),
                 width: 132,
                 height: 132,
                 decoration: BoxDecoration(
@@ -1614,7 +1623,7 @@ class HomeView extends GetView<HomeController> {
                 child: Image.asset('assets/images/updated.png'),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 12),
+                padding: const EdgeInsets.only(top: 10, bottom: 12),
                 child: Text(
                   'Drip Irrigation Updated',
                   style: GoogleFonts.poppins(
@@ -1624,25 +1633,25 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 35, right: 30, bottom: 24),
+                padding: const EdgeInsets.only(left: 35, right: 30, bottom: 24),
                 child: Text(
                   'Your drip irrigation setting  has been successfully updated, changes are reflected real time.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFF838FA0),
+                    color: const Color(0xFF838FA0),
                   ),
                 ),
               ),
               MaterialButton(
                 onPressed: () => Navigator.pop(Get.context!),
                 child: Container(
-                  margin: EdgeInsets.only(left: 14, right: 5),
+                  margin: const EdgeInsets.only(left: 14, right: 5),
                   height: 50,
                   width: 327,
                   decoration: BoxDecoration(
-                    color: Color(0xFF52B788),
+                    color: const Color(0xFF52B788),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Center(
@@ -1674,7 +1683,7 @@ class HomeView extends GetView<HomeController> {
               Container(
                 height: 5,
                 width: 60,
-                margin: EdgeInsets.only(top: 20),
+                margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(100),
@@ -1683,7 +1692,8 @@ class HomeView extends GetView<HomeController> {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 105, top: 24, bottom: 40),
+                    padding:
+                        const EdgeInsets.only(left: 105, top: 24, bottom: 40),
                     child: Text(
                       'Create Greenhouse',
                       style: GoogleFonts.poppins(
@@ -1699,7 +1709,7 @@ class HomeView extends GetView<HomeController> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(right: 190.0),
+                      padding: const EdgeInsets.only(right: 190.0),
                       child: Text(
                         "Greenhouse Name",
                         style: GoogleFonts.poppins(
@@ -1709,33 +1719,34 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     SizedBox(
                       width: 327,
                       height: 50,
                       child: FormBuilderTextField(
                         // key: _greenhouseName,
                         name: 'greenhouseName',
-                        cursorColor: Color(0xFF00AD7C),
+                        cursorColor: const Color(0xFF00AD7C),
                         decoration: InputDecoration(
                           errorStyle: const TextStyle(fontSize: 0.01),
                           hintText: "Enter greenhouse name",
                           hintStyle: GoogleFonts.poppins(
                             fontSize: 14,
-                            color: Color(0xFFABB3BB),
+                            color: const Color(0xFFABB3BB),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                           prefixIcon: Padding(
-                            padding: EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(15.0),
                             child: SvgPicture.asset(
                                 'assets/icons/greenhouseIcon.svg',
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                     Color(0xFF00AD7C), BlendMode.srcIn)),
                           ),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFF00AD7C)),
+                              borderSide:
+                                  const BorderSide(color: Color(0xFF00AD7C)),
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         validator: null,
@@ -1744,17 +1755,17 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Row(
                 children: [
                   MaterialButton(
                     onPressed: () => controller.onCreateGreenhouse(false),
                     child: Container(
-                      margin: EdgeInsets.only(left: 14, right: 14),
+                      margin: const EdgeInsets.only(left: 14, right: 14),
                       height: 54,
                       width: 142,
                       decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xFFFB9A99)),
+                        border: Border.all(color: const Color(0xFFFB9A99)),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(
@@ -1763,7 +1774,7 @@ class HomeView extends GetView<HomeController> {
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFFFB9A99),
+                            color: const Color(0xFFFB9A99),
                           ),
                         ),
                       ),
@@ -1780,7 +1791,7 @@ class HomeView extends GetView<HomeController> {
                       height: 54,
                       width: 142,
                       decoration: BoxDecoration(
-                        color: Color(0xFF52B788),
+                        color: const Color(0xFF52B788),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(

@@ -46,7 +46,7 @@ flutter:
     - assets/images/melonPlants.jpeg
     - assets/images/polybags.png
     - assets/images/failed.png
-
+    - assets/images/bagas.jpg
     - assets/icons/notificationGreen.svg
     - assets/icons/greenhouseIcon.svg
     - assets/icons/dropdownIcon.svg
@@ -78,10 +78,8 @@ flutter:
     - assets/icons/pencil.svg
     - assets/icons/camera.svg
     - assets/icons/harvest.svg
-    - assets/icons/unharvested.svg  fonts:
-    - family: EvergloIcon
-      fonts:
-        - asset: assets/icons/EvergloIcon.ttf
+    - assets/icons/unharvested.svg
+
   fonts:
     - family: EvergloIcon
       fonts:

@@ -1,8 +1,9 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
+import 'package:everglo_mobile/app/helpers/bottom_navbar.dart';
+import 'package:everglo_mobile/app/helpers/global_controller.dart';
+import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -11,7 +12,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  final GlobalController globalController = Get.find();
+  ProfileView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,7 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 65),
+                      padding: const EdgeInsets.only(top: 65),
                       child: Column(
                         children: [
                           Row(
@@ -62,52 +64,41 @@ class ProfileView extends GetView<ProfileController> {
                               )
                             ],
                           ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 150, top: 20),
-                                child: Container(
-                                  height: 90,
-                                  width: 90,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(60),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(
-                                              0.2), // Adjust opacity for shadow intensity
-                                          blurRadius:
-                                              10.0, // Adjust blur radius for shadow softness
-                                          spreadRadius:
-                                              1.0, // Adjust spread radius for shadow size
-                                        ),
-                                      ]),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(60),
-                                    child: Image.asset(
-                                      'assets/images/profileAdiat.jpeg',
-                                      fit: BoxFit.cover,
+                          Center(
+                            child: Container(
+                              height: 90,
+                              width: 90,
+                              margin: const EdgeInsets.symmetric(vertical: 20),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(60),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(
+                                          0.2), // Adjust opacity for shadow intensity
+                                      blurRadius:
+                                          10.0, // Adjust blur radius for shadow softness
+                                      spreadRadius:
+                                          1.0, // Adjust spread radius for shadow size
                                     ),
-                                  ),
+                                  ]),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(60),
+                                child: Image.asset(
+                                  'assets/images/profileAdiat.jpeg',
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, left: 120),
-                                child: Text(
-                                  'Adiat Rahman',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
-                            ],
+                          Center(
+                            child: Text(
+                              '${globalController.user.value.firstName} ${globalController.user.value.lastName}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                           Row(
                             children: [
@@ -134,7 +125,7 @@ class ProfileView extends GetView<ProfileController> {
                                             const EdgeInsets.only(left: 10),
                                         child: Center(
                                           child: Text(
-                                            'User',
+                                            '${globalController.user.value.role}',
                                             style: GoogleFonts.poppins(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w400,
@@ -154,214 +145,99 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 361,
-                    height: 67,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
-                      ),
-                      border: Border(
-                          bottom:
-                              BorderSide(color: Color(0xFFF0F0FA), width: 1.5)),
-                      color: Colors.white,
+                const SizedBox(height: 30),
+                _profileNavigation(
+                    'top',
+                    Icon(
+                      Icons.person_2_outlined,
+                      color: UiColor().primary,
                     ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 15),
-                        Container(
-                          height: 38,
-                          width: 38,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFFD8F2EA),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SvgPicture.asset(
-                              'assets/icons/profileIcon.svg',
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Text(
-                          'Profile Detail',
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(width: 175),
-                        SvgPicture.asset(
-                          'assets/icons/rightArrow.svg',
-                          color: Color(0xFFCFCFD6),
-                          height: 12,
-                          width: 12,
-                        ),
-                      ],
+                    const Color(0xFFD8F2EA),
+                    'Profile',
+                    () => Get.toNamed('/profile/profile-detail')),
+                _profileNavigation(
+                    'bottom',
+                    Icon(
+                      Icons.lock_outline_rounded,
+                      color: UiColor().primary,
                     ),
-                  ),
-                ),
-                SizedBox(height: 0),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 361,
-                    height: 67,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        bottomRight: Radius.circular(12),
-                      ),
-                      color: Colors.white,
+                    const Color(0xFFD8F2EA),
+                    'Change Password',
+                    () => Get.toNamed('/profile/change-password-profile')),
+                const SizedBox(height: 20),
+                _profileNavigation(
+                    'center',
+                    Icon(
+                      Icons.logout_outlined,
+                      color: UiColor().danger,
                     ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 15),
-                        Container(
-                          height: 38,
-                          width: 38,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFFD8F2EA),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(9.0),
-                            child: SvgPicture.asset(
-                              'assets/icons/password.svg',
-                              color: Color(0xFF52B788),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Text(
-                          'Change Password',
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(width: 140),
-                        SvgPicture.asset(
-                          'assets/icons/rightArrow.svg',
-                          color: Color(0xFFCFCFD6),
-                          height: 12,
-                          width: 12,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 361,
-                    height: 67,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
-                      ),
-                      border: Border(
-                          bottom:
-                              BorderSide(color: Color(0xFFF0F0FA), width: 1.5)),
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 15),
-                        Container(
-                          height: 38,
-                          width: 38,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFFFDE1DB),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: SvgPicture.asset(
-                              'assets/icons/logout.svg',
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Text(
-                          'Logout',
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(width: 210),
-                        SvgPicture.asset(
-                          'assets/icons/rightArrow.svg',
-                          color: Color(0xFFCFCFD6),
-                          height: 12,
-                          width: 12,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: 0),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 361,
-                    height: 67,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        bottomRight: Radius.circular(12),
-                      ),
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 15),
-                        Container(
-                          height: 38,
-                          width: 38,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(0xFFE8DAFC),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(9.0),
-                            child: SvgPicture.asset(
-                              'assets/icons/help.svg',
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        Text(
-                          'Help',
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(width: 225),
-                        SvgPicture.asset(
-                          'assets/icons/rightArrow.svg',
-                          color: Color(0xFFCFCFD6),
-                          height: 12,
-                          width: 12,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                    const Color(0xFFFDE1DB),
+                    'Logout',
+                    () => controller.handleLogout()),
               ],
             ),
           );
         }
       }),
+      bottomNavigationBar: const BottomNavbar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: ScanButton(),
+    );
+  }
+
+  Widget _profileNavigation(String type, Icon icon, Color scheme, String label,
+      void Function()? onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 361,
+        height: 67,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(type != 'bottom' ? 12 : 0),
+            topRight: Radius.circular(type != 'bottom' ? 12 : 0),
+            bottomLeft: Radius.circular(type != 'top' ? 12 : 0),
+            bottomRight: Radius.circular(type != 'top' ? 12 : 0),
+          ),
+          border: const Border(
+              bottom: BorderSide(color: Color(0xFFF0F0FA), width: 1.5)),
+          color: Colors.white,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: 38,
+                  width: 38,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: scheme,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: icon,
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Text(
+                  label,
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            const Icon(
+              Icons.chevron_right,
+              color: Colors.grey,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

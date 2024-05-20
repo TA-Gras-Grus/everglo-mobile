@@ -32,7 +32,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.POLYBAGS_DETAIL;
+  static const INITIAL = Routes.SPLASH_SCREEN;
 
   static final routes = [
     GetPage(
@@ -79,12 +79,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
       children: [
         GetPage(
           name: _Paths.PROFILE_DETAIL,
-          page: () => const ProfileDetailView(),
+          page: () => ProfileDetailView(),
           binding: ProfileDetailBinding(),
         ),
         GetPage(
