@@ -56,6 +56,28 @@ class ApiClient {
       throw DioException(requestOptions: RequestOptions());
     }
   }
+
+  Future<Response> patch(String pathUrl,
+      {Map<String, dynamic>? data, bool isAuth = true}) async {
+    try {
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers['Accept'] = 'application/json';
+      if (isAuth) {
+        dio.options.headers['Authorization'] = "Bearer $token";
+      }
+      dio.options.connectTimeout = Duration(seconds: 25000);
+      dio.options.sendTimeout = Duration(seconds: 25000);
+      dio.options.receiveTimeout = Duration(seconds: 25000);
+      dio.interceptors.clear();
+      dio.interceptors.add(DioInterceptor(dio));
+
+      return data != null
+          ? await dio.patch(baseUrl + pathUrl, data: data)
+          : await dio.patch(baseUrl + pathUrl);
+    } on DioException {
+      throw DioException(requestOptions: RequestOptions());
+    }
+  }
 }
 
 class DioInterceptor extends Interceptor {

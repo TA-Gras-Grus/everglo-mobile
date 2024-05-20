@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -9,8 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../controllers/edit_profile_controller.dart';
 
 class EditProfileView extends GetView<EditProfileController> {
-  final _formKey = GlobalKey<FormBuilderState>();
-  EditProfileView({Key? key}) : super(key: key);
+  const EditProfileView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +34,7 @@ class EditProfileView extends GetView<EditProfileController> {
               ],
             ),
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black, size: 18),
+              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 18),
               onPressed: () => Navigator.pop(Get.context!),
             ),
           ),
@@ -82,7 +80,7 @@ class EditProfileView extends GetView<EditProfileController> {
                                         1.0, // Adjust spread radius for shadow size
                                   ),
                                 ],
-                                image: DecorationImage(
+                                image: const DecorationImage(
                                     image: AssetImage(
                                         'assets/images/profileAdiat.jpeg'),
                                     fit: BoxFit.cover),
@@ -98,7 +96,7 @@ class EditProfileView extends GetView<EditProfileController> {
                                 height: 45,
                                 width: 45,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF52B788),
+                                  color: const Color(0xFF52B788),
                                   borderRadius: BorderRadius.circular(100),
                                   border:
                                       Border.all(color: Colors.white, width: 5),
@@ -125,27 +123,24 @@ class EditProfileView extends GetView<EditProfileController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
                   FormBuilder(
-                    key: _formKey,
+                    key: controller.editFormKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 250.0),
-                          child: Text(
-                            "Full Name",
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
+                        Text(
+                          "Full Name",
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         SizedBox(
                           width: 327,
-                          height: 50,
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors
@@ -153,50 +148,49 @@ class EditProfileView extends GetView<EditProfileController> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: FormBuilderTextField(
-                              // key: _fullnameKey,
                               name: 'fullname',
-                              cursorColor: Color(0xFF00AD7C),
+                              cursorColor: const Color(0xFF00AD7C),
+                              textAlignVertical: TextAlignVertical.top,
                               decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 10),
                                 errorStyle: const TextStyle(fontSize: 0.01),
-                                hintText: "Adiat Rahman",
                                 hintStyle: GoogleFonts.poppins(
                                   fontSize: 14,
                                   color: Colors.black,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
-                                  borderSide:
-                                      BorderSide(color: Colors.white, width: 3),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: Color(
                                           0xFFE5E7EB)), // Set your desired color
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xFF00AD7C)),
+                                    borderSide: const BorderSide(
+                                        color: Color(0xFF00AD7C)),
                                     borderRadius: BorderRadius.circular(10)),
                               ),
+                              initialValue: controller.fullname.value,
+                              onChanged: (value) =>
+                                  controller.fullname.value = value ?? '',
+                              style: const TextStyle(fontSize: 16),
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Padding(
-                          padding: EdgeInsets.only(right: 285.0),
-                          child: Text(
-                            "Email",
-                            style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                          ),
+                        const SizedBox(height: 20),
+                        Text(
+                          "Email",
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         SizedBox(
                           width: 327,
-                          height: 50,
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors
@@ -206,59 +200,63 @@ class EditProfileView extends GetView<EditProfileController> {
                             child: FormBuilderTextField(
                               // key: _emailKey,
                               name: 'email',
-                              cursorColor: Color(0xFF00AD7C),
+                              cursorColor: const Color(0xFF00AD7C),
                               decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 10),
                                 errorStyle: const TextStyle(fontSize: 0.01),
-                                hintText: "adiatrahman@gmail.com",
                                 hintStyle: GoogleFonts.poppins(
                                   fontSize: 14,
                                   color: Colors.black,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
-                                  borderSide:
-                                      BorderSide(color: Colors.white, width: 3),
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 3),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: Color(
                                           0xFFE5E7EB)), // Set your desired color
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xFF00AD7C)),
+                                    borderSide: const BorderSide(
+                                        color: Color(0xFF00AD7C)),
                                     borderRadius: BorderRadius.circular(10)),
                               ),
+                              style: const TextStyle(fontSize: 16),
+                              initialValue: controller.email.value,
+                              onChanged: (value) =>
+                                  controller.email.value = value ?? '',
                             ),
                           ),
                         ),
-                        SizedBox(height: 240),
-                        MaterialButton(
-                          onPressed: () {
-                            if (true) {
-                              showModalBottomSheet<void>(
-                                context: context,
-                                builder: updatedProfileBottomSheet,
-                              );
-                            }
-                          },
+                        const SizedBox(height: 240),
+                        GestureDetector(
+                          onTap: controller.isLoading.value
+                              ? null
+                              : () => controller.handleSave(),
                           child: Container(
                             width: 327,
                             height: 46,
                             decoration: BoxDecoration(
-                              color: Color(0xFF52B788),
+                              color: const Color(0xFF52B788),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Center(
-                              child: Text(
-                                "Save Changes",
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                              child: controller.isLoading.value
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : Text(
+                                      "Save Changes",
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                             ),
                           ),
                         ),
@@ -273,168 +271,4 @@ class EditProfileView extends GetView<EditProfileController> {
       }),
     );
   }
-
-  Widget updatedProfileBottomSheet(BuildContext context) => Container(
-        height: 402,
-        width: 393,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.white),
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 30, bottom: 12),
-                width: 132,
-                height: 132,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Image.asset('assets/images/updated.png'),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 22),
-                child: Text(
-                  'Profile Updated!',
-                  style: GoogleFonts.poppins(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 35, right: 30, bottom: 24),
-                child: Text(
-                  'Your profile has been successfully updated, changes are reflected real time.',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF838FA0),
-                  ),
-                ),
-              ),
-              MaterialButton(
-                onPressed: () => Navigator.pop(Get.context!),
-                child: Container(
-                  margin: EdgeInsets.only(left: 14, right: 5),
-                  height: 50,
-                  width: 327,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF52B788),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Confirm',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget failedUpdateProfileBottomSheet(BuildContext context) => Container(
-        height: 468,
-        width: 393,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.white),
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 30, bottom: 12),
-                width: 132,
-                height: 132,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Image.asset('assets/images/failed.png'),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 14),
-                child: Text(
-                  'Profile Update Failed',
-                  style: GoogleFonts.poppins(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 35, right: 30, bottom: 18),
-                child: Text(
-                  'Oops, there are something wrong with updating details, please try again in a moment.',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF838FA0),
-                  ),
-                ),
-              ),
-              MaterialButton(
-                onPressed: () => Navigator.pop(Get.context!),
-                child: Container(
-                  margin: EdgeInsets.only(left: 14, right: 5),
-                  height: 50,
-                  width: 327,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF52B788),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Try Again',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 16),
-              MaterialButton(
-                onPressed: () => Navigator.pop(Get.context!),
-                child: Container(
-                  margin: EdgeInsets.only(left: 14, right: 5),
-                  height: 50,
-                  width: 327,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(
-                              0.2), // Adjust opacity for shadow intensity
-                          blurRadius:
-                              10.0, // Adjust blur radius for shadow softness
-                          spreadRadius:
-                              1.0, // Adjust spread radius for shadow size
-                        ),
-                      ]),
-                  child: Center(
-                    child: Text(
-                      'Cancel',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF52B788),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
 }

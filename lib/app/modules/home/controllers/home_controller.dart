@@ -1,11 +1,10 @@
+import 'package:everglo_mobile/app/data/models/User.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
   RxBool isLoading = false.obs;
-  final count = 0.obs;
 
   RxBool isflowBottomSheet = false.obs;
   RxBool isflowSwitchOn = false.obs;
@@ -17,10 +16,22 @@ class HomeController extends GetxController {
 
   Rx<GetStorage> storage = GetStorage().obs;
 
+  Rx<User> user = User.fromJson({
+    "userId": "",
+    "email": "",
+    "firstName": "",
+    "lastName": "",
+    "role": "",
+    "image": null,
+    "owned": "",
+    "createdAt": "2024-05-14T07:52:17.704Z",
+    "updatedAt": "2024-05-14T07:52:17.704Z"
+  }).obs;
+
   @override
   void onInit() {
-    printInfo(info: storage.value.read('userToken'));
     super.onInit();
+    user.value = User.fromJson(storage.value.read('userData'));
   }
 
   @override

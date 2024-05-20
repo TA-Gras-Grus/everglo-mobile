@@ -1,3 +1,4 @@
+import 'package:everglo_mobile/app/helpers/global_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -7,7 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../controllers/profile_detail_controller.dart';
 
 class ProfileDetailView extends GetView<ProfileDetailController> {
-  const ProfileDetailView({Key? key}) : super(key: key);
+  final GlobalController globalController = Get.find();
+
+  ProfileDetailView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,8 +36,8 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
               ],
             ),
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black, size: 18),
-              onPressed: () => Navigator.pop(Get.context!),
+              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 18),
+              onPressed: () => Get.back(),
             ),
           ),
         ),
@@ -76,7 +79,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                                     1.0, // Adjust spread radius for shadow size
                               ),
                             ],
-                            image: DecorationImage(
+                            image: const DecorationImage(
                                 image: AssetImage(
                                     'assets/images/profileAdiat.jpeg'),
                                 fit: BoxFit.cover),
@@ -85,29 +88,29 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Get.toNamed('/profile/edit-profile'),
                     child: Container(
                       width: 361,
                       height: 48,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        border: Border(
+                        border: const Border(
                             bottom: BorderSide(
                                 color: Color(0xFFF0F0FA), width: 1.5)),
-                        color: Color(0xFF52B788),
+                        color: const Color(0xFF52B788),
                       ),
                       child: Row(
                         children: [
-                          SizedBox(width: 15),
+                          const SizedBox(width: 15),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SvgPicture.asset(
                               'assets/icons/pencil.svg',
                             ),
                           ),
-                          SizedBox(width: 85),
+                          const SizedBox(width: 85),
                           Text(
                             'Edit Profile',
                             style: GoogleFonts.poppins(
@@ -120,11 +123,11 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   Container(
                     width: 361,
                     height: 76,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(12),
                         topRight: Radius.circular(12),
@@ -138,7 +141,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                       padding: const EdgeInsets.only(top: 20),
                       child: Row(
                         children: [
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -147,11 +150,11 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xFF9A9A9A),
+                                  color: const Color(0xFF9A9A9A),
                                 ),
                               ),
                               Text(
-                                'Adiat Rahman',
+                                '${globalController.user.value.firstName} ${globalController.user.value.lastName}',
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -166,7 +169,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                   Container(
                     width: 361,
                     height: 63,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       border: Border(
                           bottom:
                               BorderSide(color: Color(0xFFF0F0FA), width: 1.5)),
@@ -176,7 +179,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -185,11 +188,11 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xFF9A9A9A),
+                                  color: const Color(0xFF9A9A9A),
                                 ),
                               ),
                               Text(
-                                '3db8c356-72ce-43e9-b2b3-91ef261f66b1',
+                                '${globalController.user.value.userId}',
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -204,7 +207,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                   Container(
                     width: 361,
                     height: 63,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       border: Border(
                           bottom:
                               BorderSide(color: Color(0xFFF0F0FA), width: 1.5)),
@@ -214,7 +217,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -223,11 +226,11 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xFF9A9A9A),
+                                  color: const Color(0xFF9A9A9A),
                                 ),
                               ),
                               Text(
-                                'Superadmin',
+                                '${globalController.user.value.role}',
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -242,7 +245,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                   Container(
                     width: 361,
                     height: 74,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(12),
                         bottomRight: Radius.circular(12),
@@ -253,7 +256,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                       padding: const EdgeInsets.only(top: 15),
                       child: Row(
                         children: [
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -262,11 +265,11 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  color: Color(0xFF9A9A9A),
+                                  color: const Color(0xFF9A9A9A),
                                 ),
                               ),
                               Text(
-                                'adiatrahman@gmail.com',
+                                '${globalController.user.value.email}',
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,

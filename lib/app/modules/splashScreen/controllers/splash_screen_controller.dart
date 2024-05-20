@@ -14,7 +14,7 @@ class SplashScreenController extends GetxController {
       isLoading.value = false;
       if (storage.value.read('userToken') != null &&
           storage.value.read('userToken') != '') {
-        Get.offAllNamed('home');
+        Get.offAllNamed('/home');
       } else {
         Get.offAllNamed('/login');
       }

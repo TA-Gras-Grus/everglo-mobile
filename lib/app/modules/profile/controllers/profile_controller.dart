@@ -1,9 +1,13 @@
+import 'package:everglo_mobile/app/data/models/User.dart';
+import 'package:everglo_mobile/app/helpers/global_controller.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
+  final GlobalController globalController = Get.find();
   RxBool isLoading = false.obs;
-  final count = 0.obs;
+  Rx<GetStorage> storage = GetStorage().obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +23,9 @@ class ProfileController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  void handleLogout() {
+    storage.value.remove('userToken');
+    storage.value.remove('userData');
+    Get.offAllNamed('/login');
+  }
 }
