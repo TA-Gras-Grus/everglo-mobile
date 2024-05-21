@@ -82,3 +82,27 @@ class Errors {
         "data": data,
       };
 }
+
+class Paging {
+  final int? currentPage;
+  final int? totalPage;
+  final int? size;
+
+  Paging({
+    this.currentPage,
+    this.totalPage,
+    this.size,
+  });
+
+  factory Paging.fromJson(Map<String, dynamic> json) => Paging(
+        currentPage: json["current_page"],
+        totalPage: json["total_page"],
+        size: json["size"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "current_page": currentPage,
+        "total_page": totalPage,
+        "size": size,
+      };
+}
