@@ -1,4 +1,4 @@
-import 'package:everglo_mobile/app/data/models/User.dart';
+import 'package:everglo_mobile/app/data/models/user.dart';
 import 'package:everglo_mobile/app/helpers/global_controller.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:everglo_mobile/app/data/models/Response.dart';
+import 'package:everglo_mobile/app/data/models/response.dart';
 import 'package:everglo_mobile/app/helpers/notification_snackbar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart' as get_dart;
@@ -21,9 +21,9 @@ class ApiClient {
       if (isAuth) {
         dio.options.headers['Authorization'] = "Bearer $token";
       }
-      dio.options.connectTimeout = Duration(seconds: 25000);
-      dio.options.sendTimeout = Duration(seconds: 25000);
-      dio.options.receiveTimeout = Duration(seconds: 25000);
+      dio.options.connectTimeout = const Duration(seconds: 25000);
+      dio.options.sendTimeout = const Duration(seconds: 25000);
+      dio.options.receiveTimeout = const Duration(seconds: 25000);
       dio.interceptors.clear();
       dio.interceptors.add(DioInterceptor(dio));
 
@@ -43,9 +43,9 @@ class ApiClient {
       if (isAuth) {
         dio.options.headers['Authorization'] = "Bearer $token";
       }
-      dio.options.connectTimeout = Duration(seconds: 25000);
-      dio.options.sendTimeout = Duration(seconds: 25000);
-      dio.options.receiveTimeout = Duration(seconds: 25000);
+      dio.options.connectTimeout = const Duration(seconds: 25000);
+      dio.options.sendTimeout = const Duration(seconds: 25000);
+      dio.options.receiveTimeout = const Duration(seconds: 25000);
       dio.interceptors.clear();
       dio.interceptors.add(DioInterceptor(dio));
 
@@ -65,9 +65,9 @@ class ApiClient {
       if (isAuth) {
         dio.options.headers['Authorization'] = "Bearer $token";
       }
-      dio.options.connectTimeout = Duration(seconds: 25000);
-      dio.options.sendTimeout = Duration(seconds: 25000);
-      dio.options.receiveTimeout = Duration(seconds: 25000);
+      dio.options.connectTimeout = const Duration(seconds: 25000);
+      dio.options.sendTimeout = const Duration(seconds: 25000);
+      dio.options.receiveTimeout = const Duration(seconds: 25000);
       dio.interceptors.clear();
       dio.interceptors.add(DioInterceptor(dio));
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:everglo_mobile/app/data/models/Response.dart';
-import 'package:everglo_mobile/app/data/models/User.dart';
-import 'package:everglo_mobile/app/data/repository/AuthRepository.dart';
+import 'package:everglo_mobile/app/data/models/response.dart';
+import 'package:everglo_mobile/app/data/models/user.dart';
+import 'package:everglo_mobile/app/data/repository/auth_repository.dart';
 import 'package:everglo_mobile/app/helpers/notification_snackbar.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';

@@ -1,10 +1,8 @@
-import 'package:everglo_mobile/app/data/models/Response.dart';
-import 'package:everglo_mobile/app/data/models/User.dart';
-import 'package:everglo_mobile/app/data/repository/AuthRepository.dart';
+import 'package:everglo_mobile/app/data/models/response.dart';
+import 'package:everglo_mobile/app/data/models/user.dart';
+import 'package:everglo_mobile/app/data/repository/auth_repository.dart';
 import 'package:everglo_mobile/app/helpers/global_controller.dart';
-import 'package:everglo_mobile/app/modules/profile/controllers/profile_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

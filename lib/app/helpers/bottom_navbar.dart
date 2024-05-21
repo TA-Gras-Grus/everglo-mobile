@@ -56,7 +56,8 @@ class BottomNavbar extends StatelessWidget {
       required bool selected}) {
     return ZoomTapAnimation(
       onTap: () {
-        if (page == 0) {
+        if (selected) {
+        } else if (page == 0) {
           Get.offAllNamed('/home');
         } else if (page == 1) {
           Get.offAllNamed('/profile');

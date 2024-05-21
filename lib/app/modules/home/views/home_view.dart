@@ -1,8 +1,10 @@
+import 'package:everglo_mobile/app/data/models/greenhouse.dart';
 import 'package:everglo_mobile/app/helpers/bottom_navbar.dart';
-import 'package:everglo_mobile/app/helpers/everglo_icon_icons.dart';
+import 'package:everglo_mobile/app/helpers/global_controller.dart';
 import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,43 +13,42 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  HomeView({Key? key}) : super(key: key);
-
-  static List<String> listGreenhouse = <String>[
-    'Greenhouse 1',
-    'Greenhouse 2',
-    'Greenhouse 3',
-    'Greenhouse 4',
-    'Greenhouse 5'
-  ];
+  final GlobalController globalController = Get.find();
+  HomeView({super.key});
 
   final _formKey = GlobalKey<FormBuilderState>();
-  final RxString dropdownValue = listGreenhouse.first.obs;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: Obx(() {
+      body: Obx(
+        () {
           if (controller.isLoading.value) {
-            return const Center(
-              child: Text("Loading"),
+            return Center(
+              child: SpinKitFoldingCube(
+                color: UiColor().primary,
+              ),
             );
           } else {
-            return Column(
-              children: [
-                _userInfo(),
-                _greenhouseOption(context),
-                _plantsButton(),
-                _greenHouseStatistic(),
-                _greenHouseController(),
-                _waterTankStatistic(),
-                _dripIrrigationControl(context),
-              ],
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  _userInfo(),
+                  _greenhouseOption(context),
+                  _plantsButton(),
+                  _greenHouseStatistic(),
+                  _greenHouseController(),
+                  _waterTankStatistic(),
+                  _dripIrrigationControl(context),
+                  const SizedBox(
+                    height: 50,
+                  )
+                ],
+              ),
             );
           }
-        }),
+        },
       ),
       bottomNavigationBar: const BottomNavbar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -98,7 +99,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        controller.user.value.firstName ?? '',
+                        globalController.user.value.firstName ?? '',
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -119,158 +120,83 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget _greenhouseOption(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 0, left: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //Select Greenhouse Button
           children: [
-            Row(
-              //Select Greenhouse Button
-              children: [
-                DropdownButtonHideUnderline(
-                  child: Container(
-                    height: 56,
-                    width: 256,
-                    padding: const EdgeInsets.only(left: 16, right: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 1.0, color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(
-                              0.2), // Adjust opacity for shadow intensity
-                          blurRadius:
-                              5.0, // Adjust blur radius for shadow softness
-                          spreadRadius:
-                              2.0, // Adjust spread radius for shadow size
-                        ),
-                      ],
+            DropdownButtonHideUnderline(
+                child: Expanded(
+              child: Container(
+                height: 56,
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(width: 1.0, color: Colors.transparent),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(
+                          0.2), // Adjust opacity for shadow intensity
+                      blurRadius: 5.0, // Adjust blur radius for shadow softness
+                      spreadRadius: 2.0, // Adjust spread radius for shadow size
                     ),
-                    child: DropdownButton2<String>(
-                      value: dropdownValue.value,
-                      items: [
-                        DropdownMenuItem(
-                          value: listGreenhouse[0],
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/icons/greenhouseIcon.svg'),
-                                const SizedBox(width: 15),
-                                Text(listGreenhouse[0]),
-                              ],
-                            ),
-                          ),
-                        ),
-                        DropdownMenuItem(
-                          value: listGreenhouse[1],
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/icons/greenhouseIcon.svg'),
-                                const SizedBox(width: 15),
-                                Text(listGreenhouse[1]),
-                              ],
-                            ),
-                          ),
-                        ),
-                        DropdownMenuItem(
-                          value: listGreenhouse[2],
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/icons/greenhouseIcon.svg'),
-                                const SizedBox(width: 15),
-                                Text(listGreenhouse[2]),
-                              ],
-                            ),
-                          ),
-                        ),
-                        DropdownMenuItem(
-                          value: listGreenhouse[3],
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/icons/greenhouseIcon.svg'),
-                                const SizedBox(width: 15),
-                                Text(
-                                  listGreenhouse[3],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        DropdownMenuItem(
-                          value: listGreenhouse[4],
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/icons/greenhouseIcon.svg'),
-                                const SizedBox(width: 15),
-                                Text(listGreenhouse[4]),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                      onChanged: (String? newValue) {
-                        dropdownValue.value = newValue!;
-                      },
-                      dropdownStyleData: DropdownStyleData(
-                        width: 260,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          color: Colors.white,
-                        ),
-                        offset: const Offset(-18, -16),
-                      ),
-                      iconStyleData: IconStyleData(
-                        icon: SvgPicture.asset('assets/icons/dropdownIcon.svg'),
-                        iconSize: 6,
-                        openMenuIcon:
-                            SvgPicture.asset('assets/icons/arrowUp.svg'),
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
-                MaterialButton(
-                  onPressed: () {
-                    showModalBottomSheet<void>(
-                      context: context,
-                      builder: _createGreenhouseBottomSheet,
-                    );
+                child: DropdownButton2<String>(
+                  value: globalController.selectedGreenhouse.value.greenhouseId,
+                  items: controller.listGreenhouse.value.greenhouse?[0]
+                              .greenhouseId ==
+                          ""
+                      ? [
+                          DropdownMenuItem(
+                            value: globalController
+                                .selectedGreenhouse.value.greenhouseId,
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                    'assets/icons/greenhouseIcon.svg'),
+                                const SizedBox(width: 15),
+                                Text(globalController
+                                        .selectedGreenhouse.value.name ??
+                                    ''),
+                              ],
+                            ),
+                          ),
+                        ]
+                      : controller.listGreenhouse.value.greenhouse!
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e.greenhouseId,
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/icons/greenhouseIcon.svg'),
+                                  const SizedBox(width: 15),
+                                  Text(e.name ?? ''),
+                                ],
+                              ),
+                            ),
+                          )
+                          .toList(),
+                  onChanged: (String? greenhouseId) {
+                    controller.handleDropdownGreenhouse(greenhouseId);
                   },
-                  child: Container(
-                    height: 56,
-                    width: 60,
+                  dropdownStyleData: DropdownStyleData(
+                    width: 260,
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(
-                              0.2), // Adjust opacity for shadow intensity
-                          blurRadius:
-                              5.0, // Adjust blur radius for shadow softness
-                          spreadRadius:
-                              2.0, // Adjust spread radius for shadow size
-                        ),
-                      ],
                     ),
-                    child: const Center(child: Icon(Icons.add)),
+                    offset: const Offset(-18, -16),
+                  ),
+                  iconStyleData: IconStyleData(
+                    icon: SvgPicture.asset('assets/icons/dropdownIcon.svg'),
+                    iconSize: 6,
+                    openMenuIcon: SvgPicture.asset('assets/icons/arrowUp.svg'),
                   ),
                 ),
-              ],
-            ),
+              ),
+            )),
           ],
         ),
       );
@@ -281,7 +207,7 @@ class HomeView extends GetView<HomeController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             MaterialButton(
-              onPressed: () => controller.createGreenhouse(),
+              onPressed: () => {},
               color: const Color(
                   0xFF00AD7C), // Set button color here for better readability
               padding: const EdgeInsets.only(left: 14, right: 20),
@@ -502,7 +428,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '30° C',
+                            '${controller.greenhouse.value.greenhouseDatas?[0].airTemperature?.toStringAsFixed(2)}° C',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -556,7 +482,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '50% RH',
+                            '${controller.greenhouse.value.greenhouseDatas?[0].humidity?.toStringAsFixed(2)}% RH',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -799,7 +725,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '216 L',
+                            '${controller.greenhouse.value.greenhouseDatas?[0].volumeWaterTank?.toStringAsFixed(2)} L',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -853,7 +779,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '1.2 EC',
+                            '${controller.greenhouse.value.greenhouseDatas?[0].ec?.toStringAsFixed(2)} EC',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -911,7 +837,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '7.26 pH',
+                            '${controller.greenhouse.value.greenhouseDatas?[0].ph?.toStringAsFixed(2)} pH',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -965,7 +891,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '1200 PPM',
+                            '${controller.greenhouse.value.greenhouseDatas?[0].ppm?.toStringAsFixed(2)} PPM',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -1058,7 +984,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '180 minutes',
+                            '${controller.greenhouse.value.intervalWaterFlow ?? 0 / 60} minutes',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -1112,7 +1038,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '2 minutes',
+                            '${controller.greenhouse.value.timeWaterFlow ?? 0 / 60} minutes',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
