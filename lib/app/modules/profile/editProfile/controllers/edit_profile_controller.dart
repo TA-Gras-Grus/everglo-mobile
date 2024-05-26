@@ -10,7 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class EditProfileController extends GetxController {
   final GlobalController globalController = Get.find();
-  final GlobalKey<FormBuilderState> editFormKey = GlobalKey();
+  final GlobalKey<FormBuilderState> editFormKey =
+      GlobalKey<FormBuilderState>(debugLabel: 'editForm');
   Rx<GetStorage> storage = GetStorage().obs;
   RxBool isLoading = false.obs;
   RxString fullname = ''.obs;
@@ -24,22 +25,47 @@ class EditProfileController extends GetxController {
     email.value = '${globalController.user.value.email}';
   }
 
+  validateEmail(String? email) {
+    if (!GetUtils.isEmail(email ?? '')) {
+      return 'Email is not valid';
+    }
+    return null;
+  }
+
+  validateFullname(String? fullname) {
+    if (GetUtils.isNullOrBlank(fullname ?? '') == null) {
+      return 'Fullname is not valid';
+    }
+    return null;
+  }
+
   void handleSave() {
-    try {
-      isLoading.value = true;
-      printInfo(info: isLoading.value.toString());
-      updateProfile().then(
-        (user) => {
-          globalController.user.value = user,
-          showModalBottomSheet<void>(
-            isScrollControlled: true,
-            context: Get.context!,
-            builder: updatedProfileBottomSheet,
-          )
-        },
+    if (!editFormKey.currentState!.validate()) {
+      Get.snackbar(
+        'Error',
+        'Login Unsuccessful',
+        snackPosition: SnackPosition.TOP,
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+        margin: const EdgeInsets.fromLTRB(10, 30, 10, 0),
       );
-    } finally {
-      isLoading.value = false;
+    } else {
+      try {
+        isLoading.value = true;
+        printInfo(info: isLoading.value.toString());
+        updateProfile().then(
+          (user) => {
+            globalController.user.value = user,
+            showModalBottomSheet<void>(
+              isScrollControlled: true,
+              context: Get.context!,
+              builder: updatedProfileBottomSheet,
+            )
+          },
+        );
+      } finally {
+        isLoading.value = false;
+      }
     }
   }
 
