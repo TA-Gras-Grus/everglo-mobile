@@ -8,7 +8,7 @@ import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
   final GlobalController globalController = Get.find();
-  RxBool isLoading = false.obs;
+  RxBool isLoading = true.obs;
   RxBool isflowBottomSheet = false.obs;
   RxBool isflowSwitchOn = false.obs;
   RxBool isSetDrip = false.obs;

@@ -187,22 +187,30 @@ class ProfileView extends GetView<ProfileController> {
 
   Widget _profileNavigation(String type, Icon icon, Color scheme, String label,
       void Function()? onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 361,
-        height: 67,
+    return Container(
+      width: 361,
+      height: 67,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(type != 'bottom' ? 12 : 0),
+          topRight: Radius.circular(type != 'bottom' ? 12 : 0),
+          bottomLeft: Radius.circular(type != 'top' ? 12 : 0),
+          bottomRight: Radius.circular(type != 'top' ? 12 : 0),
+        ),
+        border: const Border(
+            bottom: BorderSide(color: Color(0xFFF0F0FA), width: 1.5)),
+        color: Colors.white,
+      ),
+      child: MaterialButton(
+        onPressed: onTap,
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(type != 'bottom' ? 12 : 0),
             topRight: Radius.circular(type != 'bottom' ? 12 : 0),
             bottomLeft: Radius.circular(type != 'top' ? 12 : 0),
             bottomRight: Radius.circular(type != 'top' ? 12 : 0),
           ),
-          border: const Border(
-              bottom: BorderSide(color: Color(0xFFF0F0FA), width: 1.5)),
-          color: Colors.white,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,3 +1,5 @@
+import 'package:everglo_mobile/app/helpers/button.dart';
+import 'package:everglo_mobile/app/helpers/enum.dart';
 import 'package:everglo_mobile/app/helpers/global_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -89,38 +91,13 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                     ],
                   ),
                   const SizedBox(height: 30),
-                  GestureDetector(
-                    onTap: () => Get.toNamed('/profile/edit-profile'),
-                    child: Container(
-                      width: 361,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: const Border(
-                            bottom: BorderSide(
-                                color: Color(0xFFF0F0FA), width: 1.5)),
-                        color: const Color(0xFF52B788),
-                      ),
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 15),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SvgPicture.asset(
-                              'assets/icons/pencil.svg',
-                            ),
-                          ),
-                          const SizedBox(width: 85),
-                          Text(
-                            'Edit Profile',
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: EvergloButton(
+                      type: ButtonType.primary,
+                      title: 'Edit Profile',
+                      onTap: () => Get.toNamed('/profile/edit-profile'),
+                      leftIcon: Icons.mode_edit_outline_outlined,
                     ),
                   ),
                   const SizedBox(height: 25),
