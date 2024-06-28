@@ -1,5 +1,7 @@
+import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PolybagsList extends StatelessWidget {
@@ -20,7 +22,8 @@ class PolybagsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 353,
-      height: 128,
+      height: 138,
+      margin: EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -38,6 +41,7 @@ class PolybagsList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 18, top: 4),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Polybag ID',
@@ -46,31 +50,29 @@ class PolybagsList extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(width: 110),
-                _harvestStatus(
-                  status,
-                ),
-                Expanded(
-                  child: MaterialButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.only(right: 12),
-                    child: Container(
-                      width: 22,
-                      height: 22,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF52B788),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          'assets/icons/rightArrow.svg',
-                          height: 8,
-                          width: 5,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    _harvestStatus(
+                      status,
+                    ),
+                    GestureDetector(
+                      onTap: () => Get.toNamed('/polybags/polybags-detail',
+                          arguments: {'polybagId': polybagId}),
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                            color: UiColor().btnPrimary,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: const Icon(
+                          Icons.chevron_right_rounded,
+                          color: Colors.white,
                         ),
                       ),
-                    ),
-                  ),
-                ),
+                    )
+                  ],
+                )
               ],
             ),
           ),
@@ -83,7 +85,7 @@ class PolybagsList extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF8F9A94),
+                    color: const Color(0xFF8F9A94),
                   ),
                 ),
               ],
@@ -100,13 +102,13 @@ class PolybagsList extends StatelessWidget {
                       child: Row(
                         children: [
                           SvgPicture.asset('assets/icons/dayOfPlanted.svg'),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(
                             'Day of Planted',
                             style: GoogleFonts.poppins(
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
-                              color: Color(0xFF8F9A94),
+                              color: const Color(0xFF8F9A94),
                             ),
                           ),
                         ],
@@ -135,7 +137,7 @@ class PolybagsList extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(width: 30),
+                const SizedBox(width: 30),
                 Column(
                   children: [
                     Padding(
@@ -143,13 +145,13 @@ class PolybagsList extends StatelessWidget {
                       child: Row(
                         children: [
                           SvgPicture.asset('assets/icons/dayAfterPlant.svg'),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(
                             'Day After Plant',
                             style: GoogleFonts.poppins(
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
-                              color: Color(0xFF8F9A94),
+                              color: const Color(0xFF8F9A94),
                             ),
                           ),
                         ],
@@ -186,7 +188,7 @@ class PolybagsList extends StatelessWidget {
       width: 96,
       height: 23,
       decoration: BoxDecoration(
-        color: isActive ? Color(0xFFD8F3DC) : Color(0xFFFEEDB7),
+        color: isActive ? const Color(0xFFD8F3DC) : const Color(0xFFFEEDB7),
         borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
@@ -195,7 +197,7 @@ class PolybagsList extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: 10,
             fontWeight: FontWeight.w400,
-            color: isActive ? Color(0xFF40916C) : Color(0xFFF79E1B),
+            color: isActive ? const Color(0xFF40916C) : const Color(0xFFF79E1B),
           ),
         ),
       ),

@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:typed_data';
 
+import 'package:everglo_mobile/app/helpers/notification_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,7 +13,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import '../controllers/polybag_scanner_controller.dart';
 
 class PolybagScannerView extends GetView<PolybagScannerController> {
-  const PolybagScannerView({Key? key}) : super(key: key);
+  const PolybagScannerView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +23,7 @@ class PolybagScannerView extends GetView<PolybagScannerController> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 20),
           child: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.pop(Get.context!),
           ),
         ),
@@ -44,14 +45,15 @@ class PolybagScannerView extends GetView<PolybagScannerController> {
               children: [
                 MobileScanner(
                   controller: MobileScannerController(
-                    detectionSpeed: DetectionSpeed.noDuplicates,
-                  ),
+                      detectionSpeed: DetectionSpeed.noDuplicates,
+                      autoStart: true),
                   onDetect: (capture) {
                     final List<Barcode> barcodes = capture.barcodes;
-                    final Uint8List? image = capture.image;
-                    for (final barcode in barcodes) {
-                      print('Barcode Found! ${barcode.rawValue}');
-                    }
+                    NotificationSnackbar().success(
+                        'Polybag successfully scanned',
+                        '${barcodes[0].rawValue}');
+                    Get.toNamed('/polybags/polybags-detail',
+                        arguments: {'polybagId': '${barcodes[0].rawValue}'});
                   },
                 ),
                 Positioned(

@@ -1,5 +1,7 @@
-import 'package:everglo_mobile/app/data/models/greenhouse.dart';
 import 'package:everglo_mobile/app/helpers/bottom_navbar.dart';
+import 'package:everglo_mobile/app/helpers/button.dart';
+import 'package:everglo_mobile/app/helpers/enum.dart';
+import 'package:everglo_mobile/app/helpers/everglo_icon_icons.dart';
 import 'package:everglo_mobile/app/helpers/global_controller.dart';
 import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:flutter/material.dart';
@@ -31,20 +33,22 @@ class HomeView extends GetView<HomeController> {
               ),
             );
           } else {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  _userInfo(),
-                  _greenhouseOption(context),
-                  _plantsButton(),
-                  _greenHouseStatistic(),
-                  _greenHouseController(),
-                  _waterTankStatistic(),
-                  _dripIrrigationControl(context),
-                  const SizedBox(
-                    height: 50,
-                  )
-                ],
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _userInfo(),
+                    _greenhouseOption(context),
+                    _plantsButton(),
+                    _greenHouseStatistic(),
+                    _greenHouseController(),
+                    _waterTankStatistic(),
+                    _dripIrrigationControl(context),
+                    const SizedBox(
+                      height: 50,
+                    )
+                  ],
+                ),
               ),
             );
           }
@@ -57,67 +61,50 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _userInfo() => Padding(
-        padding:
-            const EdgeInsets.only(left: 24, right: 24, top: 65, bottom: 22),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            //Left Side
-            Row(
-              children: [
-                //Avatar
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(60 / 2),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Welcome, ',
+                    style: TextStyle(fontSize: 12, color: Colors.black87),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(60 / 2),
-                    child: Image.asset(
-                      'assets/images/bagas.jpg',
-                      fit: BoxFit.cover,
-                    ),
+                  Text(
+                    '${globalController.user.value.firstName}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 12,
+                        color: Colors.black87),
                   ),
-                ),
-                const SizedBox(height: 10),
-                //Info
-                Padding(
-                  // Add padding here
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Welcome!",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 14,
-                          color: const Color(0xFF000000),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        globalController.user.value.firstName ?? '',
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: const Color(0xFF000000),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
+              Text(
+                'Grow Smartly Today!',
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 15,
+                    color: UiColor().primary),
+              )
+            ],
+          ),
+          SizedBox(
+            width: 50,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Image.asset(
+                'assets/images/bagas.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
-
-            IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset('assets/icons/notificationGreen.svg'))
-          ],
-        ),
-      );
+          ),
+        ],
+      ));
 
   Widget _greenhouseOption(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -202,63 +189,14 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget _plantsButton() => Padding(
-        padding: const EdgeInsets.only(top: 16, left: 24, bottom: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            MaterialButton(
-              onPressed: () => {},
-              color: const Color(
-                  0xFF00AD7C), // Set button color here for better readability
-              padding: const EdgeInsets.only(left: 14, right: 20),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment
-                      .spaceBetween, // Aligns content horizontally
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/plantsIcon.svg',
-                    ),
-                    const SizedBox(width: 13),
-                    Text(
-                      "Your Plants",
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(width: 150),
-                    SvgPicture.asset(
-                      'assets/icons/rightArrow.svg',
-                      color: Colors.white,
-                    ),
-                    // Add an empty container here if you want equal spacing between icon and text
-                    Container(
-                      width: 5,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(
-                                0.2), // Adjust opacity for shadow intensity
-                            blurRadius:
-                                5.0, // Adjust blur radius for shadow softness
-                            spreadRadius:
-                                2.0, // Adjust spread radius for shadow size
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: EvergloButton(
+          type: ButtonType.primary,
+          leftIcon: EvergloIcon.plant,
+          title: 'Your Plants',
+          titlePosition: ButtonTitlePosition.left,
+          rightIcon: Icons.chevron_right_rounded,
+          onTap: () => Get.toNamed('/polybags'),
         ),
       );
 
@@ -316,7 +254,8 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '300',
+                            controller.greenhouse.value.totalPolybag!
+                                .toStringAsFixed(0),
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -370,7 +309,8 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '150',
+                            controller.greenhouse.value.activePolybag!
+                                .toStringAsFixed(0),
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -560,6 +500,7 @@ class HomeView extends GetView<HomeController> {
                         fit: BoxFit.fill,
                         child: Switch.adaptive(
                           value: controller.isBlowerSwitchOn.value,
+                          activeColor: UiColor().primary,
                           onChanged: (bool value) {
                             controller.isBlowerSwitchOn.value = value;
                             if (value) {
@@ -639,6 +580,7 @@ class HomeView extends GetView<HomeController> {
                       child: FittedBox(
                         fit: BoxFit.fill,
                         child: Switch.adaptive(
+                          activeColor: UiColor().primary,
                           value: controller.isHeaterSwitchOn.value,
                           onChanged: (bool value) {
                             controller.isHeaterSwitchOn.value = value;
@@ -725,7 +667,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '${controller.greenhouse.value.greenhouseDatas?[0].volumeWaterTank?.toStringAsFixed(2)} L',
+                            '${controller.greenhouse.value.volumeWaterTank?.toStringAsFixed(2)} L',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -779,7 +721,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '${controller.greenhouse.value.greenhouseDatas?[0].ec?.toStringAsFixed(2)} EC',
+                            '${controller.greenhouse.value.ec?.toStringAsFixed(2)} EC',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -837,7 +779,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '${controller.greenhouse.value.greenhouseDatas?[0].ph?.toStringAsFixed(2)} pH',
+                            '${controller.greenhouse.value.ph?.toStringAsFixed(2)} pH',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -891,7 +833,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '${controller.greenhouse.value.greenhouseDatas?[0].ppm?.toStringAsFixed(2)} PPM',
+                            '${controller.greenhouse.value.ppm?.toStringAsFixed(2)} PPM',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -1069,6 +1011,58 @@ class HomeView extends GetView<HomeController> {
                       children: [
                         Container(
                           width: 163,
+                          height: 66,
+                          padding: const EdgeInsets.all(11),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                blurRadius: 5.0,
+                                spreadRadius: 2.0,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Container(
+                                  height: 50,
+                                  width: 49,
+                                  padding: const EdgeInsets.all(11),
+                                  color: const Color(0xFFFDF1E2),
+                                  child: SvgPicture.asset(
+                                      'assets/icons/waterFlowToday.svg'),
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    '4 times',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Water Flowed Today',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 8,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Container(
+                          width: 163,
                           height: 90,
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -1117,6 +1111,7 @@ class HomeView extends GetView<HomeController> {
                                     child: FittedBox(
                                       fit: BoxFit.fill,
                                       child: Switch.adaptive(
+                                        activeColor: UiColor().primary,
                                         value:
                                             controller.isflowBottomSheet.value,
                                         onChanged: (bool value) {
@@ -1145,58 +1140,6 @@ class HomeView extends GetView<HomeController> {
                                     style: GoogleFonts.poppins(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Container(
-                          width: 163,
-                          height: 66,
-                          padding: const EdgeInsets.all(11),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 5.0,
-                                spreadRadius: 2.0,
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: Container(
-                                  height: 50,
-                                  width: 49,
-                                  padding: const EdgeInsets.all(11),
-                                  color: const Color(0xFFFDF1E2),
-                                  child: SvgPicture.asset(
-                                      'assets/icons/waterFlowToday.svg'),
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    '4 times',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Water Flowed Today',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 8,
                                     ),
                                   ),
                                 ],

@@ -37,6 +37,13 @@ class Greenhouse {
   final bool? statusHeater;
   final int? intervalWaterFlow;
   final int? timeWaterFlow;
+  final double? ec;
+  final double? ph;
+  final double? ppm;
+  final num? totalPolybag;
+  final num? activePolybag;
+  final double? volumeWaterTank;
+  final int? countWaterFlow;
   final String? apiKey;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -51,6 +58,13 @@ class Greenhouse {
     this.statusHeater,
     this.intervalWaterFlow,
     this.timeWaterFlow,
+    this.ec,
+    this.ph,
+    this.ppm,
+    this.activePolybag,
+    this.totalPolybag,
+    this.volumeWaterTank,
+    this.countWaterFlow,
     this.apiKey,
     this.createdAt,
     this.updatedAt,
@@ -66,6 +80,13 @@ class Greenhouse {
         statusHeater: json["statusHeater"],
         intervalWaterFlow: json["intervalWaterFlow"],
         timeWaterFlow: json["timeWaterFlow"],
+        ec: json["ec"]?.toDouble(),
+        ph: json["ph"]?.toDouble(),
+        ppm: json["ppm"]?.toDouble(),
+        totalPolybag: json["totalPolybag"]?.toDouble(),
+        activePolybag: json["activePolybag"]?.toDouble(),
+        volumeWaterTank: json["volumeWaterTank"]?.toDouble(),
+        countWaterFlow: json["countWaterFlow"],
         apiKey: json["apiKey"],
         createdAt: json["createdAt"] == null
             ? null
@@ -88,6 +109,13 @@ class Greenhouse {
         "statusHeater": statusHeater,
         "intervalWaterFlow": intervalWaterFlow,
         "timeWaterFlow": timeWaterFlow,
+        "ec": ec,
+        "ph": ph,
+        "ppm": ppm,
+        "activePolybag": activePolybag,
+        "totalPolybag": totalPolybag,
+        "volumeWaterTank": volumeWaterTank,
+        "countWaterFlow": countWaterFlow,
         "apiKey": apiKey,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
@@ -102,11 +130,6 @@ class GreenhouseData {
   final String? ownedGreenhouse;
   final double? airTemperature;
   final double? humidity;
-  final double? ec;
-  final double? ph;
-  final double? ppm;
-  final double? volumeWaterTank;
-  final int? countWaterFlow;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -115,11 +138,6 @@ class GreenhouseData {
     this.ownedGreenhouse,
     this.airTemperature,
     this.humidity,
-    this.ec,
-    this.ph,
-    this.ppm,
-    this.volumeWaterTank,
-    this.countWaterFlow,
     this.createdAt,
     this.updatedAt,
   });
@@ -129,11 +147,6 @@ class GreenhouseData {
         ownedGreenhouse: json["ownedGreenhouse"],
         airTemperature: json["airTemperature"]?.toDouble(),
         humidity: json["humidity"]?.toDouble(),
-        ec: json["ec"]?.toDouble(),
-        ph: json["ph"]?.toDouble(),
-        ppm: json["ppm"]?.toDouble(),
-        volumeWaterTank: json["volumeWaterTank"]?.toDouble(),
-        countWaterFlow: json["countWaterFlow"],
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -147,11 +160,6 @@ class GreenhouseData {
         "ownedGreenhouse": ownedGreenhouse,
         "airTemperature": airTemperature,
         "humidity": humidity,
-        "ec": ec,
-        "ph": ph,
-        "ppm": ppm,
-        "volumeWaterTank": volumeWaterTank,
-        "countWaterFlow": countWaterFlow,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
       };

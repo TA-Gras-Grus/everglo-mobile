@@ -1,24 +1,27 @@
+import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ListPlants extends StatelessWidget {
   final String plantsName;
   final int numberOfPolybags;
-  final String plantsImage;
+  final String? plantsImage;
+  final String? plantsId;
 
   const ListPlants({
-    Key? key,
-    required this.plantsImage,
+    super.key,
+    this.plantsImage,
+    required this.plantsId,
     required this.plantsName,
     required this.numberOfPolybags,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 30, left: 30, right: 30),
+      padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
       child: Container(
         width: 100,
         height: 125,
@@ -33,17 +36,21 @@ class ListPlants extends StatelessWidget {
                 Container(
                   width: 125,
                   height: 125,
+                  padding: EdgeInsets.all(30),
+                  decoration: BoxDecoration(
+                      color: UiColor().primary,
+                      borderRadius: BorderRadius.circular(10)),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         bottomLeft: Radius.circular(10)),
-                    child: Image.asset(
-                      '$plantsImage',
-                      fit: BoxFit.cover,
+                    child: SvgPicture.asset(
+                      'assets/icons/plants.svg',
+                      color: Colors.white,
                     ),
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0, right: 10),
                   child: Column(
@@ -68,7 +75,7 @@ class ListPlants extends StatelessWidget {
                       Row(
                         children: [
                           SvgPicture.asset('assets/icons/plants.svg'),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(
                             '$numberOfPolybags',
                             style: GoogleFonts.poppins(
@@ -77,7 +84,7 @@ class ListPlants extends StatelessWidget {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(
                             'Polybag',
                             style: GoogleFonts.poppins(
@@ -88,14 +95,16 @@ class ListPlants extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Expanded(
                         child: Row(
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 85),
                               child: MaterialButton(
-                                onPressed: () {},
+                                onPressed: () => Get.toNamed(
+                                    '/polybags/polybags-lists',
+                                    arguments: {'typeId': plantsId}),
                                 height: 28,
                                 color: const Color(
                                     0xFF00AD7C), // Set button color here for better readability
@@ -105,7 +114,7 @@ class ListPlants extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 12),
+                                  padding: const EdgeInsets.only(left: 12),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -118,7 +127,7 @@ class ListPlants extends StatelessWidget {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      SizedBox(width: 15),
+                                      const SizedBox(width: 15),
                                       SvgPicture.asset(
                                         width: 9,
                                         height: 9,

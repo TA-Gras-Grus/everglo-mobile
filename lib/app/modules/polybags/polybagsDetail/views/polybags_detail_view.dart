@@ -1,6 +1,8 @@
+import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/views/component/polybags_status.dart';
 import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/views/component/statistic_tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -8,7 +10,7 @@ import 'package:get/get.dart';
 import '../controllers/polybags_detail_controller.dart';
 
 class PolybagsDetailView extends GetView<PolybagsDetailController> {
-  const PolybagsDetailView({Key? key}) : super(key: key);
+  const PolybagsDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +26,12 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(20)),
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black, size: 20),
+              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 20),
               onPressed: () => Navigator.pop(Get.context!),
             ),
           ),
         ),
-        title: Text('Polybag Detail',
+        title: const Text('Polybag Detail',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -39,15 +41,17 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
       body: SingleChildScrollView(
         child: Obx(() {
           if (controller.isLoading.value) {
-            return const Center(
-              child: Text('Loading...'),
+            return Center(
+              child: SpinKitFoldingCube(
+                color: UiColor().primary,
+              ),
             );
           } else {
             return Column(
               children: [
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20),
+                  padding: const EdgeInsets.only(left: 0),
                   child: Container(
                     height: 66,
                     width: 353,
@@ -66,13 +70,13 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                         ]),
                     child: Row(
                       children: [
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Container(
                           height: 48,
                           width: 48,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: Color(0xFFE5F7ED),
+                              color: const Color(0xFFE5F7ED),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(
@@ -90,14 +94,14 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 11),
+                        const SizedBox(width: 11),
                         Padding(
                           padding: const EdgeInsets.only(top: 18),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Day of Planted',
+                              const Text(
+                                'Day Of Planted',
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
@@ -105,8 +109,9 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                                 ),
                               ),
                               Text(
-                                'January 20, 2024',
-                                style: TextStyle(
+                                controller.toLocalDate(
+                                    controller.polybag.value.dayOfPlanted!),
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -114,13 +119,13 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                             ],
                           ),
                         ),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Container(
                           height: 48,
                           width: 48,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: Color(0xFFE5F7ED),
+                              color: const Color(0xFFE5F7ED),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(
@@ -138,13 +143,13 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 11),
+                        const SizedBox(width: 11),
                         Padding(
                           padding: const EdgeInsets.only(top: 18),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Day After Plant',
                                 style: TextStyle(
                                   fontSize: 10,
@@ -153,8 +158,8 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                                 ),
                               ),
                               Text(
-                                '6',
-                                style: TextStyle(
+                                '${controller.polybag.value.polybagDatas!.isNotEmpty ? controller.polybag.value.polybagDatas![0].dayAfterPlanted ?? 0 : 0}',
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -166,11 +171,16 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
-                PolybagsStatus(status: 'unharvested'),
-                SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.only(right: 260),
+                const SizedBox(height: 16),
+                PolybagsStatus(
+                  id: controller.polybag.value.polybagId ?? "",
+                  status: controller.polybag.value.isActive!
+                      ? 'unharvested'
+                      : 'harvested',
+                ),
+                const SizedBox(height: 16),
+                const Padding(
+                  padding: EdgeInsets.only(right: 260),
                   child: Text(
                     "Statistic",
                     style: TextStyle(
@@ -179,8 +189,8 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
-                StatisticTabs(),
+                const SizedBox(height: 16),
+                const StatisticTabs(),
               ],
             );
           }

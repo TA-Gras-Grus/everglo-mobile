@@ -1,18 +1,23 @@
-import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/controllers/polybags_detail_controller.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/controllers/polybags_detail_controller.dart';
 
 class PolybagsStatus extends GetView<PolybagsDetailController> {
   final String status;
+  final String id;
 
-  const PolybagsStatus({Key? key, required this.status}) : super(key: key);
+  const PolybagsStatus({
+    required this.status,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 0),
       child: Container(
         height: 66,
         width: 353,
@@ -36,13 +41,14 @@ class PolybagsStatus extends GetView<PolybagsDetailController> {
     bool isActive = status == "harvested";
     return Row(
       children: [
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Container(
           height: 48,
           width: 48,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: isActive ? Color(0xFFE5F7ED) : Color(0xFFFEEDB7),
+              color:
+                  isActive ? const Color(0xFFE5F7ED) : const Color(0xFFFEEDB7),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey
@@ -60,27 +66,48 @@ class PolybagsStatus extends GetView<PolybagsDetailController> {
                 : SvgPicture.asset('assets/icons/unharvested.svg'),
           ),
         ),
-        SizedBox(width: 11),
+        const SizedBox(width: 11),
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(width: 10),
-            Container(
-              height: 6,
-              width: 6,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isActive ? Color(0xFF40916C) : Color(0xFFF79E1B),
-              ),
-            ),
-            SizedBox(width: 10),
-            Text(
-              status == "harvested" ? 'Harvested' : 'Unharvested',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 5),
+                  child: Text(
+                    id,
+                    style: TextStyle(fontSize: 10, color: Colors.black54),
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: 10),
+                    Container(
+                      height: 6,
+                      width: 6,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isActive
+                            ? const Color(0xFF40916C)
+                            : const Color(0xFFF79E1B),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      status == "harvested" ? 'Harvested' : 'Unharvested',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )
           ],
         ),
       ],

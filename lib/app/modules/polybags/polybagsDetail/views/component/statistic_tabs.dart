@@ -1,9 +1,10 @@
 import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/controllers/polybags_detail_controller.dart';
+import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/views/component/line_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class StatisticTabs extends GetView<PolybagsDetailController> {
-  const StatisticTabs({Key? key}) : super(key: key);
+  const StatisticTabs({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +21,23 @@ class StatisticTabs extends GetView<PolybagsDetailController> {
                 borderRadius: const BorderRadius.all(Radius.circular(14)),
                 child: Container(
                   height: 48,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(14)),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(14)),
                     color: Colors.white,
                   ),
                   child: TabBar(
                     indicatorSize: TabBarIndicatorSize.tab,
-                    indicatorPadding: EdgeInsets.all(6),
+                    indicatorPadding: const EdgeInsets.all(6),
                     dividerColor: Colors.transparent,
-                    indicator: BoxDecoration(
+                    indicator: const BoxDecoration(
                       color: Color(0xFF52B788),
-                      borderRadius: const BorderRadius.all(Radius.circular(14)),
+                      borderRadius: BorderRadius.all(Radius.circular(14)),
                     ),
                     labelColor: Colors.white,
-                    labelStyle: TextStyle(fontWeight: FontWeight.w700),
-                    unselectedLabelColor: Color(0xFF7D8184),
+                    labelStyle: const TextStyle(fontWeight: FontWeight.w700),
+                    unselectedLabelColor: const Color(0xFF7D8184),
                     unselectedLabelStyle:
-                        TextStyle(fontWeight: FontWeight.w400),
+                        const TextStyle(fontWeight: FontWeight.w400),
                     tabs: [
                       TabItem('NPK'),
                       TabItem('EC/PH'),
@@ -45,7 +46,7 @@ class StatisticTabs extends GetView<PolybagsDetailController> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
                 height: 16), // Add some space between the TabBar and TabBarView
             Expanded(
               child: TabBarView(
@@ -65,26 +66,26 @@ class StatisticTabs extends GetView<PolybagsDetailController> {
                                   const BorderRadius.all(Radius.circular(14)),
                               child: Container(
                                 height: 48,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(14)),
+                                decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(14)),
                                   color: Color(0xFFF2F2F2),
                                 ),
                                 child: TabBar(
                                   indicatorSize: TabBarIndicatorSize.tab,
-                                  indicatorPadding: EdgeInsets.all(6),
+                                  indicatorPadding: const EdgeInsets.all(6),
                                   dividerColor: Colors.transparent,
-                                  indicator: BoxDecoration(
+                                  indicator: const BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(14)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(14)),
                                   ),
                                   labelColor: Colors.black,
-                                  labelStyle:
-                                      TextStyle(fontWeight: FontWeight.w700),
-                                  unselectedLabelColor: Color(0xFF7D8184),
-                                  unselectedLabelStyle:
-                                      TextStyle(fontWeight: FontWeight.w600),
+                                  labelStyle: const TextStyle(
+                                      fontWeight: FontWeight.w700),
+                                  unselectedLabelColor: const Color(0xFF7D8184),
+                                  unselectedLabelStyle: const TextStyle(
+                                      fontWeight: FontWeight.w600),
                                   tabs: [
                                     TabItem('Daily'),
                                     TabItem('Week'),
@@ -94,11 +95,15 @@ class StatisticTabs extends GetView<PolybagsDetailController> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 16),
-                          Expanded(
+                          const SizedBox(height: 16),
+                          const Expanded(
                             child: TabBarView(
                               children: [
-                                Center(child: Text('Daily Content')),
+                                Center(
+                                    child: Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: EvergloChart(),
+                                )),
                                 Center(child: Text('Week Content')),
                                 Center(child: Text('Month Content')),
                               ],
@@ -122,26 +127,26 @@ class StatisticTabs extends GetView<PolybagsDetailController> {
                                   const BorderRadius.all(Radius.circular(14)),
                               child: Container(
                                 height: 48,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(14)),
+                                decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(14)),
                                   color: Color(0xFFF2F2F2),
                                 ),
                                 child: TabBar(
                                   indicatorSize: TabBarIndicatorSize.tab,
-                                  indicatorPadding: EdgeInsets.all(6),
+                                  indicatorPadding: const EdgeInsets.all(6),
                                   dividerColor: Colors.transparent,
-                                  indicator: BoxDecoration(
+                                  indicator: const BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(14)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(14)),
                                   ),
                                   labelColor: Colors.black,
-                                  labelStyle:
-                                      TextStyle(fontWeight: FontWeight.w700),
-                                  unselectedLabelColor: Color(0xFF7D8184),
-                                  unselectedLabelStyle:
-                                      TextStyle(fontWeight: FontWeight.w600),
+                                  labelStyle: const TextStyle(
+                                      fontWeight: FontWeight.w700),
+                                  unselectedLabelColor: const Color(0xFF7D8184),
+                                  unselectedLabelStyle: const TextStyle(
+                                      fontWeight: FontWeight.w600),
                                   tabs: [
                                     TabItem('Daily'),
                                     TabItem('Week'),
@@ -151,7 +156,7 @@ class StatisticTabs extends GetView<PolybagsDetailController> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           const Expanded(
                             child: TabBarView(
                               children: [

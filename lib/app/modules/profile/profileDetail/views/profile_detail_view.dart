@@ -82,8 +82,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                               ),
                             ],
                             image: const DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/profileAdiat.jpeg'),
+                                image: AssetImage('assets/images/bagas.jpg'),
                                 fit: BoxFit.cover),
                           ),
                         ),

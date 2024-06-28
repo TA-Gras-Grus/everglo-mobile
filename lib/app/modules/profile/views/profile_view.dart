@@ -84,7 +84,7 @@ class ProfileView extends GetView<ProfileController> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(60),
                                 child: Image.asset(
-                                  'assets/images/profileAdiat.jpeg',
+                                  'assets/images/bagas.jpg',
                                   fit: BoxFit.cover,
                                 ),
                               ),

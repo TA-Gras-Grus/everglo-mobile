@@ -100,7 +100,7 @@ class ScanButton extends StatelessWidget {
         ),
         child: FittedBox(
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () => Get.toNamed('/polybag-scanner'),
             child: Icon(Icons.qr_code_2),
             backgroundColor: Color(0xFF00AD7C),
             foregroundColor: Colors.white,
