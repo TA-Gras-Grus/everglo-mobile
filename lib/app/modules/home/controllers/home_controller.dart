@@ -1,19 +1,31 @@
+import 'dart:convert';
+
 import 'package:everglo_mobile/app/data/models/Response.dart';
 import 'package:everglo_mobile/app/data/models/greenhouse.dart';
 import 'package:everglo_mobile/app/data/repository/greenhouse_repository.dart';
 import 'package:everglo_mobile/app/helpers/global_controller.dart';
+import 'package:everglo_mobile/app/helpers/notification_snackbar.dart';
+import 'package:everglo_mobile/app/modules/home/controllers/mqtt_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mqtt_client/mqtt_client.dart';
 
 class HomeController extends GetxController {
   final GlobalController globalController = Get.find();
+  final MqttService mqttService = Get.put(MqttService());
   RxBool isLoading = true.obs;
   RxBool isflowBottomSheet = false.obs;
   RxBool isflowSwitchOn = false.obs;
   RxBool isSetDrip = false.obs;
   RxBool isHeaterSwitchOn = false.obs;
   RxBool isBlowerSwitchOn = false.obs;
+  RxBool onDripUpdate = false.obs;
+  RxBool onBlowerUpdate = false.obs;
+  RxBool onHeaterUpdate = false.obs;
+  RxBool onFlowUpdate = false.obs;
+  RxString flowInterval = "".obs;
+  RxString irrigationTime = "".obs;
   Rx<GetStorage> storage = GetStorage().obs;
   Rx<ListGreenhouseSum> listGreenhouse = ListGreenhouseSum.fromJson({
     "greenhouse": [
@@ -52,6 +64,8 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     isLoading.value = true;
+    mqttService.connect();
+    mqttService.client?.onSubscribed = onSubscribed;
     globalController.getListGreenhouse().then(
           (value) => {
             listGreenhouse.value = value,
@@ -89,41 +103,100 @@ class HomeController extends GetxController {
         );
   }
 
-  void onFlowSwitch(bool confirmSwitchOn) {
-    if (confirmSwitchOn) {
-      // Toggle only if confirmed
-      isflowSwitchOn.value = true;
+  @override
+  void onClose() {
+    super.onClose();
+    mqttService.disconnect();
+  }
+
+  void onFlowSwitch() {
+    onFlowUpdate.value = true;
+    final bool status = greenhouse.value.statusWaterFlow! ? false : true;
+    if (status) {
+      updateGreenhouse(null, null, status, null, null)
+          .then((value) => {
+                NotificationSnackbar()
+                    .success('Greenhouse updated', 'The blower is now on'),
+                onFlowUpdate.value = false
+              })
+          .onError((error, stackTrace) => {onFlowUpdate.value = false});
     } else {
-      // If 'No' is pressed, revert the switch to the previous state
-      isflowSwitchOn.value = false;
+      updateGreenhouse(false, null, status, null, null)
+          .then((value) => {
+                NotificationSnackbar()
+                    .success('Greenhouse updated', 'The blower is now off'),
+                onFlowUpdate.value = false
+              })
+          .onError((error, stackTrace) => {onFlowUpdate.value = false});
     }
     Navigator.pop(Get.context!); // Close bottom sheet
   }
 
   void onBlowerSwitch(bool confirmSwitchOn) {
+    onBlowerUpdate.value = true;
     if (confirmSwitchOn) {
-      isBlowerSwitchOn.value = true;
+      updateGreenhouse(true, null, null, null, null)
+          .then((value) => {
+                NotificationSnackbar()
+                    .success('Greenhouse updated', 'The blower is now on'),
+                onBlowerUpdate.value = false
+              })
+          .onError((error, stackTrace) => {onBlowerUpdate.value = false});
     } else {
-      isBlowerSwitchOn.value = false;
+      updateGreenhouse(false, null, null, null, null)
+          .then((value) => {
+                NotificationSnackbar()
+                    .success('Greenhouse updated', 'The blower is now off'),
+                onBlowerUpdate.value = false
+              })
+          .onError((error, stackTrace) => {onBlowerUpdate.value = false});
     }
   }
 
   void onHeaterSwitch(bool confirmSwitchOn) {
+    onHeaterUpdate.value = true;
     if (confirmSwitchOn) {
-      isHeaterSwitchOn.value = true;
+      updateGreenhouse(null, true, null, null, null)
+          .then((value) => {
+                NotificationSnackbar()
+                    .success('Greenhouse updated', 'The heater is now on'),
+                onHeaterUpdate.value = false
+              })
+          .onError((error, stackTrace) => {onHeaterUpdate.value = false});
     } else {
-      isHeaterSwitchOn.value = false;
+      updateGreenhouse(null, false, null, null, null)
+          .then((value) => {
+                NotificationSnackbar()
+                    .success('Greenhouse updated', 'The heater is now off'),
+                onHeaterUpdate.value = false
+              })
+          .onError((error, stackTrace) => {onHeaterUpdate.value = false});
     }
   }
 
-  void onSetDrip(bool confirmSet) {
-    //Drip Irrigation Setting Function
-    if (confirmSet) {
-      isSetDrip.value = true;
-    } else {
-      isSetDrip.value = false;
-    }
-    Navigator.pop(Get.context!);
+  void onSetDrip() {
+    onDripUpdate.value = true;
+    final interval = flowInterval.value.isNotEmpty
+        ? flowInterval.value
+        : greenhouse.value.intervalWaterFlow;
+    final time = irrigationTime.value.isNotEmpty
+        ? irrigationTime.value
+        : greenhouse.value.timeWaterFlow;
+    updateGreenhouse(null, null, null, int.parse(time.toString()),
+            int.parse(interval.toString()))
+        .then((value) => {
+              Navigator.pop(Get.context!),
+              onDripUpdate.value = false,
+              showModalBottomSheet<void>(
+                context: Get.context!,
+                builder: _updatedSetDripBottomSheet,
+              )
+            })
+        .onError((error, stackTrace) => {
+              onDripUpdate.value = false,
+              NotificationSnackbar()
+                  .error('Failed', 'Drip irrigation failed to update')
+            });
   }
 
   void onCreateGreenhouse(bool confirmSet) {
@@ -157,4 +230,103 @@ class HomeController extends GetxController {
     greenhouse.value = listGreenhouse.greenhouse![0];
     return listGreenhouse;
   }
+
+  Future<void> updateGreenhouse(
+    bool? blower,
+    bool? heater,
+    bool? flow,
+    int? flowTime,
+    int? interval,
+  ) async {
+    final response = await GreenhouseRepository().updateGreenhouse(
+      greenhouse.value.greenhouseId ?? "",
+      greenhouse.value.name ?? "",
+      blower ?? greenhouse.value.statusBlower ?? true,
+      heater ?? greenhouse.value.statusHeater ?? true,
+      flow ?? greenhouse.value.statusWaterFlow ?? true,
+      flowTime ?? greenhouse.value.timeWaterFlow ?? 0,
+      interval ?? greenhouse.value.intervalWaterFlow ?? 0,
+    );
+    ResponseSuccess result = ResponseSuccess.fromJson(response);
+    greenhouse.value = Greenhouse.fromJson(result.data);
+  }
+
+  void onSubscribed(String topic) {
+    mqttService.client?.updates
+        ?.listen((List<MqttReceivedMessage<MqttMessage>> event) {
+      final MqttPublishMessage recMess = event[0].payload as MqttPublishMessage;
+      final String message =
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      Greenhouse fromMessage = Greenhouse.fromJson(jsonDecode(message));
+      if (fromMessage.greenhouseId == greenhouse.value.greenhouseId) {
+        printInfo(info: fromMessage.statusBlower.toString());
+        greenhouse.value = fromMessage;
+      }
+    });
+  }
+
+  Widget _updatedSetDripBottomSheet(BuildContext context) => Container(
+        height: 398,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20), color: Colors.white),
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 40, bottom: 12),
+                width: 132,
+                height: 132,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Image.asset('assets/images/updated.png'),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 12),
+                child: Text(
+                  'Drip Irrigation Updated',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 35, right: 30, bottom: 24),
+                child: Text(
+                  'Your drip irrigation setting  has been successfully updated, changes are reflected real time.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF838FA0),
+                  ),
+                ),
+              ),
+              MaterialButton(
+                onPressed: () => Navigator.pop(Get.context!),
+                child: Container(
+                  margin: const EdgeInsets.only(left: 14, right: 5),
+                  height: 50,
+                  width: 327,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF52B788),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Confirm',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 }

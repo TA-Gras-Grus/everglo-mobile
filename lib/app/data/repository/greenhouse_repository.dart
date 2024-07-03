@@ -14,4 +14,25 @@ class GreenhouseRepository {
     );
     return await response.data;
   }
+
+  updateGreenhouse(
+    String id,
+    String name,
+    bool blower,
+    bool heater,
+    bool flow,
+    int flowTime,
+    int interval,
+  ) async {
+    final response = await ApiClient()
+        .patch('/greenhouses/update-greenhouse?greenhouseId=$id', data: {
+      'name': name,
+      'statusBlower': blower,
+      'statusHeater': heater,
+      'timeWaterFlow': flowTime,
+      'intervalWaterFlow': interval,
+      'statusWaterFlow': flow
+    });
+    return await response.data;
+  }
 }

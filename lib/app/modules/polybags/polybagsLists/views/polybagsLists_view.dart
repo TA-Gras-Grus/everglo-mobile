@@ -46,43 +46,51 @@ class PolybagsListsView extends GetView<PolybagsListsController> {
               ),
             );
           } else {
-            return SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  PolybagHeader(
-                      plantsName: controller.polybags[0].namePlantType ?? "",
-                      polybagSize: controller.polybags[0].generalSize ?? ""),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 310, bottom: 20),
-                    child: Text(
-                      "List",
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+            return RefreshIndicator(
+              onRefresh: () async {
+                controller.getPolybags();
+              },
+              color: UiColor().primary,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    PolybagHeader(
+                        plantsName: controller.polybags[0].namePlantType ?? "",
+                        polybagSize: controller.polybags[0].generalSize ?? ""),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 310, bottom: 20),
+                      child: Text(
+                        "List",
+                        style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
-                  controller.polybags.isNotEmpty
-                      ? Column(
-                          children: controller.polybags
-                              .map(
-                                (e) => PolybagsList(
-                                  polybagId: e.polybagId ?? "",
-                                  dayAfterPlant: e.polybagDatas!.isNotEmpty
-                                      ? e.polybagDatas![0].dayAfterPlanted ?? 0
-                                      : 0,
-                                  dayOfPlanted:
-                                      controller.toLocalDate(e.dayOfPlanted!),
-                                  status:
-                                      e.isActive! ? 'unharvesred' : 'harvested',
-                                ),
-                              )
-                              .toList(),
-                        )
-                      : SizedBox()
-                ],
+                    controller.polybags.isNotEmpty
+                        ? Column(
+                            children: controller.polybags
+                                .map(
+                                  (e) => PolybagsList(
+                                    polybagId: e.polybagId ?? "",
+                                    dayAfterPlant: e.polybagDatas!.isNotEmpty
+                                        ? e.polybagDatas![0].dayAfterPlanted ??
+                                            0
+                                        : 0,
+                                    dayOfPlanted:
+                                        controller.toLocalDate(e.dayOfPlanted!),
+                                    status: e.isActive!
+                                        ? 'unharvesred'
+                                        : 'harvested',
+                                  ),
+                                )
+                                .toList(),
+                          )
+                        : SizedBox()
+                  ],
+                ),
               ),
             );
           }

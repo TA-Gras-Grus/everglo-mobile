@@ -76,7 +76,7 @@ class AppPages {
         ),
         GetPage(
           name: _Paths.POLYBAGS_DETAIL,
-          page: () => const PolybagsDetailView(),
+          page: () => PolybagsDetailView(),
           binding: PolybagsDetailBinding(),
         ),
       ],

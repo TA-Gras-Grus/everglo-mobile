@@ -36,34 +36,32 @@ class PolybagsPlantsView extends GetView<PolybagsPlantsController> {
             )),
         centerTitle: true,
       ),
-      body: Center(
-        child: Obx(() {
-          if (controller.isLoading.value) {
-            return Center(
-              child: SpinKitFoldingCube(
-                color: UiColor().primary,
-              ),
-            );
-          } else {
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    children: controller.plantTypes.value.plantType!
-                        .map((e) => ListPlants(
-                              plantsName: e.name ?? "",
-                              numberOfPolybags: e.totalPolybag ?? 0,
-                              plantsId: e.plantTypeId,
-                              plantsImage: 'assets/images/chiliPlants.png',
-                            ))
-                        .toList(),
-                  ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Center(
+            child: SpinKitFoldingCube(
+              color: UiColor().primary,
+            ),
+          );
+        } else {
+          return Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: controller.plantTypes.value.plantType!
+                      .map((e) => ListPlants(
+                            plantsName: e.name ?? "",
+                            numberOfPolybags: e.totalPolybag ?? 0,
+                            plantsId: e.plantTypeId,
+                            plantsImage: 'assets/images/chiliPlants.png',
+                          ))
+                      .toList(),
                 ),
-              ],
-            );
-          }
-        }),
-      ),
+              ),
+            ],
+          );
+        }
+      }),
     );
   }
 }

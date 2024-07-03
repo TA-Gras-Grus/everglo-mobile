@@ -21,7 +21,7 @@ class ListPlants extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Container(
         width: 100,
         height: 125,
@@ -36,7 +36,7 @@ class ListPlants extends StatelessWidget {
                 Container(
                   width: 125,
                   height: 125,
-                  padding: EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(30),
                   decoration: BoxDecoration(
                       color: UiColor().primary,
                       borderRadius: BorderRadius.circular(10)),
@@ -100,7 +100,7 @@ class ListPlants extends StatelessWidget {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 85),
+                              padding: const EdgeInsets.only(left: 100),
                               child: MaterialButton(
                                 onPressed: () => Get.toNamed(
                                     '/polybags/polybags-lists',

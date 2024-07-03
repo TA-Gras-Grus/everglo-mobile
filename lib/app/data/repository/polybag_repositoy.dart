@@ -15,4 +15,11 @@ class PolybagRepository {
         .get('/polybags/get-all-polybag?page=1&size=1&polybagId=$polybagId');
     return await response.data;
   }
+
+  updatePolybag(String polybagId, String weight) async {
+    final response = await ApiClient().patch(
+        '/polybags/update-polybag?polybagId=$polybagId',
+        data: {'isActive': false, 'weightOfHarvest': weight});
+    return await response.data;
+  }
 }

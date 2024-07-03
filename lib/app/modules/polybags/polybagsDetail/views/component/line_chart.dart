@@ -1,15 +1,79 @@
+import 'package:everglo_mobile/app/data/models/polybag.dart';
 import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class EvergloChart extends StatelessWidget {
-  const EvergloChart({super.key});
+  final List<PolybagData> data;
+  const EvergloChart({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
     return LineChart(
-      sampleData1,
-      duration: const Duration(milliseconds: 250),
+      LineChartData(
+        borderData: FlBorderData(
+          show: true,
+          border: Border.all(
+            color: const Color(0xff37434d),
+            width: 1,
+          ),
+        ),
+        gridData: FlGridData(show: true),
+        titlesData: FlTitlesData(
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 22,
+              getTitlesWidget: (value, meta) {
+                return Text(
+                  value.toInt().toString(),
+                  style: const TextStyle(
+                    color: Color(0xff68737d),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                );
+              },
+            ),
+          ),
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              getTitlesWidget: (value, meta) {
+                return Text(
+                  value.toString(),
+                  style: const TextStyle(
+                    color: Color(0xff67727d),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        minX: 0,
+        maxX: data.length.toDouble(),
+        minY: 0,
+        maxY: 20,
+        lineBarsData: [
+          LineChartBarData(
+            spots: data
+                .map((e) =>
+                    FlSpot(e.dayAfterPlanted!.toDouble(), e.ec!.toDouble()))
+                .toList(),
+            isCurved: true,
+            barWidth: 1,
+            isStrokeCapRound: true,
+            dotData: FlDotData(
+              show: false,
+            ),
+            belowBarData: BarAreaData(
+              show: false,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

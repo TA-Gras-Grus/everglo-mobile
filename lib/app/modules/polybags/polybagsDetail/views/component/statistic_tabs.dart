@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class StatisticTabs extends GetView<PolybagsDetailController> {
-  const StatisticTabs({super.key});
+  final data;
+  const StatisticTabs({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -96,13 +97,13 @@ class StatisticTabs extends GetView<PolybagsDetailController> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          const Expanded(
+                          Expanded(
                             child: TabBarView(
                               children: [
                                 Center(
                                     child: Padding(
                                   padding: EdgeInsets.all(10),
-                                  child: EvergloChart(),
+                                  child: EvergloChart(data: data),
                                 )),
                                 Center(child: Text('Week Content')),
                                 Center(child: Text('Month Content')),

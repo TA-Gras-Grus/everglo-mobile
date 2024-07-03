@@ -493,25 +493,27 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 40,
-                      width: 54,
-                      child: FittedBox(
-                        fit: BoxFit.fill,
-                        child: Switch.adaptive(
-                          value: controller.isBlowerSwitchOn.value,
-                          activeColor: UiColor().primary,
-                          onChanged: (bool value) {
-                            controller.isBlowerSwitchOn.value = value;
-                            if (value) {
-                              controller.isBlowerSwitchOn.value = true;
-                            } else {
-                              controller.isBlowerSwitchOn.value = value;
-                            }
-                          },
-                        ),
-                      ),
-                    ),
+                    controller.onBlowerUpdate.value
+                        ? SpinKitFadingCircle(
+                            color: UiColor().primary,
+                            size: 35,
+                          )
+                        : SizedBox(
+                            height: 40,
+                            width: 54,
+                            child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: Switch.adaptive(
+                                value:
+                                    controller.greenhouse.value.statusBlower ??
+                                        false,
+                                activeColor: UiColor().primary,
+                                onChanged: (bool value) {
+                                  controller.onBlowerSwitch(value);
+                                },
+                              ),
+                            ),
+                          ),
                   ],
                 ),
                 const SizedBox(height: 7),
@@ -574,25 +576,27 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 40,
-                      width: 54,
-                      child: FittedBox(
-                        fit: BoxFit.fill,
-                        child: Switch.adaptive(
-                          activeColor: UiColor().primary,
-                          value: controller.isHeaterSwitchOn.value,
-                          onChanged: (bool value) {
-                            controller.isHeaterSwitchOn.value = value;
-                            if (value) {
-                              controller.isHeaterSwitchOn.value = true;
-                            } else {
-                              controller.isHeaterSwitchOn.value = value;
-                            }
-                          },
-                        ),
-                      ),
-                    ),
+                    controller.onHeaterUpdate.value
+                        ? SpinKitFadingCircle(
+                            color: UiColor().primary,
+                            size: 35,
+                          )
+                        : SizedBox(
+                            height: 40,
+                            width: 54,
+                            child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: Switch.adaptive(
+                                activeColor: UiColor().primary,
+                                value:
+                                    controller.greenhouse.value.statusHeater ??
+                                        false,
+                                onChanged: (bool value) {
+                                  controller.onHeaterSwitch(value);
+                                },
+                              ),
+                            ),
+                          ),
                   ],
                 ),
                 const SizedBox(height: 7),
@@ -1105,31 +1109,30 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 40,
-                                    width: 54,
-                                    child: FittedBox(
-                                      fit: BoxFit.fill,
-                                      child: Switch.adaptive(
-                                        activeColor: UiColor().primary,
-                                        value:
-                                            controller.isflowBottomSheet.value,
-                                        onChanged: (bool value) {
-                                          controller.isflowBottomSheet.value =
-                                              value;
-                                          if (value) {
-                                            showModalBottomSheet<void>(
-                                              context: context,
-                                              builder: _flowBottomSheet,
-                                            );
-                                          } else {
-                                            controller.isflowSwitchOn.value =
-                                                value;
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ),
+                                  controller.onFlowUpdate.value
+                                      ? SpinKitFadingCircle(
+                                          color: UiColor().primary,
+                                          size: 35,
+                                        )
+                                      : SizedBox(
+                                          height: 40,
+                                          width: 54,
+                                          child: FittedBox(
+                                            fit: BoxFit.fill,
+                                            child: Switch.adaptive(
+                                              activeColor: UiColor().primary,
+                                              value: controller.greenhouse.value
+                                                      .statusWaterFlow ??
+                                                  false,
+                                              onChanged: (bool value) {
+                                                showModalBottomSheet<void>(
+                                                  context: context,
+                                                  builder: _flowBottomSheet,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
                                 ],
                               ),
                               const SizedBox(height: 7),
@@ -1181,7 +1184,9 @@ class HomeView extends GetView<HomeController> {
                     padding: const EdgeInsets.only(
                         left: 35, right: 30, top: 24, bottom: 24),
                     child: Text(
-                      'Are you sure want to turn on drip\nirrigation system?',
+                      controller.greenhouse.value.statusWaterFlow!
+                          ? 'Are you sure want to turn off drip\nirrigation system?'
+                          : 'Are you sure want to turn on drip\nirrigation system?',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         fontSize: 18,
@@ -1197,7 +1202,9 @@ class HomeView extends GetView<HomeController> {
                     padding:
                         const EdgeInsets.only(left: 35, right: 30, bottom: 28),
                     child: Text(
-                      'The drip irrigation system will be turned on\nonce, click yes if you want to continue.',
+                      controller.greenhouse.value.statusWaterFlow!
+                          ? 'The drip irrigation system will be turned off,\n click yes if you want to continue.'
+                          : 'The drip irrigation system will be turned on\nonce, click yes if you want to continue.',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         fontSize: 14,
@@ -1210,7 +1217,7 @@ class HomeView extends GetView<HomeController> {
               Row(
                 children: [
                   MaterialButton(
-                    onPressed: () => controller.onFlowSwitch(false),
+                    onPressed: () => Navigator.pop(context),
                     child: Container(
                       margin: const EdgeInsets.only(left: 14, right: 5),
                       height: 54,
@@ -1232,7 +1239,7 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                   MaterialButton(
-                    onPressed: () => controller.onFlowSwitch(true),
+                    onPressed: () => controller.onFlowSwitch(),
                     child: Container(
                       height: 54,
                       width: 142,
@@ -1315,6 +1322,10 @@ class HomeView extends GetView<HomeController> {
                       child: FormBuilderTextField(
                         // key: _flowInterval,
                         name: 'waterFlowInterval',
+                        initialValue: controller
+                            .greenhouse.value.intervalWaterFlow
+                            .toString(),
+                        keyboardType: TextInputType.number,
                         cursorColor: const Color(0xFF00AD7C),
                         decoration: InputDecoration(
                           errorStyle: const TextStyle(fontSize: 0.01),
@@ -1351,6 +1362,8 @@ class HomeView extends GetView<HomeController> {
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         validator: null,
+                        onChanged: (value) =>
+                            {controller.flowInterval.value = value ?? ""},
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -1372,6 +1385,9 @@ class HomeView extends GetView<HomeController> {
                       child: FormBuilderTextField(
                         // key: _flowTime,
                         name: 'waterFlowTime',
+                        initialValue: controller.greenhouse.value.timeWaterFlow
+                            .toString(),
+                        keyboardType: TextInputType.number,
                         cursorColor: const Color(0xFF00AD7C),
                         decoration: InputDecoration(
                           errorStyle: const TextStyle(fontSize: 0.01),
@@ -1408,6 +1424,8 @@ class HomeView extends GetView<HomeController> {
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         validator: null,
+                        onChanged: (value) =>
+                            {controller.irrigationTime.value = value ?? ""},
                       ),
                     ),
                   ],
@@ -1417,7 +1435,7 @@ class HomeView extends GetView<HomeController> {
               Row(
                 children: [
                   MaterialButton(
-                    onPressed: () => controller.onSetDrip(false),
+                    onPressed: () => {Navigator.pop(context)},
                     child: Container(
                       margin: const EdgeInsets.only(left: 14, right: 14),
                       height: 54,
@@ -1440,13 +1458,9 @@ class HomeView extends GetView<HomeController> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      controller.onSetDrip(true);
-                      if (true) {
-                        showModalBottomSheet<void>(
-                          context: context,
-                          builder: _updatedSetDripBottomSheet,
-                        );
-                      }
+                      controller.onDripUpdate.value
+                          ? ''
+                          : controller.onSetDrip();
                     },
                     child: Container(
                       height: 54,
@@ -1456,85 +1470,25 @@ class HomeView extends GetView<HomeController> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Center(
-                        child: Text(
-                          'Change',
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: controller.onDripUpdate.value
+                            ? const SpinKitFadingCircle(
+                                color: Colors.white,
+                                size: 30,
+                              )
+                            : Text(
+                                'Change',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 40),
-            ],
-          ),
-        ),
-      );
-
-  Widget _updatedSetDripBottomSheet(BuildContext context) => Container(
-        height: 398,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.white),
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 40, bottom: 12),
-                width: 132,
-                height: 132,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Image.asset('assets/images/updated.png'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 12),
-                child: Text(
-                  'Drip Irrigation Updated',
-                  style: GoogleFonts.poppins(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 35, right: 30, bottom: 24),
-                child: Text(
-                  'Your drip irrigation setting  has been successfully updated, changes are reflected real time.',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xFF838FA0),
-                  ),
-                ),
-              ),
-              MaterialButton(
-                onPressed: () => Navigator.pop(Get.context!),
-                child: Container(
-                  margin: const EdgeInsets.only(left: 14, right: 5),
-                  height: 50,
-                  width: 327,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF52B788),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Confirm',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

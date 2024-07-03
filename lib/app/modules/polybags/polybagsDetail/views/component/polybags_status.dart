@@ -8,11 +8,10 @@ import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/controllers/p
 class PolybagsStatus extends GetView<PolybagsDetailController> {
   final String status;
   final String id;
+  final String? weight;
 
-  const PolybagsStatus({
-    required this.status,
-    required this.id,
-  });
+  const PolybagsStatus(
+      {super.key, required this.status, required this.id, this.weight});
 
   @override
   Widget build(BuildContext context) {
@@ -76,36 +75,53 @@ class PolybagsStatus extends GetView<PolybagsDetailController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 5),
+                  padding: const EdgeInsets.only(left: 5),
                   child: Text(
                     id,
-                    style: TextStyle(fontSize: 10, color: Colors.black54),
+                    style: const TextStyle(fontSize: 10, color: Colors.black54),
                   ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(width: 10),
-                    Container(
-                      height: 6,
-                      width: 6,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: isActive
-                            ? const Color(0xFF40916C)
-                            : const Color(0xFFF79E1B),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      status == "harvested" ? 'Harvested' : 'Unharvested',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+                const SizedBox(
+                  height: 10,
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 10),
+                        Container(
+                          height: 6,
+                          width: 6,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: isActive
+                                ? const Color(0xFF40916C)
+                                : const Color(0xFFF79E1B),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          status == "harvested" ? 'Harvested' : 'Unharvested',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 100,
+                    ),
+                    weight != 'null'
+                        ? Text(
+                            '$weight gram',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          )
+                        : const SizedBox(),
+                  ],
+                )
               ],
             )
           ],
