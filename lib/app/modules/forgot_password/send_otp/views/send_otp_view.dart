@@ -109,7 +109,7 @@ class SendOtpView extends GetView<SendOtpController> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       Obx(() {

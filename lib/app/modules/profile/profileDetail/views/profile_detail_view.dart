@@ -2,7 +2,6 @@ import 'package:everglo_mobile/app/helpers/button.dart';
 import 'package:everglo_mobile/app/helpers/enum.dart';
 import 'package:everglo_mobile/app/helpers/global_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,7 +17,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 80,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFFF6F6F6),
         leading: Padding(
           padding:
               const EdgeInsets.only(left: 20, right: 18, top: 10, bottom: 10),
@@ -61,10 +60,10 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
               padding: const EdgeInsets.only(top: 10),
               child: Column(
                 children: [
-                  Row(
+                  Stack(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 122),
+                        padding: const EdgeInsets.only(left: 120),
                         child: Container(
                           height: 154,
                           width: 154,
@@ -81,9 +80,20 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                                     1.0, // Adjust spread radius for shadow size
                               ),
                             ],
-                            image: const DecorationImage(
-                                image: AssetImage('assets/images/bagas.jpg'),
-                                fit: BoxFit.cover),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100.0),
+                            child: Image.network(
+                              'https://via.placeholder.com/138x138?text=${globalController.user.value.firstName![0].toUpperCase()}',
+                              width: 138,
+                              height: 138,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -91,7 +101,7 @@ class ProfileDetailView extends GetView<ProfileDetailController> {
                   ),
                   const SizedBox(height: 30),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: EvergloButton(
                       type: ButtonType.primary,
                       title: 'Edit Profile',

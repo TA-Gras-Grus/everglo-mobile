@@ -56,12 +56,12 @@ class HomeView extends GetView<HomeController> {
       ),
       bottomNavigationBar: const BottomNavbar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: ScanButton(),
+      floatingActionButton: const ScanButton(),
     );
   }
 
   Widget _userInfo() => Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -71,13 +71,13 @@ class HomeView extends GetView<HomeController> {
             children: [
               Row(
                 children: [
-                  Text(
+                  const Text(
                     'Welcome, ',
                     style: TextStyle(fontSize: 12, color: Colors.black87),
                   ),
                   Text(
                     '${globalController.user.value.firstName}',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 12,
                         color: Colors.black87),
@@ -93,14 +93,13 @@ class HomeView extends GetView<HomeController> {
               )
             ],
           ),
-          SizedBox(
-            width: 50,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.asset(
-                'assets/images/bagas.jpg',
-                fit: BoxFit.cover,
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100.0),
+            child: Image.network(
+              'https://via.placeholder.com/100x100?text=${globalController.user.value.firstName![0].toUpperCase()}',
+              width: 50,
+              height: 50,
+              fit: BoxFit.cover,
             ),
           ),
         ],
@@ -671,7 +670,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            '${controller.greenhouse.value.volumeWaterTank?.toStringAsFixed(2)} L',
+                            true ? 'Fill in' : 'FIll out',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -1047,7 +1046,7 @@ class HomeView extends GetView<HomeController> {
                                 children: [
                                   const SizedBox(height: 8),
                                   Text(
-                                    '4 times',
+                                    '${controller.greenhouse.value.countWaterFlow} times',
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,

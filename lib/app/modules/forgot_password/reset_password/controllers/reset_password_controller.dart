@@ -44,10 +44,6 @@ class ResetPasswordController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<void> onSendPassword() async {
     isLoading.value = true;

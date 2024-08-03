@@ -30,16 +30,6 @@ class PolybagsListsController extends GetxController {
     getPolybags();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   Future<void> getPolybags() async {
     isLoading.value = true;
     final res = await PolybagRepository().getPolybags(

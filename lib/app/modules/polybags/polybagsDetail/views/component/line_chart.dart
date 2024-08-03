@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 
 class EvergloChart extends StatelessWidget {
   final List<PolybagData> data;
-  const EvergloChart({super.key, required this.data});
+  final List<AiPredictionElement> ai;
+  final int maxY;
+  const EvergloChart(
+      {super.key, required this.data, required this.ai, required this.maxY});
 
   @override
   Widget build(BuildContext context) {
@@ -15,22 +18,24 @@ class EvergloChart extends StatelessWidget {
           show: true,
           border: Border.all(
             color: const Color(0xff37434d),
-            width: 1,
+            width: 0,
           ),
         ),
-        gridData: FlGridData(show: true),
+        gridData: const FlGridData(show: true),
         titlesData: FlTitlesData(
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              reservedSize: 22,
+              reservedSize: 20,
               getTitlesWidget: (value, meta) {
                 return Text(
-                  value.toInt().toString(),
+                  ai.isNotEmpty
+                      ? 'DAP${ai[value.toInt()].dayAfterPlanted!.toInt()}'
+                      : 'DAP${value.toInt()}',
                   style: const TextStyle(
                     color: Color(0xff68737d),
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 6,
                   ),
                 );
               },
@@ -39,212 +44,102 @@ class EvergloChart extends StatelessWidget {
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
+              reservedSize: 22,
               getTitlesWidget: (value, meta) {
                 return Text(
-                  value.toString(),
+                  value.toInt().toString(),
                   style: const TextStyle(
                     color: Color(0xff67727d),
                     fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    fontSize: 12,
                   ),
                 );
               },
             ),
           ),
+          rightTitles: const AxisTitles(
+              sideTitles: SideTitles(
+            showTitles: false,
+          )),
+          topTitles: const AxisTitles(
+              sideTitles: SideTitles(
+            showTitles: false,
+          )),
         ),
         minX: 0,
-        maxX: data.length.toDouble(),
+        maxX: ai.length.toDouble() != 0 ? ai.length.toDouble() - 1 : 1,
         minY: 0,
-        maxY: 20,
+        maxY: maxY.toDouble(),
         lineBarsData: [
           LineChartBarData(
             spots: data
-                .map((e) =>
-                    FlSpot(e.dayAfterPlanted!.toDouble(), e.ec!.toDouble()))
+                .map((e) => FlSpot(e.dayAfterPlanted!.toDouble(), e.ec!))
                 .toList(),
+            // data.map
+            //     data
+            //     .asMap()
+            //     .map((index, e) =>
+            //         MapEntry(index, FlSpot(index.toDouble(), e.ec!)))
+            //     .values
+            //     .toList(),
             isCurved: true,
-            barWidth: 1,
+            barWidth: 2,
             isStrokeCapRound: true,
-            dotData: FlDotData(
-              show: false,
+            dotData: const FlDotData(
+              show: true,
             ),
             belowBarData: BarAreaData(
-              show: false,
+              show: true,
+              color: Colors.green.shade100,
             ),
+            color: UiColor().primary,
           ),
+          data.isNotEmpty
+              ? data.last.dayAfterPlanted != 90
+                  ? LineChartBarData(
+                      spots: ai
+                          .map((e) =>
+                              FlSpot(e.dayAfterPlanted!.toDouble(), e.ec!))
+                          .toList(),
+                      // ai
+                      //     .asMap()
+                      //     .map((index, e) =>
+                      //         MapEntry(index, FlSpot(index.toDouble(), e.ec!)))
+                      //     .values
+                      //     .toList(),
+                      isCurved: true,
+                      barWidth: 2,
+                      isStrokeCapRound: true,
+                      dotData: const FlDotData(
+                        show: true,
+                      ),
+                      belowBarData: BarAreaData(
+                          show: true, color: Colors.red.withOpacity(0.2)),
+                      color: UiColor().danger,
+                    )
+                  : LineChartBarData()
+              : LineChartBarData(
+                  spots: ai
+                      .map((e) => FlSpot(e.dayAfterPlanted!.toDouble(), e.ec!))
+                      .toList(),
+                  // ai
+                  // .asMap()
+                  // .map((index, e) =>
+                  //     MapEntry(index, FlSpot(index.toDouble(), e.ec!)))
+                  // .values
+                  // .toList(),
+                  isCurved: true,
+                  barWidth: 2,
+                  isStrokeCapRound: true,
+                  dotData: const FlDotData(
+                    show: true,
+                  ),
+                  belowBarData: BarAreaData(
+                      show: true, color: Colors.red.withOpacity(0.2)),
+                  color: UiColor().danger,
+                ),
         ],
       ),
     );
   }
-
-  LineChartData get sampleData1 => LineChartData(
-        lineTouchData: lineTouchData1,
-        gridData: gridData,
-        titlesData: titlesData1,
-        borderData: borderData,
-        lineBarsData: lineBarsData1,
-        minX: 0,
-        maxX: 14,
-        maxY: 4,
-        minY: 0,
-      );
-  FlTitlesData get titlesData1 => FlTitlesData(
-        bottomTitles: AxisTitles(
-          sideTitles: bottomTitles,
-        ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
-        leftTitles: AxisTitles(
-          sideTitles: leftTitles(),
-        ),
-      );
-  SideTitles leftTitles() => SideTitles(
-        getTitlesWidget: leftTitleWidgets,
-        showTitles: true,
-        interval: 1,
-        reservedSize: 40,
-      );
-  Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
-    String text;
-    switch (value.toInt()) {
-      case 1:
-        text = '1m';
-        break;
-      case 2:
-        text = '2m';
-        break;
-      case 3:
-        text = '3m';
-        break;
-      case 4:
-        text = '5m';
-        break;
-      case 5:
-        text = '6m';
-        break;
-      default:
-        return Container();
-    }
-
-    return Text(text, style: style, textAlign: TextAlign.center);
-  }
-
-  Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 16,
-    );
-    Widget text;
-    switch (value.toInt()) {
-      case 2:
-        text = const Text('SEPT', style: style);
-        break;
-      case 7:
-        text = const Text('OCT', style: style);
-        break;
-      case 12:
-        text = const Text('DEC', style: style);
-        break;
-      default:
-        text = const Text('');
-        break;
-    }
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 10,
-      child: text,
-    );
-  }
-
-  SideTitles get bottomTitles => SideTitles(
-        showTitles: true,
-        reservedSize: 32,
-        interval: 1,
-        getTitlesWidget: bottomTitleWidgets,
-      );
-
-  LineTouchData get lineTouchData1 => LineTouchData(
-        handleBuiltInTouches: true,
-        touchTooltipData: LineTouchTooltipData(
-          getTooltipColor: (touchedSpot) => Colors.blueGrey.withOpacity(0.8),
-        ),
-      );
-  List<LineChartBarData> get lineBarsData1 => [
-        lineChartBarData1_1,
-        lineChartBarData1_2,
-        lineChartBarData1_3,
-      ];
-  FlGridData get gridData => const FlGridData(show: false);
-
-  FlBorderData get borderData => FlBorderData(
-        show: true,
-        border: Border(
-          bottom: BorderSide(color: UiColor().primary, width: 4),
-          left: const BorderSide(color: Colors.transparent),
-          right: const BorderSide(color: Colors.transparent),
-          top: const BorderSide(color: Colors.transparent),
-        ),
-      );
-
-  LineChartBarData get lineChartBarData1_1 => LineChartBarData(
-        isCurved: true,
-        color: Colors.yellow,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(show: false),
-        spots: const [
-          FlSpot(1, 1),
-          FlSpot(3, 1.5),
-          FlSpot(5, 1.4),
-          FlSpot(7, 3.4),
-          FlSpot(10, 2),
-          FlSpot(12, 2.2),
-          FlSpot(13, 1.8),
-        ],
-      );
-
-  LineChartBarData get lineChartBarData1_2 => LineChartBarData(
-        isCurved: true,
-        color: Colors.pink,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(
-          show: false,
-          color: Colors.pink[100],
-        ),
-        spots: const [
-          FlSpot(1, 1),
-          FlSpot(3, 2.8),
-          FlSpot(7, 1.2),
-          FlSpot(10, 2.8),
-          FlSpot(12, 2.6),
-          FlSpot(13, 3.9),
-        ],
-      );
-
-  LineChartBarData get lineChartBarData1_3 => LineChartBarData(
-        isCurved: true,
-        color: Colors.blue,
-        barWidth: 8,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(show: false),
-        spots: const [
-          FlSpot(1, 2.8),
-          FlSpot(3, 1.9),
-          FlSpot(6, 3),
-          FlSpot(10, 1.3),
-          FlSpot(13, 2.5),
-        ],
-      );
 }

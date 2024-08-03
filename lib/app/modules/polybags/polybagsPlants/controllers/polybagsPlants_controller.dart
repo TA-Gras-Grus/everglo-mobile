@@ -17,16 +17,6 @@ class PolybagsPlantsController extends GetxController {
         .then((value) => {plantTypes.value = value, isLoading.value = false});
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   Future<ListPlantType> getPlantType() async {
     final response = await PlantTypeRepository().getListPlantType(
         globalController.selectedGreenhouse.value.greenhouseId ?? "");

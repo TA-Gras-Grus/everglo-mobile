@@ -42,12 +42,12 @@ class Greenhouse {
   final double? ppm;
   final num? totalPolybag;
   final num? activePolybag;
-  final double? volumeWaterTank;
+  final bool? statusWaterTank;
   final int? countWaterFlow;
   final String? apiKey;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final List<GreenhouseData>? greenhouseDatas;
+  List<GreenhouseData>? greenhouseDatas;
 
   Greenhouse({
     this.greenhouseId,
@@ -63,7 +63,7 @@ class Greenhouse {
     this.ppm,
     this.activePolybag,
     this.totalPolybag,
-    this.volumeWaterTank,
+    this.statusWaterTank,
     this.countWaterFlow,
     this.apiKey,
     this.createdAt,
@@ -85,7 +85,7 @@ class Greenhouse {
         ppm: json["ppm"]?.toDouble(),
         totalPolybag: json["totalPolybag"]?.toDouble(),
         activePolybag: json["activePolybag"]?.toDouble(),
-        volumeWaterTank: json["volumeWaterTank"]?.toDouble(),
+        statusWaterTank: json["statusWaterTank"],
         countWaterFlow: json["countWaterFlow"],
         apiKey: json["apiKey"],
         createdAt: json["createdAt"] == null
@@ -114,7 +114,7 @@ class Greenhouse {
         "ppm": ppm,
         "activePolybag": activePolybag,
         "totalPolybag": totalPolybag,
-        "volumeWaterTank": volumeWaterTank,
+        "statusWaterTank": statusWaterTank,
         "countWaterFlow": countWaterFlow,
         "apiKey": apiKey,
         "createdAt": createdAt?.toIso8601String(),
@@ -128,8 +128,8 @@ class Greenhouse {
 class GreenhouseData {
   final String? greenhouseDataId;
   final String? ownedGreenhouse;
-  final double? airTemperature;
-  final double? humidity;
+  double? airTemperature;
+  double? humidity;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 

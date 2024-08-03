@@ -119,7 +119,8 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -209,7 +210,8 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -304,7 +306,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 50),
+                      margin: const EdgeInsets.only(bottom: 50),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 0),
                       child: FilledButton(
@@ -322,7 +324,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                             ),
                           ),
                           child: const Text(
-                            'Send OTP',
+                            'Save Changes',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,

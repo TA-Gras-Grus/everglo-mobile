@@ -82,9 +82,11 @@ class ProfileView extends GetView<ProfileController> {
                                     ),
                                   ]),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(60),
-                                child: Image.asset(
-                                  'assets/images/bagas.jpg',
+                                borderRadius: BorderRadius.circular(100.0),
+                                child: Image.network(
+                                  'https://via.placeholder.com/100x100?text=${globalController.user.value.firstName![0].toUpperCase()}',
+                                  width: 50,
+                                  height: 50,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -181,7 +183,7 @@ class ProfileView extends GetView<ProfileController> {
       }),
       bottomNavigationBar: const BottomNavbar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: ScanButton(),
+      floatingActionButton: const ScanButton(),
     );
   }
 

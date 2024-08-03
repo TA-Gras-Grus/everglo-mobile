@@ -9,7 +9,7 @@ class MqttService extends GetxService {
 
   Future<void> connect() async {
     client = MqttServerClient.withPort(
-        'wss://02fa3ba5f83a4760bc66879c7e081d28.s1.eu.hivemq.cloud:8884/mqtt',
+        'wss://a7701bd2b3e54353b8aeab74b9c7f322.s1.eu.hivemq.cloud:8884/mqtt',
         'flutter_client',
         8884);
     client?.logging(on: true);
@@ -19,7 +19,7 @@ class MqttService extends GetxService {
     client?.onConnected = onConnected;
 
     final connMessage = MqttConnectMessage()
-        .authenticateAs('everglo', 'everglo2024')
+        .authenticateAs('everglo', 'Everglo2024')
         .withWillTopic('willtopic')
         .withWillMessage('My Will message')
         .startClean()
@@ -42,7 +42,8 @@ class MqttService extends GetxService {
 
   void onConnected() {
     printInfo(info: 'Connected');
-    client?.subscribe('greenhouse:updated', MqttQos.atMostOnce);
+    client?.subscribe('greenhouse:updated', MqttQos.exactlyOnce);
+    client?.subscribe('greenhouseData:created', MqttQos.exactlyOnce);
   }
 
   void onDisconnected() {

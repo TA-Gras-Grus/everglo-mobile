@@ -23,7 +23,7 @@ class PolybagsList extends StatelessWidget {
     return Container(
       width: 353,
       height: 138,
-      margin: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),

@@ -8,7 +8,12 @@ import 'package:everglo_mobile/app/data/models/Response.dart';
 
 Polybags polybagsFromJson(String str) => Polybags.fromJson(json.decode(str));
 
+AiPrediction aiPredictionFromJson(String str) =>
+    AiPrediction.fromJson(json.decode(str));
+
 String polybagsToJson(Polybags data) => json.encode(data.toJson());
+
+String aiPredictionToJson(AiPrediction data) => json.encode(data.toJson());
 
 class Polybags {
   final List<Polybag>? polybag;
@@ -115,9 +120,9 @@ class PolybagData {
   final String? ownedPolybag;
   final int? dayAfterPlanted;
   final double? ec;
-  final int? n;
-  final int? p;
-  final int? k;
+  final double? n;
+  final double? p;
+  final double? k;
   final double? ph;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -140,9 +145,9 @@ class PolybagData {
         ownedPolybag: json["ownedPolybag"],
         dayAfterPlanted: json["dayAfterPlanted"],
         ec: json["ec"]?.toDouble(),
-        n: json["n"],
-        p: json["p"],
-        k: json["k"],
+        n: json["n"]?.toDouble(),
+        p: json["p"]?.toDouble(),
+        k: json["k"]?.toDouble(),
         ph: json["ph"]?.toDouble(),
         createdAt: json["createdAt"] == null
             ? null
@@ -155,6 +160,84 @@ class PolybagData {
   Map<String, dynamic> toJson() => {
         "polybagDataId": polybagDataId,
         "ownedPolybag": ownedPolybag,
+        "dayAfterPlanted": dayAfterPlanted,
+        "ec": ec,
+        "n": n,
+        "p": p,
+        "k": k,
+        "ph": ph,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+      };
+}
+
+class AiPrediction {
+  final List<AiPredictionElement>? aiPrediction;
+
+  AiPrediction({
+    this.aiPrediction,
+  });
+
+  factory AiPrediction.fromJson(Map<String, dynamic> json) => AiPrediction(
+        aiPrediction: json["aiPrediction"] == null
+            ? []
+            : List<AiPredictionElement>.from(json["aiPrediction"]!
+                .map((x) => AiPredictionElement.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "aiPrediction": aiPrediction == null
+            ? []
+            : List<dynamic>.from(aiPrediction!.map((x) => x.toJson())),
+      };
+}
+
+class AiPredictionElement {
+  final String? aiPredictionId;
+  final String? owned;
+  final int? dayAfterPlanted;
+  final double? ec;
+  final int? n;
+  final int? p;
+  final int? k;
+  final int? ph;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  AiPredictionElement({
+    this.aiPredictionId,
+    this.owned,
+    this.dayAfterPlanted,
+    this.ec,
+    this.n,
+    this.p,
+    this.k,
+    this.ph,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory AiPredictionElement.fromJson(Map<String, dynamic> json) =>
+      AiPredictionElement(
+        aiPredictionId: json["aiPredictionId"],
+        owned: json["owned"],
+        dayAfterPlanted: json["dayAfterPlanted"],
+        ec: json["ec"]?.toDouble(),
+        n: json["n"],
+        p: json["p"],
+        k: json["k"],
+        ph: json["ph"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "aiPredictionId": aiPredictionId,
+        "owned": owned,
         "dayAfterPlanted": dayAfterPlanted,
         "ec": ec,
         "n": n,

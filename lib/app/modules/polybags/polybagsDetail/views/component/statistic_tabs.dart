@@ -1,11 +1,14 @@
+import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/controllers/polybags_detail_controller.dart';
 import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/views/component/line_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class StatisticTabs extends GetView<PolybagsDetailController> {
-  final data;
-  const StatisticTabs({super.key, this.data});
+  final dynamic data;
+  final dynamic ai;
+  final int maxY;
+  const StatisticTabs({super.key, this.data, this.ai, required this.maxY});
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +43,8 @@ class StatisticTabs extends GetView<PolybagsDetailController> {
                     unselectedLabelStyle:
                         const TextStyle(fontWeight: FontWeight.w400),
                     tabs: [
+                      TabItem('EC'),
                       TabItem('NPK'),
-                      TabItem('EC/PH'),
                     ],
                   ),
                 ),
@@ -54,120 +57,55 @@ class StatisticTabs extends GetView<PolybagsDetailController> {
                 children: [
                   // Your content for the first tab (NPK)
                   DefaultTabController(
-                    length: 3,
-                    child: SizedBox(
-                      height: 200,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(14)),
-                              child: Container(
-                                height: 48,
-                                decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(14)),
-                                  color: Color(0xFFF2F2F2),
-                                ),
-                                child: TabBar(
-                                  indicatorSize: TabBarIndicatorSize.tab,
-                                  indicatorPadding: const EdgeInsets.all(6),
-                                  dividerColor: Colors.transparent,
-                                  indicator: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(14)),
-                                  ),
-                                  labelColor: Colors.black,
-                                  labelStyle: const TextStyle(
-                                      fontWeight: FontWeight.w700),
-                                  unselectedLabelColor: const Color(0xFF7D8184),
-                                  unselectedLabelStyle: const TextStyle(
-                                      fontWeight: FontWeight.w600),
-                                  tabs: [
-                                    TabItem('Daily'),
-                                    TabItem('Week'),
-                                    TabItem('Month')
-                                  ],
-                                ),
+                    length: 1,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 350,
+                          padding: const EdgeInsets.all(20),
+                          child: EvergloChart(
+                            data: data,
+                            ai: ai,
+                            maxY: maxY,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(children: [
+                              Icon(
+                                Icons.circle,
+                                color: UiColor().primary,
                               ),
+                              const Text(
+                                'Polybag Statistic',
+                                style: TextStyle(color: Colors.black54),
+                              )
+                            ]),
+                            const SizedBox(
+                              width: 20,
                             ),
-                          ),
-                          const SizedBox(height: 16),
-                          Expanded(
-                            child: TabBarView(
-                              children: [
-                                Center(
-                                    child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: EvergloChart(data: data),
-                                )),
-                                Center(child: Text('Week Content')),
-                                Center(child: Text('Month Content')),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                            Row(children: [
+                              Icon(
+                                Icons.circle,
+                                color: UiColor().danger,
+                              ),
+                              const Text(
+                                'AI Prediction',
+                                style: TextStyle(color: Colors.black54),
+                              )
+                            ])
+                          ],
+                        )
+                      ],
                     ),
                   ),
-                  DefaultTabController(
+                  const DefaultTabController(
                     length: 3,
-                    child: SizedBox(
-                      height: 200,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(14)),
-                              child: Container(
-                                height: 48,
-                                decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(14)),
-                                  color: Color(0xFFF2F2F2),
-                                ),
-                                child: TabBar(
-                                  indicatorSize: TabBarIndicatorSize.tab,
-                                  indicatorPadding: const EdgeInsets.all(6),
-                                  dividerColor: Colors.transparent,
-                                  indicator: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(14)),
-                                  ),
-                                  labelColor: Colors.black,
-                                  labelStyle: const TextStyle(
-                                      fontWeight: FontWeight.w700),
-                                  unselectedLabelColor: const Color(0xFF7D8184),
-                                  unselectedLabelStyle: const TextStyle(
-                                      fontWeight: FontWeight.w600),
-                                  tabs: [
-                                    TabItem('Daily'),
-                                    TabItem('Week'),
-                                    TabItem('Month')
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          const Expanded(
-                            child: TabBarView(
-                              children: [
-                                Center(child: Text('Daily Content')),
-                                Center(child: Text('Week Content')),
-                                Center(child: Text('Month Content')),
-                              ],
-                            ),
-                          ),
-                        ],
+                    child: Center(
+                      child: Text(
+                        'Coming Soon!',
+                        style: TextStyle(fontSize: 12, color: Colors.black54),
                       ),
                     ),
                   ),

@@ -6,32 +6,32 @@ import 'package:get/get.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class BottomNavigationView extends GetView<HomeController> {
-  const BottomNavigationView({Key? key}) : super(key: key);
+  const BottomNavigationView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.only(top: 30),
         child: Container(
           height: 70.0,
           width: 70.0,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Color(0xFF00AD7C).withOpacity(0.3),
+                color: const Color(0xFF00AD7C).withOpacity(0.3),
                 spreadRadius: 10,
                 blurRadius: 28,
-                offset: Offset(0, 4),
+                offset: const Offset(0, 4),
               ),
             ],
           ),
           child: FittedBox(
             child: FloatingActionButton(
               onPressed: () {},
-              child: Icon(Icons.qr_code_2),
-              backgroundColor: Color(0xFF00AD7C),
+              backgroundColor: const Color(0xFF00AD7C),
               foregroundColor: Colors.white,
+              child: const Icon(Icons.qr_code_2),
             ),
           ),
         ),
@@ -41,7 +41,7 @@ class BottomNavigationView extends GetView<HomeController> {
         color: Colors.white,
         height: 85,
         notchMargin: 10.0,
-        shape: AutomaticNotchedShape(
+        shape: const AutomaticNotchedShape(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(30),
@@ -52,7 +52,7 @@ class BottomNavigationView extends GetView<HomeController> {
           ),
         ),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

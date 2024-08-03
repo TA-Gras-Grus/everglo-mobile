@@ -15,7 +15,7 @@ class PolybagsPlantsView extends GetView<PolybagsPlantsController> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 80,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFFF6F6F6),
         leading: Padding(
           padding: const EdgeInsets.only(left: 20, right: 5, top: 2, bottom: 5),
           child: Container(
@@ -44,21 +44,23 @@ class PolybagsPlantsView extends GetView<PolybagsPlantsController> {
             ),
           );
         } else {
-          return Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: controller.plantTypes.value.plantType!
-                      .map((e) => ListPlants(
-                            plantsName: e.name ?? "",
-                            numberOfPolybags: e.totalPolybag ?? 0,
-                            plantsId: e.plantTypeId,
-                            plantsImage: 'assets/images/chiliPlants.png',
-                          ))
-                      .toList(),
+          return SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: controller.plantTypes.value.plantType!
+                        .map((e) => ListPlants(
+                              plantsName: e.name ?? "",
+                              numberOfPolybags: e.totalPolybag ?? 0,
+                              plantsId: e.plantTypeId,
+                              plantsImage: 'assets/images/chiliPlants.png',
+                            ))
+                        .toList(),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }
       }),

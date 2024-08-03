@@ -52,7 +52,7 @@ class HomeController extends GetxController {
         "ec": 0,
         "ph": 0,
         "ppm": 0,
-        "volumeWaterTank": 0,
+        "statusWaterTank": false,
         "countWaterFlow": 8,
         "createdAt": "2024-04-22T07:39:28.616Z",
         "updatedAt": "2024-04-22T07:39:28.616Z",
@@ -257,10 +257,22 @@ class HomeController extends GetxController {
       final MqttPublishMessage recMess = event[0].payload as MqttPublishMessage;
       final String message =
           MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-      Greenhouse fromMessage = Greenhouse.fromJson(jsonDecode(message));
-      if (fromMessage.greenhouseId == greenhouse.value.greenhouseId) {
-        printInfo(info: fromMessage.statusBlower.toString());
-        greenhouse.value = fromMessage;
+      if (topic == 'greenhouse:updated') {
+        Greenhouse fromMessage = Greenhouse.fromJson(jsonDecode(message));
+        if (fromMessage.greenhouseId == greenhouse.value.greenhouseId) {
+          greenhouse.value = fromMessage;
+        }
+      } else if (topic == 'greenhouseData:created') {
+        GreenhouseData fromMessage =
+            GreenhouseData.fromJson(jsonDecode(message));
+        if (fromMessage.ownedGreenhouse == greenhouse.value.greenhouseId) {
+          greenhouse.value.greenhouseDatas![0].airTemperature =
+              fromMessage.airTemperature;
+          greenhouse.value.greenhouseDatas![0].humidity = fromMessage.humidity;
+          printError(
+              info: greenhouse.value.greenhouseDatas![0].toJson().toString());
+          greenhouse.refresh();
+        }
       }
     });
   }

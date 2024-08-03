@@ -5,7 +5,7 @@ class PolybagRepository {
   getPolybags(String polybagId, String greenhouseId, String dayOfPlanted,
       String isActive, String plantTypeId, Paging paging) async {
     final response = await ApiClient().get(
-      '/polybags/get-all-polybag?page=${paging.currentPage}&size=${paging.size}&polybagId=${polybagId}&greenhouseId=${greenhouseId}&dayOfPlanted=&isActive=&plantTypeId=$plantTypeId',
+      '/polybags/get-all-polybag?page=${paging.currentPage}&size=${paging.size}&polybagId=$polybagId&greenhouseId=$greenhouseId&dayOfPlanted=&isActive=&plantTypeId=$plantTypeId',
     );
     return await response.data;
   }
@@ -20,6 +20,20 @@ class PolybagRepository {
     final response = await ApiClient().patch(
         '/polybags/update-polybag?polybagId=$polybagId',
         data: {'isActive': false, 'weightOfHarvest': weight});
+    return await response.data;
+  }
+
+  createPolybagData(
+      String greenhouseId, String polybagId, double ec, double ph) async {
+    final response = await ApiClient().post(
+        '/polybags/create-polybag-data?apiKey=$greenhouseId&polybagId=$polybagId',
+        data: {'ec': ec, 'ph': ph});
+    return await response.data;
+  }
+
+  getAiPrediction(String greenhouseId, int aiCount) async {
+    final response = await ApiClient().get(
+        '/greenhouses/get-ai-prediction?greenhouseId=$greenhouseId&day=$aiCount');
     return await response.data;
   }
 }

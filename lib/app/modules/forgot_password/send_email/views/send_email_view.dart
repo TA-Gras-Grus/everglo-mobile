@@ -119,7 +119,7 @@ class SendEmailView extends GetView<SendEmailController> {
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -202,7 +202,7 @@ class SendEmailView extends GetView<SendEmailController> {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 50),
+                      margin: const EdgeInsets.only(bottom: 50),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 0),
                       child: FilledButton(

@@ -51,7 +51,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () => LoginView(),
+      page: () => const LoginView(),
       binding: LoginBinding(),
     ),
     GetPage(
@@ -93,19 +93,19 @@ class AppPages {
         ),
         GetPage(
           name: _Paths.EDIT_PROFILE,
-          page: () => EditProfileView(),
+          page: () => const EditProfileView(),
           binding: EditProfileBinding(),
         ),
         GetPage(
           name: _Paths.CHANGE_PASSWORD_PROFILE,
-          page: () => ChangePasswordProfileView(),
+          page: () => const ChangePasswordProfileView(),
           binding: ChangePasswordProfileBinding(),
         ),
       ],
     ),
     GetPage(
       name: _Paths.SEND_EMAIL,
-      page: () => SendEmailView(),
+      page: () => const SendEmailView(),
       binding: SendEmailBinding(),
     ),
     GetPage(

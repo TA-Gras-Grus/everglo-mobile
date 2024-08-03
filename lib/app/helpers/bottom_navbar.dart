@@ -81,29 +81,31 @@ class BottomNavbar extends StatelessWidget {
 }
 
 class ScanButton extends StatelessWidget {
+  const ScanButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 30),
+      padding: const EdgeInsets.only(top: 30),
       child: Container(
         height: 70.0,
         width: 70.0,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Color(0xFF00AD7C).withOpacity(0.3),
+              color: const Color(0xFF00AD7C).withOpacity(0.3),
               spreadRadius: 10,
               blurRadius: 28,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
         child: FittedBox(
           child: FloatingActionButton(
             onPressed: () => Get.toNamed('/polybag-scanner'),
-            child: Icon(Icons.qr_code_2),
-            backgroundColor: Color(0xFF00AD7C),
+            backgroundColor: const Color(0xFF00AD7C),
             foregroundColor: Colors.white,
+            child: const Icon(Icons.qr_code_2),
           ),
         ),
       ),

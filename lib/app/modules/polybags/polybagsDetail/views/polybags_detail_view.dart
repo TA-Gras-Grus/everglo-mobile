@@ -1,3 +1,4 @@
+import 'package:everglo_mobile/app/helpers/everglo_icon_icons.dart';
 import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/views/component/polybags_status.dart';
 import 'package:everglo_mobile/app/modules/polybags/polybagsDetail/views/component/statistic_tabs.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:get/get.dart';
 
@@ -19,7 +21,7 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 80,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFFF6F6F6),
         leading: Padding(
           padding: const EdgeInsets.only(left: 20, right: 5, top: 2, bottom: 5),
           child: Container(
@@ -42,7 +44,7 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
       ),
       body: Obx(
         () {
-          if (controller.isLoading.value) {
+          if (controller.isLoading.value || controller.getMaxY() == 0) {
             return Center(
               child: SpinKitFoldingCube(
                 color: UiColor().primary,
@@ -197,33 +199,27 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                           ),
                         ),
                         controller.polybag.value.isActive!
-                            ? GestureDetector(
-                                onTap: () {
-                                  showModalBottomSheet<void>(
-                                    context: context,
-                                    builder: _setPlantWeightSheet,
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  decoration: BoxDecoration(
-                                      color: UiColor().primary,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: const Text(
-                                    'Harvest now',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )
+                            ? _option(context)
                             : const SizedBox(),
                       ],
                     ),
                   ),
                   const SizedBox(height: 16),
-                  StatisticTabs(data: controller.polybag.value.polybagDatas),
+                  controller.getMaxY() == 0
+                      ? const Center(
+                          child: Text(
+                            'No data available',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )
+                      : StatisticTabs(
+                          data: controller.getReversedData(),
+                          ai: controller.getReversedAiData(),
+                          maxY: controller.getMaxY(),
+                        ),
                 ],
               ),
             );
@@ -289,7 +285,7 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                     Container(
                       width: 327,
                       height: 70,
-                      padding: EdgeInsets.only(bottom: 10, top: 0),
+                      padding: const EdgeInsets.only(bottom: 10, top: 0),
                       child: FormBuilderTextField(
                         // key: _flowTime,
                         name: 'harvestWeight',
@@ -396,5 +392,271 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
             ],
           ),
         ),
+      );
+
+  Widget _newPolybagData(BuildContext context) => SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+          ),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            children: [
+              Container(
+                height: 5,
+                width: 60,
+                margin: const EdgeInsets.only(top: 20),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 30),
+                    child: Text(
+                      'Create new polybag data',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              FormBuilder(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 35),
+                      child: Row(
+                        children: [
+                          Text(
+                            "EC value",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      width: 327,
+                      height: 70,
+                      padding: const EdgeInsets.only(bottom: 10, top: 0),
+                      child: FormBuilderTextField(
+                        name: 'ec',
+                        keyboardType: TextInputType.number,
+                        cursorColor: const Color(0xFF00AD7C),
+                        decoration: InputDecoration(
+                          errorStyle: const TextStyle(fontSize: 0.01),
+                          hintText: "Enter EC value",
+                          hintStyle: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFFABB3BB),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          suffixIcon: const Padding(
+                            padding: EdgeInsets.only(
+                                left: 14, right: 20, top: 14, bottom: 14),
+                            child: Text(
+                              'EC',
+                              style: TextStyle(
+                                color:
+                                    Color(0xFF8A8A8A), // Adjust color as needed
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Icon(
+                              Icons.electric_meter_outlined,
+                              color: UiColor().primary,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  const BorderSide(color: Color(0xFF00AD7C)),
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                        validator: null,
+                        onChanged: (value) =>
+                            {controller.ec.value = value ?? ""},
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 35),
+                      child: Row(
+                        children: [
+                          Text(
+                            "pH value",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      width: 327,
+                      height: 70,
+                      padding: const EdgeInsets.only(bottom: 10, top: 0),
+                      child: FormBuilderTextField(
+                        name: 'ph',
+                        keyboardType: TextInputType.number,
+                        cursorColor: const Color(0xFF00AD7C),
+                        decoration: InputDecoration(
+                          errorStyle: const TextStyle(fontSize: 0.01),
+                          hintText: "Enter pH value",
+                          hintStyle: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFFABB3BB),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          suffixIcon: const Padding(
+                            padding: EdgeInsets.only(
+                                left: 14, right: 20, top: 14, bottom: 14),
+                            child: Text(
+                              'pH',
+                              style: TextStyle(
+                                color:
+                                    Color(0xFF8A8A8A), // Adjust color as needed
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Icon(
+                              Icons.water_drop_outlined,
+                              color: UiColor().primary,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  const BorderSide(color: Color(0xFF00AD7C)),
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                        validator: null,
+                        onChanged: (value) =>
+                            {controller.ph.value = value ?? ""},
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  MaterialButton(
+                    onPressed: () => {Navigator.pop(context)},
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 14, right: 14),
+                      height: 54,
+                      width: 142,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xFFFB9A99)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFFFB9A99),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      controller.onCreateData();
+                    },
+                    child: Container(
+                      height: 54,
+                      width: 142,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF52B788),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Center(
+                        child: controller.onHarvest.value
+                            ? const SpinKitFadingCircle(
+                                color: Colors.white,
+                                size: 30,
+                              )
+                            : const Text(
+                                'Save',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+            ],
+          ),
+        ),
+      );
+
+  Widget _option(BuildContext context) => SpeedDial(
+        icon: EvergloIcon.plant,
+        foregroundColor: Colors.white,
+        backgroundColor: UiColor().primary,
+        direction: SpeedDialDirection.down,
+        activeLabel: const Text('Test'),
+        children: [
+          SpeedDialChild(
+            label: 'Create new data',
+            child: Icon(
+              Icons.add_chart_outlined,
+              color: UiColor().primary,
+            ),
+            onTap: () {
+              showModalBottomSheet<void>(
+                isScrollControlled: true,
+                context: context,
+                builder: _newPolybagData,
+              );
+            },
+          ),
+          SpeedDialChild(
+            label: 'Harvest now',
+            child: SvgPicture.asset(
+              'assets/icons/harvest.svg',
+            ),
+            onTap: () {
+              showModalBottomSheet<void>(
+                isScrollControlled: true,
+                context: context,
+                builder: _setPlantWeightSheet,
+              );
+            },
+          ),
+        ],
       );
 }

@@ -2,7 +2,6 @@ import 'package:everglo_mobile/app/helpers/button.dart';
 import 'package:everglo_mobile/app/helpers/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +15,7 @@ class EditProfileView extends GetView<EditProfileController> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 80,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFFF6F6F6),
         leading: Padding(
           padding:
               const EdgeInsets.only(left: 20, right: 18, top: 10, bottom: 10),
@@ -60,69 +59,42 @@ class EditProfileView extends GetView<EditProfileController> {
                 padding: const EdgeInsets.only(top: 10),
                 child: Column(
                   children: [
-                    Row(
+                    Stack(
                       children: [
-                        Stack(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 122),
-                              child: Container(
-                                height: 154,
-                                width: 154,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  border:
-                                      Border.all(color: Colors.white, width: 8),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(
-                                          0.2), // Adjust opacity for shadow intensity
-                                      blurRadius:
-                                          10.0, // Adjust blur radius for shadow softness
-                                      spreadRadius:
-                                          1.0, // Adjust spread radius for shadow size
-                                    ),
-                                  ],
-                                  image: const DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/profileAdiat.jpeg'),
-                                      fit: BoxFit.cover),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 120),
+                          child: Container(
+                            height: 154,
+                            width: 154,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(color: Colors.white, width: 8),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(
+                                      0.2), // Adjust opacity for shadow intensity
+                                  blurRadius:
+                                      10.0, // Adjust blur radius for shadow softness
+                                  spreadRadius:
+                                      1.0, // Adjust spread radius for shadow size
                                 ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100.0),
+                              child: Image.network(
+                                'https://via.placeholder.com/138x138?text=${controller.fullname.value[0].toUpperCase()}',
+                                width: 138,
+                                height: 138,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 175, top: 125),
-                                child: Container(
-                                  height: 45,
-                                  width: 45,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF52B788),
-                                    borderRadius: BorderRadius.circular(100),
-                                    border: Border.all(
-                                        color: Colors.white, width: 5),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(
-                                            0.2), // Adjust opacity for shadow intensity
-                                        blurRadius:
-                                            10.0, // Adjust blur radius for shadow softness
-                                        spreadRadius:
-                                            1.0, // Adjust spread radius for shadow size
-                                      ),
-                                    ],
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SvgPicture.asset(
-                                        'assets/icons/camera.svg'),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ],
                     ),

@@ -48,8 +48,8 @@ class PolybagHeader extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${plantsName}',
-                        style: TextStyle(fontWeight: FontWeight.w700),
+                        plantsName,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,10 +58,10 @@ class PolybagHeader extends StatelessWidget {
                             'assets/icons/plants.svg',
                             color: UiColor().primary,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text('${polybagSize}'),
+                          Text(polybagSize),
                         ],
                       )
                     ],

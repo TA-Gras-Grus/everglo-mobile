@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,8 +10,8 @@ class ForgetPasswordController extends GetxController {
 
   //Focusnode
   final FocusNode focusNode = FocusNode();
-  final focusedIconColor = Color(0xFF00AD7C);
-  final unfocusedIconColor = Color(0xFF8A8D90);
+  final focusedIconColor = const Color(0xFF00AD7C);
+  final unfocusedIconColor = const Color(0xFF8A8D90);
 
   //Timer Variable Define Usage
   final Rx<DateTime> _endTime = DateTime.now().obs;
@@ -20,7 +19,7 @@ class ForgetPasswordController extends GetxController {
   RxBool isTimerStarted = RxBool(false);
   final RxString _timeLeft = RxString('00:00:00');
   String get timeLeft => _timeLeft.value;
-  Duration? temporarySecond = Duration(minutes: 2);
+  Duration? temporarySecond = const Duration(minutes: 2);
   Timer? timer;
   RxBool isResendButtonEnabled = true.obs;
 
@@ -34,10 +33,6 @@ class ForgetPasswordController extends GetxController {
     });
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void dispose() {
@@ -45,10 +40,6 @@ class ForgetPasswordController extends GetxController {
     super.dispose();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 
@@ -70,11 +61,11 @@ class ForgetPasswordController extends GetxController {
       timer?.cancel();
       isTimerStarted.value = false;
       _timeLeft.value = '00:00:00';
-      temporarySecond = Duration(minutes: 2);
+      temporarySecond = const Duration(minutes: 2);
       isResendButtonEnabled.value = true;
     } else {
       isTimerStarted.value = true;
-      String _formatTime(Duration duration) {
+      String formatTime(Duration duration) {
         String twoDigits(int n) => n.toString().padLeft(2, '0');
         final String twoDigitMinutes =
             twoDigits(difference.value.inMinutes.remainder(60));
@@ -84,7 +75,7 @@ class ForgetPasswordController extends GetxController {
         return '$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds';
       }
 
-      _timeLeft.value = _formatTime(difference.value);
+      _timeLeft.value = formatTime(difference.value);
     }
   }
 
