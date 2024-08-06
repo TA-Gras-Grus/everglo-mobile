@@ -19,6 +19,7 @@ abstract class Routes {
   static const SEND_EMAIL = _Paths.SEND_EMAIL;
   static const SEND_OTP = _Paths.SEND_OTP;
   static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
+  static const RECAP = _Paths.POLYBAGS + _Paths.RECAP;
 }
 
 abstract class _Paths {
@@ -38,4 +39,5 @@ abstract class _Paths {
   static const SEND_EMAIL = '/send-email';
   static const SEND_OTP = '/send-otp';
   static const RESET_PASSWORD = '/reset-password';
+  static const RECAP = '/recap';
 }

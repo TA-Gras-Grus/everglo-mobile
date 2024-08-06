@@ -26,6 +26,9 @@ class HomeController extends GetxController {
   RxBool onFlowUpdate = false.obs;
   RxString flowInterval = "".obs;
   RxString irrigationTime = "".obs;
+  RxString heaterBlowerDevice = "".obs;
+  RxString dripIrrigationDevice = "".obs;
+  RxString waterTankDevice = "".obs;
   Rx<GetStorage> storage = GetStorage().obs;
   Rx<ListGreenhouseSum> listGreenhouse = ListGreenhouseSum.fromJson({
     "greenhouse": [
@@ -113,7 +116,7 @@ class HomeController extends GetxController {
     onFlowUpdate.value = true;
     final bool status = greenhouse.value.statusWaterFlow! ? false : true;
     if (status) {
-      updateGreenhouse(null, null, status, null, null)
+      updateGreenhouse("dripIrrigation", null, null, status, null, null)
           .then((value) => {
                 NotificationSnackbar()
                     .success('Greenhouse updated', 'The blower is now on'),
@@ -121,7 +124,7 @@ class HomeController extends GetxController {
               })
           .onError((error, stackTrace) => {onFlowUpdate.value = false});
     } else {
-      updateGreenhouse(false, null, status, null, null)
+      updateGreenhouse("dripIrrigation", false, null, status, null, null)
           .then((value) => {
                 NotificationSnackbar()
                     .success('Greenhouse updated', 'The blower is now off'),
@@ -135,7 +138,7 @@ class HomeController extends GetxController {
   void onBlowerSwitch(bool confirmSwitchOn) {
     onBlowerUpdate.value = true;
     if (confirmSwitchOn) {
-      updateGreenhouse(true, null, null, null, null)
+      updateGreenhouse("heaterBlower", true, null, null, null, null)
           .then((value) => {
                 NotificationSnackbar()
                     .success('Greenhouse updated', 'The blower is now on'),
@@ -143,7 +146,7 @@ class HomeController extends GetxController {
               })
           .onError((error, stackTrace) => {onBlowerUpdate.value = false});
     } else {
-      updateGreenhouse(false, null, null, null, null)
+      updateGreenhouse("heaterBlower", false, null, null, null, null)
           .then((value) => {
                 NotificationSnackbar()
                     .success('Greenhouse updated', 'The blower is now off'),
@@ -156,7 +159,7 @@ class HomeController extends GetxController {
   void onHeaterSwitch(bool confirmSwitchOn) {
     onHeaterUpdate.value = true;
     if (confirmSwitchOn) {
-      updateGreenhouse(null, true, null, null, null)
+      updateGreenhouse("heaterBlower", null, true, null, null, null)
           .then((value) => {
                 NotificationSnackbar()
                     .success('Greenhouse updated', 'The heater is now on'),
@@ -164,7 +167,7 @@ class HomeController extends GetxController {
               })
           .onError((error, stackTrace) => {onHeaterUpdate.value = false});
     } else {
-      updateGreenhouse(null, false, null, null, null)
+      updateGreenhouse("heaterBlower", null, false, null, null, null)
           .then((value) => {
                 NotificationSnackbar()
                     .success('Greenhouse updated', 'The heater is now off'),
@@ -182,8 +185,8 @@ class HomeController extends GetxController {
     final time = irrigationTime.value.isNotEmpty
         ? irrigationTime.value
         : greenhouse.value.timeWaterFlow;
-    updateGreenhouse(null, null, null, int.parse(time.toString()),
-            int.parse(interval.toString()))
+    updateGreenhouse("dripIrrigation", null, null, null,
+            int.parse(time.toString()), int.parse(interval.toString()))
         .then((value) => {
               Navigator.pop(Get.context!),
               onDripUpdate.value = false,
@@ -222,24 +225,54 @@ class HomeController extends GetxController {
     getGreenhouse().then((value) => isLoading.value = false);
   }
 
+  void onConnectDevice() {
+    connectDevice(
+      waterTankDevice.value,
+      dripIrrigationDevice.value,
+      heaterBlowerDevice.value,
+    )
+        .then((value) => {
+              NotificationSnackbar()
+                  .success('Success', 'Devices connected successfully'),
+              getGreenhouse().then(
+                (value) => {
+                  Navigator.pop(Get.context!),
+                },
+              ),
+            })
+        .onError((error, stackTrace) => {
+              NotificationSnackbar()
+                  .error('Failed', 'Failed to connect devices'),
+            });
+  }
+
   Future<ListGreenhouse> getGreenhouse() async {
     final response = await GreenhouseRepository().getGreenhouse(
         globalController.selectedGreenhouse.value.greenhouseId ?? "");
     ResponseSuccess result = ResponseSuccess.fromJson(response);
     ListGreenhouse listGreenhouse = ListGreenhouse.fromJson(result.data);
     greenhouse.value = listGreenhouse.greenhouse![0];
+    heaterBlowerDevice.value = greenhouse.value.heaterBlowerDevice ?? "";
+    dripIrrigationDevice.value = greenhouse.value.dripIrrigationDevice ?? "";
+    waterTankDevice.value = greenhouse.value.waterTankDevice ?? "";
     return listGreenhouse;
   }
 
   Future<void> updateGreenhouse(
+    String? type,
     bool? blower,
     bool? heater,
     bool? flow,
     int? flowTime,
     int? interval,
   ) async {
+    final id = type == "dripIrrigation"
+        ? greenhouse.value.dripIrrigationDevice
+        : type == "heaterBlower"
+            ? greenhouse.value.heaterBlowerDevice
+            : greenhouse.value.waterTankDevice;
     final response = await GreenhouseRepository().updateGreenhouse(
-      greenhouse.value.greenhouseId ?? "",
+      id ?? "",
       greenhouse.value.name ?? "",
       blower ?? greenhouse.value.statusBlower ?? true,
       heater ?? greenhouse.value.statusHeater ?? true,
@@ -249,6 +282,20 @@ class HomeController extends GetxController {
     );
     ResponseSuccess result = ResponseSuccess.fromJson(response);
     greenhouse.value = Greenhouse.fromJson(result.data);
+  }
+
+  Future<void> connectDevice(
+    String waterTank,
+    String dripIrrigation,
+    String heaterBlower,
+  ) async {
+    final response = await GreenhouseRepository().connectDevice(
+      greenhouse.value.greenhouseId ?? "",
+      waterTank,
+      dripIrrigation,
+      heaterBlower,
+    );
+    return response;
   }
 
   void onSubscribed(String topic) {

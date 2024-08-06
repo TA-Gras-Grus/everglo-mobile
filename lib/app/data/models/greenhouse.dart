@@ -45,6 +45,9 @@ class Greenhouse {
   final bool? statusWaterTank;
   final int? countWaterFlow;
   final String? apiKey;
+  final String? waterTankDevice;
+  final String? dripIrrigationDevice;
+  final String? heaterBlowerDevice;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   List<GreenhouseData>? greenhouseDatas;
@@ -66,6 +69,9 @@ class Greenhouse {
     this.statusWaterTank,
     this.countWaterFlow,
     this.apiKey,
+    this.waterTankDevice,
+    this.dripIrrigationDevice,
+    this.heaterBlowerDevice,
     this.createdAt,
     this.updatedAt,
     this.greenhouseDatas,
@@ -88,6 +94,9 @@ class Greenhouse {
         statusWaterTank: json["statusWaterTank"],
         countWaterFlow: json["countWaterFlow"],
         apiKey: json["apiKey"],
+        waterTankDevice: json["waterTankDevice"] ?? "",
+        dripIrrigationDevice: json["dripIrrigationDevice"] ?? "",
+        heaterBlowerDevice: json["heaterBlowerDevice"] ?? "",
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -117,6 +126,9 @@ class Greenhouse {
         "statusWaterTank": statusWaterTank,
         "countWaterFlow": countWaterFlow,
         "apiKey": apiKey,
+        "waterTankDevice": waterTankDevice,
+        "dripIrrigationDevice": dripIrrigationDevice,
+        "heaterBlowerDevice": heaterBlowerDevice,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "greenhouseDatas": greenhouseDatas == null

@@ -101,7 +101,7 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                           ),
                           const SizedBox(width: 11),
                           Padding(
-                            padding: const EdgeInsets.only(top: 18),
+                            padding: const EdgeInsets.only(top: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -117,14 +117,14 @@ class PolybagsDetailView extends GetView<PolybagsDetailController> {
                                   controller.toLocalDate(
                                       controller.polybag.value.dayOfPlanted!),
                                   style: const TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 10,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(width: 12),
+                          const SizedBox(width: 32),
                           Container(
                             height: 48,
                             width: 48,

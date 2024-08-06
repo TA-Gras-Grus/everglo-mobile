@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 
-import '../modules/forgetPassword/bindings/forget_password_binding.dart';
-import '../modules/forgetPassword/views/change_password_view.dart';
 import '../modules/forgot_password/reset_password/bindings/reset_password_binding.dart';
 import '../modules/forgot_password/reset_password/views/reset_password_view.dart';
 import '../modules/forgot_password/send_email/bindings/send_email_binding.dart';
@@ -20,6 +18,8 @@ import '../modules/polybags/polybagsLists/bindings/polybagsLists_binding.dart';
 import '../modules/polybags/polybagsLists/views/polybagsLists_view.dart';
 import '../modules/polybags/polybagsPlants/bindings/polybagsPlants_binding.dart';
 import '../modules/polybags/polybagsPlants/views/polybags_plants_view.dart';
+import '../modules/polybags/recap/bindings/recap_binding.dart';
+import '../modules/polybags/recap/views/recap_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/change_password_profile/bindings/change_password_profile_binding.dart';
 import '../modules/profile/change_password_profile/views/change_password_profile_view.dart';
@@ -55,11 +55,6 @@ class AppPages {
       binding: LoginBinding(),
     ),
     GetPage(
-      name: _Paths.FORGET_PASSWORD,
-      page: () => ChangePasswordView(),
-      binding: ForgetPasswordBinding(),
-    ),
-    GetPage(
       name: _Paths.POLYBAG_SCANNER,
       page: () => const PolybagScannerView(),
       binding: PolybagScannerBinding(),
@@ -78,6 +73,11 @@ class AppPages {
           name: _Paths.POLYBAGS_DETAIL,
           page: () => PolybagsDetailView(),
           binding: PolybagsDetailBinding(),
+        ),
+        GetPage(
+          name: _Paths.RECAP,
+          page: () => const RecapView(),
+          binding: RecapBinding(),
         ),
       ],
     ),

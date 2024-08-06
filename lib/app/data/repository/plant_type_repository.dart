@@ -7,4 +7,11 @@ class PlantTypeRepository {
     );
     return await response.data;
   }
+
+  getRecap(String greenhouseId, String? startDate, String? endDate) async {
+    final response = await ApiClient().get(
+      '/polybags/recap-polybag?greenhouseId=$greenhouseId&startDate=$startDate&endDate=$endDate',
+    );
+    return await response.data;
+  }
 }

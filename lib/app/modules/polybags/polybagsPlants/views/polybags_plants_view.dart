@@ -36,6 +36,17 @@ class PolybagsPlantsView extends GetView<PolybagsPlantsController> {
             )),
         centerTitle: true,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed('/polybags/recap');
+        },
+        child: const Icon(
+          Icons.bar_chart_rounded,
+          color: Colors.white,
+        ),
+        backgroundColor: UiColor().primary,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Obx(() {
         if (controller.isLoading.value) {
           return Center(

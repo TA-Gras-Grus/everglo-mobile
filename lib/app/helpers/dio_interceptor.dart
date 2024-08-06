@@ -157,6 +157,11 @@ class DioInterceptor extends Interceptor {
             ResponseError.fromJson(jsonDecode(err.response.toString()));
         NotificationSnackbar().error('Failed', error.errors!.message);
         super.onError(err, handler);
+      } else if (err.response?.statusCode == 404) {
+        ResponseError error =
+            ResponseError.fromJson(jsonDecode(err.response.toString()));
+        NotificationSnackbar().error('Failed', error.errors!.message);
+        super.onError(err, handler);
       } else {
         NotificationSnackbar().error('Authentication Failed', err.message);
         super.onError(err, handler);

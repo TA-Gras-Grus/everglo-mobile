@@ -1,4 +1,3 @@
-
 import 'package:everglo_mobile/app/data/models/Response.dart';
 import 'package:everglo_mobile/app/data/models/polybag.dart';
 import 'package:everglo_mobile/app/data/repository/polybag_repositoy.dart';
@@ -31,7 +30,9 @@ class PolybagsDetailController extends GetxController {
   }
 
   String toLocalDate(DateTime val) {
-    String result = DateFormat.yMMMMEEEEd('id').format(val);
+    String result = DateFormat('EEEE,\nd MMMM yyyy', 'id')
+        .format(val); // Selasa, 20 Juli 2021
+
     return result;
   }
 

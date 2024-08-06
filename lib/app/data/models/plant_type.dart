@@ -7,7 +7,11 @@ import 'dart:convert';
 ListPlantType listPlantTypeFromJson(String str) =>
     ListPlantType.fromJson(json.decode(str));
 
+RecapList recapListFromJson(String str) => RecapList.fromJson(json.decode(str));
+
 String listPlantTypeToJson(ListPlantType data) => json.encode(data.toJson());
+
+String recapListToJson(RecapList data) => json.encode(data.toJson());
 
 class ListPlantType {
   final List<PlantType>? plantType;
@@ -55,5 +59,49 @@ class PlantType {
         "name": name,
         "totalPolybag": totalPolybag,
         "polybagSize": polybagSize,
+      };
+}
+
+class RecapList {
+  final List<Recap>? recap;
+
+  RecapList({
+    this.recap,
+  });
+
+  factory RecapList.fromJson(Map<String, dynamic> json) => RecapList(
+        recap: json["recap"] == null
+            ? []
+            : List<Recap>.from(json["recap"]!.map((x) => Recap.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "recap": recap == null
+            ? []
+            : List<dynamic>.from(recap!.map((x) => x.toJson())),
+      };
+}
+
+class Recap {
+  final String? label;
+  final int? weight;
+  final String? unit;
+
+  Recap({
+    this.label,
+    this.weight,
+    this.unit,
+  });
+
+  factory Recap.fromJson(Map<String, dynamic> json) => Recap(
+        label: json["label"],
+        weight: json["weight"],
+        unit: json["unit"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "label": label,
+        "weight": weight,
+        "unit": unit,
       };
 }

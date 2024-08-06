@@ -3,6 +3,7 @@ import 'package:everglo_mobile/app/helpers/button.dart';
 import 'package:everglo_mobile/app/helpers/enum.dart';
 import 'package:everglo_mobile/app/helpers/everglo_icon_icons.dart';
 import 'package:everglo_mobile/app/helpers/global_controller.dart';
+import 'package:everglo_mobile/app/helpers/notification_snackbar.dart';
 import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -39,6 +41,7 @@ class HomeView extends GetView<HomeController> {
                   children: [
                     _userInfo(),
                     _greenhouseOption(context),
+                    _deviceKeySetting(context),
                     _plantsButton(),
                     _greenHouseStatistic(),
                     _greenHouseController(),
@@ -96,10 +99,20 @@ class HomeView extends GetView<HomeController> {
           ClipRRect(
             borderRadius: BorderRadius.circular(100.0),
             child: Image.network(
-              'https://via.placeholder.com/100x100?text=${globalController.user.value.firstName![0].toUpperCase()}',
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
+              'https://via.placeholder.com/40x40?text=${globalController.user.value.firstName![0].toUpperCase()}',
+              width: 40,
+              height: 40,
+              fit: BoxFit.contain,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return SpinKitFadingCircle(
+                    color: UiColor().primary,
+                    size: 20,
+                  );
+                }
+              },
             ),
           ),
         ],
@@ -168,12 +181,12 @@ class HomeView extends GetView<HomeController> {
                     controller.handleDropdownGreenhouse(greenhouseId);
                   },
                   dropdownStyleData: DropdownStyleData(
-                    width: 260,
+                    width: 345,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(14),
                       color: Colors.white,
                     ),
-                    offset: const Offset(-18, -16),
+                    offset: const Offset(-25, -16),
                   ),
                   iconStyleData: IconStyleData(
                     icon: SvgPicture.asset('assets/icons/dropdownIcon.svg'),
@@ -196,6 +209,22 @@ class HomeView extends GetView<HomeController> {
           titlePosition: ButtonTitlePosition.left,
           rightIcon: Icons.chevron_right_rounded,
           onTap: () => Get.toNamed('/polybags'),
+        ),
+      );
+  Widget _deviceKeySetting(context) => Padding(
+        padding: const EdgeInsets.only(top: 16, right: 24, left: 24),
+        child: EvergloButton(
+          type: ButtonType.secondary,
+          title: 'Device Key Setting',
+          titlePosition: ButtonTitlePosition.left,
+          leftIcon: Icons.settings_input_antenna_rounded,
+          onTap: () {
+            showModalBottomSheet<void>(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => _deviceKeySettingBottomSheet(context),
+            );
+          },
         ),
       );
 
@@ -670,7 +699,10 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           const SizedBox(height: 8),
                           Text(
-                            true ? 'Fill in' : 'FIll out',
+                            (controller.greenhouse.value.statusWaterTank ??
+                                    true)
+                                ? 'Fill in'
+                                : 'FIll out',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -1493,13 +1525,15 @@ class HomeView extends GetView<HomeController> {
         ),
       );
 
-  Widget _createGreenhouseBottomSheet(BuildContext context) => Container(
-        height: 348,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
-        ),
-        child: Center(
+  Widget _deviceKeySettingBottomSheet(BuildContext context) =>
+      SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+          ),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
             children: [
               Container(
@@ -1511,77 +1545,221 @@ class HomeView extends GetView<HomeController> {
                   borderRadius: BorderRadius.circular(100),
                 ),
               ),
-              Row(
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.only(left: 105, top: 24, bottom: 40),
+                    padding: EdgeInsets.symmetric(vertical: 30),
                     child: Text(
-                      'Create Greenhouse',
-                      style: GoogleFonts.poppins(
+                      'Device Key Setting',
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
               FormBuilder(
                 key: _formKey,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 190.0),
-                      child: Text(
-                        "Greenhouse Name",
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 35),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Heater Blower Device",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 15),
-                    SizedBox(
+                    Container(
                       width: 327,
-                      height: 50,
+                      height: 70,
+                      padding: const EdgeInsets.only(bottom: 10, top: 0),
                       child: FormBuilderTextField(
-                        // key: _greenhouseName,
-                        name: 'greenhouseName',
+                        name: 'heaterBlowerDevice',
+                        keyboardType: TextInputType.number,
                         cursorColor: const Color(0xFF00AD7C),
+                        initialValue: controller.heaterBlowerDevice.value,
                         decoration: InputDecoration(
                           errorStyle: const TextStyle(fontSize: 0.01),
-                          hintText: "Enter greenhouse name",
-                          hintStyle: GoogleFonts.poppins(
+                          hintText: "Enter Key",
+                          hintStyle: const TextStyle(
                             fontSize: 14,
-                            color: const Color(0xFFABB3BB),
+                            color: Color(0xFFABB3BB),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                          ),
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: SvgPicture.asset(
-                                'assets/icons/greenhouseIcon.svg',
-                                colorFilter: const ColorFilter.mode(
-                                    Color(0xFF00AD7C), BlendMode.srcIn)),
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
                                   const BorderSide(color: Color(0xFF00AD7C)),
                               borderRadius: BorderRadius.circular(10)),
+                          suffix: IconButton(
+                            icon: Icon(
+                              Icons.qr_code_scanner_rounded,
+                              color: UiColor().primary,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              showModalBottomSheet<void>(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) =>
+                                    _deviceKeyScannerBottomSheet(
+                                        context, 'heaterBlowerDevice'),
+                              );
+                            },
+                          ),
                         ),
                         validator: null,
+                        onChanged: (value) =>
+                            {controller.heaterBlowerDevice.value = value ?? ""},
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 35),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Drip Irrigation Device",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      width: 327,
+                      height: 70,
+                      padding: const EdgeInsets.only(bottom: 10, top: 0),
+                      child: FormBuilderTextField(
+                        name: 'dripIrrigationDevice',
+                        keyboardType: TextInputType.text,
+                        cursorColor: const Color(0xFF00AD7C),
+                        initialValue: controller.dripIrrigationDevice.value,
+                        decoration: InputDecoration(
+                          errorStyle: const TextStyle(fontSize: 0.01),
+                          hintText: "Enter Key",
+                          hintStyle: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFFABB3BB),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  const BorderSide(color: Color(0xFF00AD7C)),
+                              borderRadius: BorderRadius.circular(10)),
+                          suffix: IconButton(
+                            icon: Icon(
+                              Icons.qr_code_scanner_rounded,
+                              color: UiColor().primary,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              showModalBottomSheet<void>(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) =>
+                                    _deviceKeyScannerBottomSheet(
+                                        context, 'dripIrrigationDevice'),
+                              );
+                            },
+                          ),
+                        ),
+                        validator: null,
+                        onChanged: (value) => {
+                          controller.dripIrrigationDevice.value = value ?? ""
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 35),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Water Tank Device",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      width: 327,
+                      height: 70,
+                      padding: const EdgeInsets.only(bottom: 10, top: 0),
+                      child: FormBuilderTextField(
+                        name: 'waterTankDevice',
+                        keyboardType: TextInputType.text,
+                        cursorColor: const Color(0xFF00AD7C),
+                        initialValue: controller.waterTankDevice.value,
+                        decoration: InputDecoration(
+                          errorStyle: const TextStyle(fontSize: 0.01),
+                          hintText: "Enter Key",
+                          hintStyle: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFFABB3BB),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xFF00AD7C)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          suffix: IconButton(
+                            icon: Icon(
+                              Icons.qr_code_scanner_rounded,
+                              color: UiColor().primary,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              showModalBottomSheet<void>(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) =>
+                                    _deviceKeyScannerBottomSheet(
+                                        context, 'waterTankDevice'),
+                              );
+                            },
+                          ),
+                        ),
+                        validator: null,
+                        onChanged: (value) => {
+                          controller.dripIrrigationDevice.value = value ?? ""
+                        },
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 24),
               Row(
                 children: [
                   MaterialButton(
-                    onPressed: () => controller.onCreateGreenhouse(false),
+                    onPressed: () => {Navigator.pop(context)},
                     child: Container(
                       margin: const EdgeInsets.only(left: 14, right: 14),
                       height: 54,
@@ -1590,13 +1768,13 @@ class HomeView extends GetView<HomeController> {
                         border: Border.all(color: const Color(0xFFFB9A99)),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Cancel',
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: const Color(0xFFFB9A99),
+                            color: Color(0xFFFB9A99),
                           ),
                         ),
                       ),
@@ -1604,10 +1782,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      Get.snackbar("Create Greenhouse",
-                          "Success Create Greenhose (Name)",
-                          snackPosition: SnackPosition.TOP);
-                      controller.onCreateGreenhouse(true);
+                      controller.onConnectDevice();
                     },
                     child: Container(
                       height: 54,
@@ -1616,10 +1791,10 @@ class HomeView extends GetView<HomeController> {
                         color: const Color(0xFF52B788),
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
-                          'Create',
-                          style: GoogleFonts.poppins(
+                          'Save',
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
@@ -1630,8 +1805,70 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ],
               ),
+              const SizedBox(height: 40),
             ],
           ),
         ),
+      );
+
+  Widget _deviceKeyScannerBottomSheet(BuildContext context, String type) =>
+      SingleChildScrollView(
+        child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+            ),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              children: [
+                Container(
+                  height: 5,
+                  width: 60,
+                  margin: const EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 350,
+                      height: 600,
+                      child: MobileScanner(
+                        controller: MobileScannerController(
+                            detectionSpeed: DetectionSpeed.noDuplicates,
+                            autoStart: true),
+                        onDetect: (capture) {
+                          printInfo(info: capture.barcodes[0].rawValue ?? 'no');
+                          final List<Barcode> barcodes = capture.barcodes;
+                          NotificationSnackbar().success(
+                              'Device key scanned', '${barcodes[0].rawValue}');
+                          if (type == 'heaterBlowerDevice') {
+                            controller.heaterBlowerDevice.value =
+                                barcodes[0].rawValue!;
+                          } else if (type == 'dripIrrigationDevice') {
+                            controller.dripIrrigationDevice.value =
+                                barcodes[0].rawValue!;
+                          } else if (type == 'waterTankDevice') {
+                            controller.waterTankDevice.value =
+                                barcodes[0].rawValue!;
+                          }
+                          Navigator.pop(context);
+                          showModalBottomSheet<void>(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) =>
+                                _deviceKeySettingBottomSheet(context),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )),
       );
 }
