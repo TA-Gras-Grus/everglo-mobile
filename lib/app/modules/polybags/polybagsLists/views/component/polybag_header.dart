@@ -1,83 +1,74 @@
+import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PolybagHeader extends StatelessWidget {
   final String plantsName;
   final String polybagSize;
-  final String plantsImage;
 
   const PolybagHeader({
     super.key,
     required this.plantsName,
     required this.polybagSize,
-    required this.plantsImage,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 16),
+    return Container(
+      padding: const EdgeInsets.all(20),
       child: Container(
-        height: 208,
-        width: 353,
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey
-                  .withOpacity(0.2), // Adjust opacity for shadow intensity
-              blurRadius: 10.0, // Adjust blur radius for shadow softness
-              spreadRadius: 1.0, // Adjust spread radius for shadow size
-            ),
-          ],
-        ),
-        child: Column(
+            color: Colors.white, borderRadius: BorderRadius.circular(10)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 12, top: 14),
-                  child: Container(
-                    height: 155,
-                    width: 327,
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    width: 150,
+                    height: 150,
+                    padding: const EdgeInsets.all(30),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(18),
-                      child: Image.asset(
-                        '$plantsImage',
-                        fit: BoxFit.cover,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10)),
+                      child: SvgPicture.asset(
+                        'assets/icons/plants.svg',
+                        color: UiColor().primary,
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 14, right: 14, top: 8),
-              child: Row(
-                children: [
-                  Text(
-                    plantsName,
-                    style: GoogleFonts.poppins(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(width: 180),
-                  SvgPicture.asset('assets/icons/plants.svg',
-                      color: Color(0xFF00AD7C)),
-                  SizedBox(width: 5),
-                  Text(
-                    polybagSize,
-                    style: GoogleFonts.poppins(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        plantsName,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/plants.svg',
+                            color: UiColor().primary,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(polybagSize),
+                        ],
+                      )
+                    ],
+                  )
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 class PolybagScannerController extends GetxController {
   //TODO: Implement PolybagScannerController
@@ -8,15 +7,7 @@ class PolybagScannerController extends GetxController {
   // final MobileScannerController mobileScannerController =
   //     MobileScannerController();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   void onScanBarcode() async {
     // // Request camera permissions (if needed)
@@ -42,10 +33,6 @@ class PolybagScannerController extends GetxController {
     // await mobileScannerController.stop();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   void increment() => count.value++;
 }

@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:everglo_mobile/app/helpers/ui_color.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'package:everglo_mobile/app/helpers/enum.dart';
 
@@ -12,11 +12,13 @@ class EvergloButton extends StatelessWidget {
   final ButtonType type;
   final double? height;
   final double? width;
+  final String? shadow;
   final void Function()? onTap;
 
   const EvergloButton(
       {super.key,
       required this.type,
+      this.shadow,
       this.width,
       this.height,
       this.leftIcon,
@@ -32,9 +34,15 @@ class EvergloButton extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: const Border(
-            bottom: BorderSide(color: Color(0xFFF0F0FA), width: 1.5)),
-        color: const Color(0xFF52B788),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 10,
+            offset: Offset(0, 3),
+          )
+        ],
+        color: type == ButtonType.primary ? Color(0xFF52B788) : Colors.white,
       ),
       child: MaterialButton(
         onPressed: onTap,
@@ -47,7 +55,9 @@ class EvergloButton extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Icon(
                   leftIcon,
-                  color: Colors.white,
+                  color: type == ButtonType.primary
+                      ? Colors.white
+                      : UiColor().primary,
                 ),
               ),
             ),
@@ -62,10 +72,12 @@ class EvergloButton extends StatelessWidget {
                         : Alignment.center,
                 child: Text(
                   title ?? '',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: type == ButtonType.primary
+                        ? Colors.white
+                        : UiColor().primary,
                   ),
                 ),
               ),
@@ -75,7 +87,9 @@ class EvergloButton extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: Icon(
                   rightIcon,
-                  color: Colors.white,
+                  color: type == ButtonType.primary
+                      ? Colors.white
+                      : UiColor().primary,
                   size: 28,
                 ),
               ),

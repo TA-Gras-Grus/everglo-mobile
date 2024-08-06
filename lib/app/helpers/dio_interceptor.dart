@@ -148,6 +148,19 @@ class DioInterceptor extends Interceptor {
             ResponseError.fromJson(jsonDecode(err.response.toString()));
         NotificationSnackbar()
             .error('Authentication Failed', error.errors!.message);
+        if (error.errors?.message == "jwt expired") {
+          get.offAllNamed('/login');
+        }
+        super.onError(err, handler);
+      } else if (err.response?.statusCode == 400) {
+        ResponseError error =
+            ResponseError.fromJson(jsonDecode(err.response.toString()));
+        NotificationSnackbar().error('Failed', error.errors!.message);
+        super.onError(err, handler);
+      } else if (err.response?.statusCode == 404) {
+        ResponseError error =
+            ResponseError.fromJson(jsonDecode(err.response.toString()));
+        NotificationSnackbar().error('Failed', error.errors!.message);
         super.onError(err, handler);
       } else {
         NotificationSnackbar().error('Authentication Failed', err.message);

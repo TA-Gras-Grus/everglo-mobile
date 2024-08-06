@@ -42,44 +42,52 @@ class ResponseSuccess {
 class ResponseError {
   final bool? success;
   final Errors? errors;
+  final DataError? data;
 
   ResponseError({
     this.success,
     this.errors,
+    this.data,
   });
 
   factory ResponseError.fromJson(Map<String, dynamic> json) => ResponseError(
         success: json["success"],
         errors: json["errors"] == null ? null : Errors.fromJson(json["errors"]),
+        data: json["data"] == null ? null : DataError.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
         "success": success,
         "errors": errors?.toJson(),
+        "data": data?.toJson(),
       };
+}
+
+class DataError {
+  DataError();
+
+  factory DataError.fromJson(Map<String, dynamic> json) => DataError();
+
+  Map<String, dynamic> toJson() => {};
 }
 
 class Errors {
   final String? name;
   final String? message;
-  final Map<String, dynamic>? data;
 
   Errors({
     this.name,
     this.message,
-    this.data,
   });
 
   factory Errors.fromJson(Map<String, dynamic> json) => Errors(
         name: json["name"],
         message: json["message"],
-        data: json["data"],
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "message": message,
-        "data": data,
       };
 }
 

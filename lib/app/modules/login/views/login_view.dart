@@ -16,21 +16,24 @@ class LoginView extends GetView<LoginController> {
             return Stack(
               children: [
                 Image.asset('assets/images/splash.png'),
-                Padding(
-                  padding: const EdgeInsets.all(92),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset('assets/images/bubbleLogo.png'),
-                      const SizedBox(height: 9),
-                      RichText(
-                        text: const TextSpan(
-                          text: 'Welcome to Everglo',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w700),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 90),
+                        Image.asset('assets/images/bubbleLogo.png'),
+                        const SizedBox(height: 9),
+                        RichText(
+                          text: const TextSpan(
+                            text: 'Welcome to Everglo',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w700),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Positioned(
@@ -233,7 +236,9 @@ class LoginView extends GetView<LoginController> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 215.0),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.toNamed('/send-email');
+                                  },
                                   child: const Text(
                                     "Forgot Password",
                                     style: TextStyle(

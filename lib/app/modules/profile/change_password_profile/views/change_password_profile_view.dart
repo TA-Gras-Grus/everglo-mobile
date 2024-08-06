@@ -8,14 +8,13 @@ import '../controllers/change_password_profile_controller.dart';
 
 class ChangePasswordProfileView
     extends GetView<ChangePasswordProfileController> {
-  ChangePasswordProfileView({Key? key}) : super(key: key);
-  final _formKey = GlobalKey<FormBuilderState>();
+  const ChangePasswordProfileView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 80,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFFF6F6F6),
         leading: Padding(
           padding:
               const EdgeInsets.only(left: 20, right: 18, top: 10, bottom: 10),
@@ -35,7 +34,7 @@ class ChangePasswordProfileView
               ],
             ),
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black, size: 18),
+              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 18),
               onPressed: () => Navigator.pop(Get.context!),
             ),
           ),
@@ -61,11 +60,11 @@ class ChangePasswordProfileView
                   Padding(
                     padding: const EdgeInsets.only(left: 5, top: 15),
                     child: FormBuilder(
-                      key: _formKey,
+                      key: controller.formKey,
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(right: 240.0),
+                            padding: const EdgeInsets.only(right: 240.0),
                             child: Text(
                               "Old Password",
                               style: GoogleFonts.poppins(
@@ -74,7 +73,7 @@ class ChangePasswordProfileView
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: SizedBox(
@@ -82,8 +81,11 @@ class ChangePasswordProfileView
                               height: 50,
                               child: FormBuilderTextField(
                                 name: 'oldPassword',
-                                obscureText: controller.isPasswordHidden.value,
-                                cursorColor: Color(0xFF00AD7C),
+                                obscureText:
+                                    controller.isOldPasswordHidden.value,
+                                cursorColor: const Color(0xFF00AD7C),
+                                onChanged: (value) =>
+                                    controller.oldPassword.value = value ?? "",
                                 decoration: InputDecoration(
                                   hintText: "Enter your old password",
                                   hintStyle: GoogleFonts.poppins(
@@ -92,38 +94,55 @@ class ChangePasswordProfileView
                                   ),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  prefixIcon: Padding(
+                                  prefixIcon: const Padding(
                                     padding: EdgeInsets.all(10.0),
                                     child: Icon(Icons.lock_outline),
                                   ),
                                   suffixIcon: Padding(
-                                    padding: EdgeInsets.only(right: 10.0),
+                                    padding: const EdgeInsets.only(right: 10.0),
                                     child: InkWell(
                                       child: Icon(
-                                        controller.isPasswordHidden.value
+                                        controller.isOldPasswordHidden.value
                                             ? Icons.visibility_off
                                             : Icons.visibility,
                                       ),
                                       onTap: () {
-                                        controller.isPasswordHidden.value =
-                                            !controller.isPasswordHidden.value;
+                                        controller.isOldPasswordHidden.value =
+                                            !controller
+                                                .isOldPasswordHidden.value;
                                       },
                                     ),
                                   ),
                                   errorStyle: const TextStyle(fontSize: 0.01),
                                   focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xFF00AD7C)),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFF00AD7C)),
                                       borderRadius: BorderRadius.circular(10)),
                                 ),
-                                validator: (pwd) =>
-                                    controller.validatePassword(pwd),
+                                validator: (old) =>
+                                    controller.validateOldPassword(old ?? ""),
                               ),
                             ),
                           ),
-                          SizedBox(height: 15),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 24),
+                                child: Text(
+                                  controller.formKey.currentState
+                                          ?.errors['oldPassword'] ??
+                                      "",
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    color: Colors.red.shade900,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 15),
                           Padding(
-                            padding: EdgeInsets.only(right: 240.0),
+                            padding: const EdgeInsets.only(right: 240.0),
                             child: Text(
                               "New Password",
                               style: GoogleFonts.poppins(
@@ -132,7 +151,7 @@ class ChangePasswordProfileView
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: SizedBox(
@@ -141,7 +160,9 @@ class ChangePasswordProfileView
                               child: FormBuilderTextField(
                                 name: 'newPassword',
                                 obscureText: controller.isPasswordHidden.value,
-                                cursorColor: Color(0xFF00AD7C),
+                                cursorColor: const Color(0xFF00AD7C),
+                                onChanged: (value) =>
+                                    controller.password.value = value ?? "",
                                 decoration: InputDecoration(
                                   hintText: "Enter your new password",
                                   hintStyle: GoogleFonts.poppins(
@@ -150,12 +171,12 @@ class ChangePasswordProfileView
                                   ),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  prefixIcon: Padding(
+                                  prefixIcon: const Padding(
                                     padding: EdgeInsets.all(10.0),
                                     child: Icon(Icons.lock_outline),
                                   ),
                                   suffixIcon: Padding(
-                                    padding: EdgeInsets.only(right: 10.0),
+                                    padding: const EdgeInsets.only(right: 10.0),
                                     child: InkWell(
                                       child: Icon(
                                         controller.isPasswordHidden.value
@@ -170,18 +191,34 @@ class ChangePasswordProfileView
                                   ),
                                   errorStyle: const TextStyle(fontSize: 0.01),
                                   focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xFF00AD7C)),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFF00AD7C)),
                                       borderRadius: BorderRadius.circular(10)),
                                 ),
-                                validator: (pwd) =>
-                                    controller.validatePassword(pwd),
+                                validator: (newPass) =>
+                                    controller.validatePassword(newPass ?? ""),
                               ),
                             ),
                           ),
-                          SizedBox(height: 15),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 24),
+                                child: Text(
+                                  controller.formKey.currentState
+                                          ?.errors['newPassword'] ??
+                                      "",
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    color: Colors.red.shade900,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 15),
                           Padding(
-                            padding: EdgeInsets.only(right: 140.0),
+                            padding: const EdgeInsets.only(right: 140.0),
                             child: Text(
                               "New Password Confirmation",
                               style: GoogleFonts.poppins(
@@ -190,73 +227,84 @@ class ChangePasswordProfileView
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: SizedBox(
                               width: 353,
                               height: 50,
                               child: FormBuilderTextField(
-                                name: 'newPassword',
-                                obscureText: controller.isPasswordHidden.value,
-                                cursorColor: Color(0xFF00AD7C),
+                                name: 'newPasswordConfirm',
+                                obscureText:
+                                    controller.isPasswordConfirmHidden.value,
+                                cursorColor: const Color(0xFF00AD7C),
+                                onChanged: (value) => controller
+                                    .passwordConfirm.value = value ?? "",
                                 decoration: InputDecoration(
-                                  hintText: "Enter your new password",
+                                  hintText:
+                                      "Enter your new password confirmation",
                                   hintStyle: GoogleFonts.poppins(
                                     fontSize: 14,
                                     color: Colors.black,
                                   ),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  prefixIcon: Padding(
+                                  prefixIcon: const Padding(
                                     padding: EdgeInsets.all(10.0),
                                     child: Icon(Icons.lock_outline),
                                   ),
                                   suffixIcon: Padding(
-                                    padding: EdgeInsets.only(right: 10.0),
+                                    padding: const EdgeInsets.only(right: 10.0),
                                     child: InkWell(
                                       child: Icon(
-                                        controller.isPasswordHidden.value
+                                        controller.isPasswordConfirmHidden.value
                                             ? Icons.visibility_off
                                             : Icons.visibility,
                                       ),
                                       onTap: () {
-                                        controller.isPasswordHidden.value =
-                                            !controller.isPasswordHidden.value;
+                                        controller
+                                                .isPasswordConfirmHidden.value =
+                                            !controller
+                                                .isPasswordConfirmHidden.value;
                                       },
                                     ),
                                   ),
                                   errorStyle: const TextStyle(fontSize: 0.01),
                                   focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xFF00AD7C)),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFF00AD7C)),
                                       borderRadius: BorderRadius.circular(10)),
                                 ),
-                                validator: (pwd) =>
-                                    controller.validatePassword(pwd),
+                                validator: (newPassConfirm) =>
+                                    controller.validatePasswordConfirm(
+                                        newPassConfirm ?? ""),
                               ),
                             ),
                           ),
-                          SizedBox(height: 330),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 24),
+                                child: Text(
+                                  controller.formKey.currentState
+                                          ?.errors['newPasswordConfirm'] ??
+                                      "",
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    color: Colors.red.shade900,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 300),
                           MaterialButton(
-                            onPressed: () {
-                              if (true) {
-                                showModalBottomSheet<void>(
-                                  context: context,
-                                  builder: changedPasswordBottomSheet,
-                                );
-                              }
-                            },
-                            //Validate and save the form values
-                            //   _formKey.currentState?.saveAndValidate();
-                            //   debugPrint(
-                            //       _formKey.currentState?.value.toString());
-                            // },
+                            onPressed: () => controller.onChangePassword(),
                             child: Container(
                               width: 343,
                               height: 46,
                               decoration: BoxDecoration(
-                                color: Color(0xFF52B788),
+                                color: const Color(0xFF52B788),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Center(
@@ -293,7 +341,7 @@ class ChangePasswordProfileView
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 30, bottom: 12),
+                margin: const EdgeInsets.only(top: 30, bottom: 12),
                 width: 132,
                 height: 132,
                 decoration: BoxDecoration(
@@ -302,7 +350,7 @@ class ChangePasswordProfileView
                 child: Image.asset('assets/images/updated.png'),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 18),
+                padding: const EdgeInsets.only(top: 5, bottom: 18),
                 child: Text(
                   'Password Changed!',
                   style: GoogleFonts.poppins(
@@ -312,25 +360,25 @@ class ChangePasswordProfileView
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 35, right: 30, bottom: 24),
+                padding: const EdgeInsets.only(left: 35, right: 30, bottom: 24),
                 child: Text(
                   'Your password has been successfully changed, changes are reflected real time.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFF838FA0),
+                    color: const Color(0xFF838FA0),
                   ),
                 ),
               ),
               MaterialButton(
                 onPressed: () => Navigator.pop(Get.context!),
                 child: Container(
-                  margin: EdgeInsets.only(left: 14, right: 5),
+                  margin: const EdgeInsets.only(left: 14, right: 5),
                   height: 50,
                   width: 327,
                   decoration: BoxDecoration(
-                    color: Color(0xFF52B788),
+                    color: const Color(0xFF52B788),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Center(
@@ -359,7 +407,7 @@ class ChangePasswordProfileView
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 30, bottom: 12),
+                margin: const EdgeInsets.only(top: 30, bottom: 12),
                 width: 132,
                 height: 132,
                 decoration: BoxDecoration(
@@ -368,7 +416,7 @@ class ChangePasswordProfileView
                 child: Image.asset('assets/images/failed.png'),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 14),
+                padding: const EdgeInsets.only(top: 5, bottom: 14),
                 child: Text(
                   'Password Change Failed',
                   style: GoogleFonts.poppins(
@@ -378,25 +426,25 @@ class ChangePasswordProfileView
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 35, right: 30, bottom: 18),
+                padding: const EdgeInsets.only(left: 35, right: 30, bottom: 18),
                 child: Text(
                   'Oops, there are something wrong with changing password, please try again in a moment.',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFF838FA0),
+                    color: const Color(0xFF838FA0),
                   ),
                 ),
               ),
               MaterialButton(
                 onPressed: () => Navigator.pop(Get.context!),
                 child: Container(
-                  margin: EdgeInsets.only(left: 14, right: 5),
+                  margin: const EdgeInsets.only(left: 14, right: 5),
                   height: 50,
                   width: 327,
                   decoration: BoxDecoration(
-                    color: Color(0xFF52B788),
+                    color: const Color(0xFF52B788),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Center(
@@ -411,11 +459,11 @@ class ChangePasswordProfileView
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               MaterialButton(
                 onPressed: () => Navigator.pop(Get.context!),
                 child: Container(
-                  margin: EdgeInsets.only(left: 14, right: 5),
+                  margin: const EdgeInsets.only(left: 14, right: 5),
                   height: 50,
                   width: 327,
                   decoration: BoxDecoration(
@@ -437,7 +485,7 @@ class ChangePasswordProfileView
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF52B788),
+                        color: const Color(0xFF52B788),
                       ),
                     ),
                   ),

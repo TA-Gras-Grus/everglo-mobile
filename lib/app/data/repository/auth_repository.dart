@@ -13,12 +13,22 @@ class AuthRepository {
     List<String> nameArray = fullname.split(' ');
     String firstName = nameArray[0];
     nameArray.removeAt(0);
-    String lastName = '${nameArray.join(' ')}';
+    String lastName = nameArray.join(' ');
     printInfo(info: lastName);
     final response = await ApiClient().patch('/users/update-profile', data: {
       'email': email.value,
       'firstName': firstName,
       'lastName': lastName
+    });
+    return await response.data;
+  }
+
+  changePassword(
+      String oldPasword, String newPassword, String passwordConfrim) async {
+    final response = await ApiClient().patch('/users/change-password', data: {
+      'oldPassword': oldPasword,
+      'newPassword': newPassword,
+      'confirmPassword': passwordConfrim,
     });
     return await response.data;
   }

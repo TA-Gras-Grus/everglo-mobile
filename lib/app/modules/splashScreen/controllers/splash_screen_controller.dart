@@ -10,7 +10,6 @@ class SplashScreenController extends GetxController {
   @override
   void onInit() {
     Timer(const Duration(seconds: 3), () {
-      printInfo(info: 'oke');
       isLoading.value = false;
       if (storage.value.read('userToken') != null &&
           storage.value.read('userToken') != '') {

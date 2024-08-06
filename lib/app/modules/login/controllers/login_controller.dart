@@ -17,8 +17,8 @@ class LoginController extends GetxController {
   Rx<Color> unfocusedIconColor = const Color(0xFF8A8D90).obs;
   Rx<GetStorage> storage = GetStorage().obs;
   RxBool isLoading = false.obs;
-  RxString email = 'owner@gmail.com'.obs;
-  RxString password = '88888888'.obs;
+  RxString email = ''.obs;
+  RxString password = ''.obs;
 
   @override
   void onInit() {
