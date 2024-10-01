@@ -39,10 +39,10 @@ class EvergloButton extends StatelessWidget {
             color: Colors.black.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 10,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           )
         ],
-        color: type == ButtonType.primary ? Color(0xFF52B788) : Colors.white,
+        color: type == ButtonType.primary ? const Color(0xFF52B788) : Colors.white,
       ),
       child: MaterialButton(
         onPressed: onTap,

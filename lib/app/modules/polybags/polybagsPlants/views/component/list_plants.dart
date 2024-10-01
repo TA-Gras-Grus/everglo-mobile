@@ -24,7 +24,7 @@ class ListPlants extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Container(
         width: 100,
-        height: 125,
+        height: 145,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -35,7 +35,7 @@ class ListPlants extends StatelessWidget {
               children: [
                 Container(
                   width: 125,
-                  height: 125,
+                  height: 145,
                   padding: const EdgeInsets.all(30),
                   decoration: BoxDecoration(
                       color: UiColor().primary,
@@ -64,12 +64,17 @@ class ListPlants extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      Text(
-                        plantsName,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
+                      SizedBox(
+                        width: 190,
+                        child: Text(
+                          plantsName,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       Row(

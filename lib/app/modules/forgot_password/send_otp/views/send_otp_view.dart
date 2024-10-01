@@ -18,7 +18,7 @@ class SendOtpView extends GetView<SendOtpController> {
         child: Center(
           child: Stack(
             children: [
-              Image.asset('assets/images/splash.png'),
+              Image.asset('assets/images/splash.jpg'),
               Positioned.fill(
                 child: Align(
                   alignment: Alignment.topCenter,
@@ -26,7 +26,10 @@ class SendOtpView extends GetView<SendOtpController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 90),
-                      Image.asset('assets/images/bubbleLogo.png'),
+                      Image.asset(
+                        'assets/images/everglo_new.png',
+                        width: 100,
+                      ),
                       const SizedBox(height: 9),
                       RichText(
                         text: const TextSpan(
