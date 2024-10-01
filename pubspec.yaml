@@ -2,24 +2,110 @@ name: everglo_mobile
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=3.2.6 <4.0.0'
+environment:
+  sdk: ">=3.2.6 <4.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.2
-  get: 4.6.6
   dio: ^5.4.0
+  dropdown_button2: ^2.3.9
+  flutter:
+    sdk: flutter
   flutter_dotenv: ^5.1.0
-  flutter_form_builder: ^9.1.1
+  flutter_dynamic_icon: ^2.1.0
+  flutter_form_builder: ^9.2.1
+  flutter_riverpod: ^2.4.10
+  flutter_svg: ^2.0.10+1
   form_builder_validators: ^9.1.0
-  flutter: 
+  get: 4.6.6
+  get_cli: ^1.8.1
+  google_fonts: ^6.1.0
+  material_design_icons_flutter: ^7.0.7296
+  mobile_scanner: ^3.5.5
+  zoom_tap_animation: ^1.1.0
+  get_storage: ^2.1.1
+  fl_chart: ^0.67.0
+  flutter_spinkit: ^5.2.1
+  intl: ^0.18.1
+  flutter_otp_text_field: ^1.1.3+2
+  mqtt_client: ^10.2.1
+  flutter_speed_dial: ^7.0.0
+  flutter_localizations:
     sdk: flutter
 
-dev_dependencies: 
-  flutter_lints: ^2.0.0
-  flutter_test: 
+dev_dependencies:
+  flutter_lints: ^3.0.1
+  flutter_launcher_icons: "^0.13.1"
+  flutter_test:
     sdk: flutter
 
-flutter: 
+flutter:
   uses-material-design: true
+  assets:
+    - .env
+    - assets/images/splash.jpg
+    - assets/images/everglo_bgputih.png
+    - assets/images/everglo_bghijau.png
+    - assets/images/everglo_new.png
+    - assets/images/mail.png
+    - assets/images/password.png
+    - assets/images/hideEyes.png
+    - assets/images/updated.png
+    - assets/images/polybags.png
+    - assets/images/failed.png
+    - assets/images/bagas.jpg
+    - assets/icons/notificationGreen.svg
+    - assets/icons/greenhouseIcon.svg
+    - assets/icons/dropdownIcon.svg
+    - assets/icons/plantsIcon.svg
+    - assets/icons/rightArrow.svg
+    - assets/icons/totalPolybagIcon.svg
+    - assets/icons/activePolybagIcon.svg
+    - assets/icons/humidityIcon.svg
+    - assets/icons/airTemperatureIcon.svg
+    - assets/icons/blowerControl.svg
+    - assets/icons/heaterControl.svg
+    - assets/icons/waterTankVolume.svg
+    - assets/icons/electricalConductivity.svg
+    - assets/icons/potentialHydrogen.svg
+    - assets/icons/partPerMillion.svg
+    - assets/icons/waterFlowInterval.svg
+    - assets/icons/waterFlowTime.svg
+    - assets/icons/waterFlowToday.svg
+    - assets/icons/flowControl.svg
+    - assets/icons/arrowUp.svg
+    - assets/icons/scan.svg
+    - assets/icons/plants.svg
+    - assets/icons/dayOfPlanted.svg
+    - assets/icons/dayAfterPlant.svg
+    - assets/icons/profileIcon.svg
+    - assets/icons/password.svg
+    - assets/icons/logout.svg
+    - assets/icons/help.svg
+    - assets/icons/pencil.svg
+    - assets/icons/camera.svg
+    - assets/icons/harvest.svg
+    - assets/icons/unharvested.svg
 
+  fonts:
+    - family: EvergloIcon
+      fonts:
+        - asset: assets/icons/EvergloIcon.ttf
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/everglo_new.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/images/everglo_new.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/images/everglo_new.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/images/everglo_new.png"
