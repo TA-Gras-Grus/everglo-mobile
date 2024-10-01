@@ -17,7 +17,7 @@ class SendEmailView extends GetView<SendEmailController> {
           child: Obx(() {
             return Stack(
               children: [
-                Image.asset('assets/images/splash.png'),
+                Image.asset('assets/images/splash.jpg'),
                 Positioned.fill(
                   child: Align(
                     alignment: Alignment.topCenter,
@@ -25,7 +25,10 @@ class SendEmailView extends GetView<SendEmailController> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(height: 90),
-                        Image.asset('assets/images/bubbleLogo.png'),
+                        Image.asset(
+                          'assets/images/everglo_new.png',
+                          width: 100,
+                        ),
                         const SizedBox(height: 9),
                         RichText(
                           text: const TextSpan(
@@ -119,7 +122,8 @@ class SendEmailView extends GetView<SendEmailController> {
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,

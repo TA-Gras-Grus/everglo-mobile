@@ -1586,7 +1586,7 @@ class HomeView extends GetView<HomeController> {
                       padding: const EdgeInsets.only(bottom: 10, top: 0),
                       child: FormBuilderTextField(
                         name: 'heaterBlowerDevice',
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         cursorColor: const Color(0xFF00AD7C),
                         initialValue: controller.heaterBlowerDevice.value,
                         decoration: InputDecoration(
@@ -1830,6 +1830,13 @@ class HomeView extends GetView<HomeController> {
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(100),
                   ),
+                  child: Text(
+                    'Device Key Scanner',
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -1868,6 +1875,9 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 100,
+                )
               ],
             )),
       );

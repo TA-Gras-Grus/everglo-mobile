@@ -40,11 +40,11 @@ class PolybagsPlantsView extends GetView<PolybagsPlantsController> {
         onPressed: () {
           Get.toNamed('/polybags/recap');
         },
+        backgroundColor: UiColor().primary,
         child: const Icon(
           Icons.bar_chart_rounded,
           color: Colors.white,
         ),
-        backgroundColor: UiColor().primary,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Obx(() {
@@ -62,10 +62,10 @@ class PolybagsPlantsView extends GetView<PolybagsPlantsController> {
                   child: ListView(
                     children: controller.plantTypes.value.plantType!
                         .map((e) => ListPlants(
-                              plantsName: e.name ?? "",
+                              plantsName:
+                                  "${e.name ?? ""} ${e.polybagSize ?? ""}",
                               numberOfPolybags: e.totalPolybag ?? 0,
                               plantsId: e.plantTypeId,
-                              plantsImage: 'assets/images/chiliPlants.png',
                             ))
                         .toList(),
                   ),

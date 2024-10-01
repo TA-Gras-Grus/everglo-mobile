@@ -18,7 +18,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
                       children: [
                         FittedBox(
                           fit: BoxFit.cover,
-                          child: Image.asset('assets/images/splash.png'),
+                          child: Image.asset('assets/images/splash.jpg'),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 40.0, top: 70.0),

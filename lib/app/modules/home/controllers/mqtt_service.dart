@@ -42,8 +42,8 @@ class MqttService extends GetxService {
 
   void onConnected() {
     printInfo(info: 'Connected');
-    client?.subscribe('greenhouse:updated', MqttQos.exactlyOnce);
-    client?.subscribe('greenhouseData:created', MqttQos.exactlyOnce);
+    client?.subscribe('greenhouse:updated', MqttQos.atMostOnce);
+    client?.subscribe('greenhouseData:created', MqttQos.atMostOnce);
   }
 
   void onDisconnected() {

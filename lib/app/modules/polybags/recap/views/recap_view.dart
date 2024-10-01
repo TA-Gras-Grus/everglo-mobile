@@ -11,18 +11,19 @@ import 'package:get/get.dart';
 import '../controllers/recap_controller.dart';
 
 class RecapView extends GetView<RecapController> {
-  const RecapView({Key? key}) : super(key: key);
+  const RecapView({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
         GlobalWidgetsLocalizations.delegate,
         GlobalMaterialLocalizations.delegate
         // Add other delegates if needed
       ],
-      supportedLocales: [
-        const Locale('en', 'US'), // Add other supported locales
-        const Locale('id', 'ID'),
+      supportedLocales: const [
+        Locale('en', 'US'), // Add other supported locales
+        Locale('id', 'ID'),
       ],
       // Wrap the RecapView widget with MaterialApp
       home: Scaffold(
@@ -82,16 +83,20 @@ class RecapView extends GetView<RecapController> {
                                         firstDate: DateTime(2000),
                                         lastDate: DateTime(2100),
                                         format: DateFormat('dd-MM-yyyy'),
-                                        locale: Locale('id', 'ID'),
+                                        locale: const Locale('id', 'ID'),
                                         allowClear: true,
                                         decoration: InputDecoration(
                                           labelText: 'Filter by Date',
+                                          labelStyle: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12),
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                           ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 5),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 10, vertical: 0),
                                           suffixIcon: Icon(
                                             Icons.date_range,
                                             color: UiColor().primary,
@@ -102,7 +107,6 @@ class RecapView extends GetView<RecapController> {
                                               value != null
                                                   ? value.toString()
                                                   : "";
-                                          printInfo(info: value.toString());
                                           controller.isLoading.value = true;
                                           controller.getRecap().then((value) {
                                             controller.isLoading.value = false;
@@ -113,7 +117,7 @@ class RecapView extends GetView<RecapController> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 70,
                           ),
                           SizedBox(
@@ -175,18 +179,18 @@ class RecapView extends GetView<RecapController> {
                                             },
                                           ),
                                         ),
-                                        rightTitles: AxisTitles(
+                                        rightTitles: const AxisTitles(
                                           sideTitles:
                                               SideTitles(showTitles: false),
                                         ),
-                                        topTitles: AxisTitles(
+                                        topTitles: const AxisTitles(
                                           sideTitles:
                                               SideTitles(showTitles: false),
                                         ),
                                       ),
                                     ),
                                   )
-                                : Center(
+                                : const Center(
                                     child: Text('No data found'),
                                   ),
                           ),
@@ -207,7 +211,7 @@ class RecapView extends GetView<RecapController> {
               toY: controller.recaps.value.recap![index].weight!.toDouble(),
               color: UiColor().primary),
         ],
-        showingTooltipIndicators: [index],
+        showingTooltipIndicators: [0],
       );
     });
   }

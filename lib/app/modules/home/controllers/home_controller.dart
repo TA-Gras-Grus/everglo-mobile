@@ -308,6 +308,7 @@ class HomeController extends GetxController {
         Greenhouse fromMessage = Greenhouse.fromJson(jsonDecode(message));
         if (fromMessage.greenhouseId == greenhouse.value.greenhouseId) {
           greenhouse.value = fromMessage;
+          printInfo(info: greenhouse.value.toJson().toString());
         }
       } else if (topic == 'greenhouseData:created') {
         GreenhouseData fromMessage =

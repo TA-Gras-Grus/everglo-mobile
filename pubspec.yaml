@@ -43,14 +43,14 @@ flutter:
   uses-material-design: true
   assets:
     - .env
-    - assets/images/splash.png
-    - assets/images/bubbleLogo.png
+    - assets/images/splash.jpg
+    - assets/images/everglo_bgputih.png
+    - assets/images/everglo_bghijau.png
+    - assets/images/everglo_new.png
     - assets/images/mail.png
     - assets/images/password.png
     - assets/images/hideEyes.png
     - assets/images/updated.png
-    - assets/images/chiliPlants.png
-    - assets/images/melonPlants.jpeg
     - assets/images/polybags.png
     - assets/images/failed.png
     - assets/images/bagas.jpg
@@ -95,17 +95,17 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/bubbleLogo.png"
+  image_path: "assets/images/everglo_new.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/bubbleLogo.png"
+    image_path: "assets/images/everglo_new.png"
     background_color: "#hexcode"
     theme_color: "#hexcode"
   windows:
     generate: true
-    image_path: "assets/images/bubbleLogo.png"
+    image_path: "assets/images/everglo_new.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/images/bubbleLogo.png"
+    image_path: "assets/images/everglo_new.png"
